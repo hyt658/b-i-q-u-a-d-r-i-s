@@ -6,7 +6,8 @@ class Level {
     int lv;
 
     public:
-        virtual Block createBlock() = 0;
+        virtual Block* createRandBlock() = 0;
+        virtual Block* createCertinBlock() = 0;
         int getlevel();
 };
 
