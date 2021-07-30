@@ -7,7 +7,7 @@ class Level {
 
     public:
         virtual Block* createRandBlock() = 0;
-        virtual Block* createCertinBlock() = 0;
+        virtual Block* createCertainBlock(std::string type) = 0;
         int getlevel();
 };
 
