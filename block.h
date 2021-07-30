@@ -6,6 +6,7 @@
 #include "observer.h"
 
 class Block: public Subject, public Observer {
+    int generateLv;
     std::string type;
     bool heavy;
     std::vector<std::vector<int>> locations;
@@ -28,7 +29,8 @@ class Block: public Subject, public Observer {
         std::vector<std::vector<int>>& getLocation();
         bool isHeavy();
         bool isEmpty();
-        void notify() override;
+        void notify(int n=0) override;
+        void notifyObservers() override;
 };
 
 #endif

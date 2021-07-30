@@ -9,9 +9,8 @@ class Subject {
     public:
         Subject();
         void attach(Observer *o);
-        void detach(Observer *o);
-        void notifyObservers();
-        virtual ~Subject() = 0;
+        void detach(Observer *o);   //估计用不上，先放着吧，最后删
+        virtual void notifyObservers() = 0;
 };
 
 #endif
