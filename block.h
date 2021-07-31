@@ -4,6 +4,7 @@
 #include <vector>
 #include "subject.h"
 #include "observer.h"
+#include "board.h"
 
 
 class Block: public Subject, public Observer {
@@ -26,8 +27,9 @@ class Block: public Subject, public Observer {
     public:
         Block(std::string new_type, bool isheavy);
         virtual void rotate(bool clockwise) = 0;
-        virtual void moveLeft() = 0;
-        virtual void moveRight() = 0;
+        void moveLeft(std::vector<std::vector<Cell>>);
+        void moveRight(std::vector<std::vector<Cell>>);
+        void drop(std::vector<std::vector<Cell>>);
         std::string getBlockType();
         std::vector<std::vector<int>>& getLocation();
         bool isHeavy();
