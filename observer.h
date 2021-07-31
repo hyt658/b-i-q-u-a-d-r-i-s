@@ -3,8 +3,8 @@
 
 class Observer {
     public:
-        // parameter n is used when necessary
-        virtual void notify(int n=0) = 0;     
+        // parameter n and m is used when necessary
+        virtual void notify(int n=0, int m=0) = 0;     
         virtual ~Observer() = default;
 };
 

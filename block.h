@@ -29,7 +29,7 @@ class Block: public Subject, public Observer {
         std::vector<std::vector<int>>& getLocation();
         bool isHeavy();
         bool isEmpty();
-        void notify(int n=0) override;
+        void notify(int n=0, int m=0) override;
         void notifyObservers() override;
 };
 
