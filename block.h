@@ -6,6 +6,7 @@
 #include "observer.h"
 #include "board.h"
 
+using std::vector;
 
 class Block: public Subject, public Observer {
     protected:
@@ -26,12 +27,12 @@ class Block: public Subject, public Observer {
 
     public:
         Block(std::string new_type, bool isheavy);
-        virtual void rotate(bool clockwise) = 0;
-        void moveLeft(std::vector<std::vector<Cell>>);
-        void moveRight(std::vector<std::vector<Cell>>);
-        void drop(std::vector<std::vector<Cell>>);
+        virtual void rotate(bool clockwise, vector<vector<Cell>> grid) = 0;
+        void moveLeft(vector<vector<Cell>> grid);
+        void moveRight(vector<vector<Cell>> grid);
+        void drop(vector<vector<Cell>>);
         std::string getBlockType();
-        std::vector<std::vector<int>>& getLocation();
+        vector<vector<int>>& getLocation();
         bool isHeavy();
         bool isEmpty();
         void notify(int n=0, int m=0) override;
