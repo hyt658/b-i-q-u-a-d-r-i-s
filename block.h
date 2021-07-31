@@ -4,11 +4,13 @@
 #include <vector>
 
 class Block {
-    std::string type;
-    bool heavy;
-    std::vector<std::vector<int>> theBlock;
+    protected:
+        std::string type;
+        bool heavy;
+        std::vector<std::vector<int>> theBlock;
 
     public:
+        Block(std::string new_type, bool isheavy);
         virtual void rotate(bool clockwise) = 0;
         bool isHeavy();
         std::string getBlockType();
