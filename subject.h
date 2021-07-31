@@ -4,7 +4,8 @@
 #include "observer.h"
 
 class Subject {
-    std::vector<Observer*> observers;
+    protected:
+        std::vector<Observer*> observers;
 
     public:
         Subject();

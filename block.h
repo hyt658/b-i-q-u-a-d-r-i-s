@@ -4,7 +4,9 @@
 #include <vector>
 #include "subject.h"
 #include "observer.h"
+#include "board.h"
 
+using std::vector;
 
 class Block: public Subject, public Observer {
     protected:
@@ -25,12 +27,12 @@ class Block: public Subject, public Observer {
 
     public:
         Block(std::string new_type, bool isheavy);
-        virtual void rotate(bool clockwise, std::vector<std::vector<Cell>>) = 0;
-        virtual void moveLeft(std::vector<std::vector<Cell>>) = 0;
-        virtual void moveRight(std::vector<std::vector<Cell>>) = 0;
-        virtual void drop(std::vector<std::vector<Cell>>) = 0;
+        virtual void rotate(bool clockwise, vector<vector<Cell>> board) = 0;
+        void moveLeft(vector<vector<Cell>> board);
+        void moveRight(vector<vector<Cell>> board);
+        void drop(vector<vector<Cell>> board);
         std::string getBlockType();
-        std::vector<std::vector<int>>& getLocation();
+        vector<vector<int>>& getLocation();
         bool isHeavy();
         bool isEmpty();
         void notify(int n=0, int m=0) override;
