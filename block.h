@@ -25,9 +25,10 @@ class Block: public Subject, public Observer {
 
     public:
         Block(std::string new_type, bool isheavy);
-        virtual void rotate(bool clockwise) = 0;
-        virtual void moveLeft() = 0;
-        virtual void moveRight() = 0;
+        virtual void rotate(bool clockwise, std::vector<std::vector<Cell>>) = 0;
+        virtual void moveLeft(std::vector<std::vector<Cell>>) = 0;
+        virtual void moveRight(std::vector<std::vector<Cell>>) = 0;
+        virtual void drop(std::vector<std::vector<Cell>>) = 0;
         std::string getBlockType();
         std::vector<std::vector<int>>& getLocation();
         bool isHeavy();

@@ -9,6 +9,7 @@ class Biquadris {
     int highScore;
     
     public:
+        Biquadris();
         void setup();
         void play();
 };
