@@ -6,7 +6,7 @@
 class IBlock:public Block {
     public:
         IBlock(bool isheavy);
-        void rotate(bool clockwise) override;
+        void rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 
 #endif
