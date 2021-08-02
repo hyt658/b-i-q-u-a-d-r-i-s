@@ -25,44 +25,36 @@ void TBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     if(clockwise) {
         if(locations[0][0] == locations[1][0]) {
             if(locations[0][0] + 1 == locations[1][0]) {
-                tryRotate(0, 2, 1, 1, 0, 2, 0, 0, board);
+                tryRotate(-1, 1, 0, 0, 1, -1, -1, -1, board);
             }
             else {
+                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
         }
         else {
             if(locations[0][1] + 1 == locations[1][1]) {
+                tryRotate(-1, 1, 0, 0, 1, 1, 1, -1, board);
             }
             else {
-
-            }
-        }
-        else {
-            if(locations[0][0] + 1 == locations[1][0]) {
-            }
-            else {
+                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
         }
     }
     else {
         if(locations[0][0] == locations[1][0]) {
             if(locations[0][0] + 1 == locations[1][0]) {
-                tryRotate(0, 2, 1, 1, 0, 2, 0, 0, board);
+                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
             else {
+                tryRotate(-1, 1, 0, 0, 1, 1, 1, -1, board);
             }
         }
         else {
             if(locations[0][1] + 1 == locations[1][1]) {
+                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
             else {
-
-            }
-        }
-        else {
-            if(locations[0][0] + 1 == locations[1][0]) {
-            }
-            else {
+                tryRotate(-1, 1, 0, 0, 1, -1, -1, -1, board);
             }
         }
     }
