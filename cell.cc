@@ -1,7 +1,7 @@
 #include "cell.h"
 #include <string>
 
-Cell::Cell(int row, int col) : r{row}, c{col}, {}
+Cell::Cell(int row, int col) : r{row}, c{col} {}
 
 void Cell::setBlind(bool state) {
     blind = state;
