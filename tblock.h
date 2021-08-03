@@ -1,11 +1,11 @@
-#ifndef __IBLOCK_H__
-#define __IBLOCK_H__
+#ifndef __TBLOCK_H__
+#define __TBLOCK_H__
 #include "block.h"
 #include <string>
 
-class IBlock:public Block {
+class TBlock:public Block {
     public:
-        IBlock(bool isheavy);
+        TBlock(bool isheavy);
         void rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 

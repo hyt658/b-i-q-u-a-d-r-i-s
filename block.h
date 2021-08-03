@@ -5,6 +5,13 @@
 #include "subject.h"
 #include "observer.h"
 #include "board.h"
+#include "iblock.h"
+#include "jblock.h"
+#include "lblock.h"
+#include "oblock.h"
+#include "sblock.h"
+#include "zblock.h"
+#include "tblock.h"
 
 using std::vector;
 
@@ -37,6 +44,8 @@ class Block: public Subject, public Observer {
         bool isEmpty();
         void notify(int n=0, int m=0) override;
         void notifyObservers() override;
+        bool isFull(int idx, int a, int b, vector<vector<Cell>> board);
+        void tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board);
 };
 
 #endif

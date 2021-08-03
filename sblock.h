@@ -6,7 +6,7 @@
 class SBlock:public Block {
     public:
         SBlock(bool isheavy);
-        void rotate(bool clockwise) override;
+        void rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 
 #endif

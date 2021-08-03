@@ -3,15 +3,16 @@
 #include <string>
 #include "subject.h"
 
-class Cell: public Subject {
-    int x, y;
-    bool blind;
+class Cell {
+    int r, c;
+    bool blind = false;
     std::string name;
 
     public:
+        Cell(int row, int col);
         void setBlind(bool state);
         bool isBlind();
-        void setName(std::string name);
+        void setName(std::string name_);
         std::string getName();
         void notifyObservers() override;
 };
