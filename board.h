@@ -18,17 +18,18 @@ class Board: public Observer {
 
     public:
         Board(int row, int col);
+        void init(int n);
         int getScore();
         void setLevel(int n);
+        int getlevel();
         void levelUp();
         void levelDown();
-        void generateBlock();
+        int update();
         void assignNextBlock(std::string type);
         void controlBlock(std::string command);
-        void checkCancel();
+        int checkCancel();
         void setDebuff(std::string type);
-        void printNextBlock();
-        void printCell(int row, int col);
+        void printBoard();
         void notify(int n=0, int m=0) override;
         ~Board();
 };

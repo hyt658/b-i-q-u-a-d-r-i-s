@@ -1,13 +1,37 @@
 #include "board.h"
+#include "commands.h"
 using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
 
+//////////////////////////////////////////////////////////////////////
+// helper functions
+//////////////////////////////////////////////////////////////////////
+
 int square(int n) {
     return (n * n);
 }
+
+Level* judgeLevel(int n) {
+    if (n == 0) {
+        // return new level0();
+    } else if (n == 1) {
+        // return new level1();
+    } else if (n == 2) {
+        // return new level2();
+    } else if (n == 3) {
+        // return new level3();
+    } else {
+        // return new level4();
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// field methods
+//////////////////////////////////////////////////////////////////////
 
 Board::Board(int row, int col):
     score{0}, curr_blcok{nullptr}, next_block{nullptr} 
@@ -24,20 +48,27 @@ Board::Board(int row, int col):
     }
 }
 
-void Board::setLevel(int n) {
-    if (n == 0) {
-        // lv = new level0(this);
-    } else if (n == 1) {
-        // lv = new level1(this);
-    } else if (n == 2) {
-        // lv = new level2(this);
-    } else if (n == 3) {
-        // lv = new level3(this);
-    } else {
-        // lv = new level4(this);
+void Board::init(int n) {
+    lv = judgeLevel(n);
+    curr_blcok = lv->createRandBlock(this);
+    auto locations = curr_blcok->getLocation();
+    for (auto location : locations) {
+        int row = location[0];
+        int col = location[1];
+        theBoard[row][col].setName(curr_blcok->getBlockType());
     }
+    next_block = lv->createRandBlock(this);
+}
+
+void Board::setLevel(int n) {
+    delete lv;
+    lv = judgeLevel(n);
     delete next_block;
-    next_block = lv->createRandBlock();
+    next_block = lv->createRandBlock(this);
+}
+
+int Board::getlevel() {
+    return lv->getlevel();
 }
 
 void Board::levelUp() {
@@ -64,29 +95,42 @@ void Board::levelDown() {
     */
 }
 
-void Board::generateBlock() {
+int Board::update() {
     Blocks.emplace_back(curr_blcok);
-    delete curr_blcok;
     curr_blcok = next_block;
-    next_block = lv->createRandBlock();
+    auto locations = curr_blcok->getLocation();
+    for (auto location : locations) {
+        int row = location[0];
+        int col = location[1];
+        if (theBoard[row][col].getName() != "empty") {
+            theBoard[row][col].setName("X");
+            return 1;
+        } else {
+            theBoard[row][col].setName(curr_blcok->getBlockType());
+        }
+    }
+    next_block = lv->createRandBlock(this);
+    return 0;
 }
 
 void Board::assignNextBlock(string type) {
     delete next_block;
-    next_block = lv->createCertainBlock(type);
+    next_block = lv->createCertainBlock(type, this);
 }
 
 void Board::controlBlock(string command) {      
-    if (command == "left") {
+    if (command == LEFT) {
         curr_blcok->moveLeft(theBoard);
-    } else if (command == "right") {
+    } else if (command == RIGHT) {
         curr_blcok->moveRight(theBoard);
-    } else if (command == "clockwise") {
+    } else if (command == CLOCKWISE) {
         curr_blcok->rotate(true, theBoard);
-    } else if (command == "counterclockwise") {
+    } else if (command == COUNTER_CLOCKWISE) {
         curr_blcok->rotate(false, theBoard);
-    } else { 
-        
+    } else if (command == DOWN) { 
+        curr_blcok->down(theBoard);
+    } else {
+        curr_blcok->drop(theBoard);
     }
 
     // plot the locations on cells
@@ -99,7 +143,7 @@ void Board::controlBlock(string command) {
     }
 }
 
-void Board::checkCancel() {
+int Board::checkCancel() {
     int cleaned_line = 0;
     for (size_t i = 0; i < theBoard.size(); ++i) {
         if (cellsPerRow[i] == theBoard[i].size()) {
@@ -110,18 +154,21 @@ void Board::checkCancel() {
         }
     }
     score += square(cleaned_line + lv->getlevel());
+    return cleaned_line;
 }
 
 void Board::setDebuff(string type) {
-
+    if (type == "blind") {
+        for (int i = 2; i < 11; ++i) {
+            for (int j = 2; j < 8; ++j) {
+                
+            }
+        }
+    }
 }
 
-void Board::printNextBlock() {
+void Board::printBoard() {
     
-}
-
-void Board::printCell(int row, int col) {
-
 }
 
 int Board::getScore() {

@@ -10,8 +10,10 @@ class Biquadris {
     
     public:
         Biquadris();
-        void setup();
-        void play();
+        void setup();   // set up two boards for two player
+        int play();     // play the game. After one game end, return 1 
+                        //   if want to replay a new game, return 0 if 
+                        //   just want to quit 
 };
 
 #endif
