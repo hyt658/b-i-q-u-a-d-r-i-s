@@ -3,14 +3,15 @@
 #include <string>
 
 class Cell {
-    int x, y;
-    bool blind;
+    int r, c;
+    bool blind = false;
     std::string name;
 
     public:
+        Cell(int row, int col);
         void setBlind(bool state);
         bool isBlind();
-        void setName(std::string name);
+        void setName(std::string name_);
         std::string getName();
 };
 
