@@ -3,7 +3,7 @@
 #include <string>
 #include "subject.h"
 
-class Cell {
+class Cell: public Subject {
     int r, c;
     bool blind = false;
     std::string name;
