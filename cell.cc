@@ -18,3 +18,9 @@ void Cell::setName(std::string name_) {
 std::string Cell::getName() {
     return name;
 }
+
+void Cell::notifyObservers() {
+    for(auto i : observers) {
+        i->notify(r, c);
+    }
+}

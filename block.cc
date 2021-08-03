@@ -72,7 +72,7 @@ void Block::notify(int n, int m) {
 
 void notifyObservers() {
     for(auto i : observers) {
-        i.notify();
+        i->notify(generateLv);
     }
 }
 // This is a helper function that is used to determine whether the idx+1th points exists and is empty after adding a unit in its row and b units in its column.
