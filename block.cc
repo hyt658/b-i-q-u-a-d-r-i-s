@@ -20,15 +20,29 @@ void moveLeft(vector<vector<Cell>> board) {
     }
 }
 
-void moveLeft(vector<vector<Cell>> board) {
+void down(vector<vector<Cell>> board) {
     bool movable = true;
     for(i = 0; i < locations.size(); i++) {
-        if(locations[i][1] >= 1 || board[locations[i][0]][locations[i][1]-1] != "empty") {
+        if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].isEmpty()==true) {
             movable = false;
         }
     }
     if(movable) {
         for(i = 0; i < locations.size(); i++) {
+            locations[i][0]+=1;
+        }
+    }
+}
+
+void moveLeft(vector<vector<Cell>> board) {
+    bool movable = true;
+    for(i = 0; i < locations.size(); i++) {
+        if(locations[i][1] >= 1 || board[locations[i][0]][locations[i][1]-1].isEmpty()==true) {
+            movable = false;
+        }
+    }
+    if(movable) {
+        for(size_t i = 0; i < locations.size(); i++) {
             locations[i][1]-=1;
         }
     }
@@ -36,14 +50,16 @@ void moveLeft(vector<vector<Cell>> board) {
 
 void drop(vector<vector<Cell>> board) {
     bool movable = true;
-    for(i = 0; i < locations.size(); i++) {
-        if(locations[i][0] < 17 || board[locations[i][0]][locations[i][0]+1] != "empty") {
-            movable = false;
+    while(movable) {
+        for(size_t i = 0; i < locations.size(); i++) {
+            if(locations[i][0] + 1 >= 17 && board[locations[i][0]+1][locations[i][1]].isEmpty()!=true) {
+                movable = false;
+            }
         }
-    }
-    if(movable) {
-        for(i = 0; i < locations.size(); i++) {
-            locations[i][0]+=1;
+        if(movable) {
+            for(size_t i = 0; i < locations.size(); i++) {
+                locations[i][0]+=1;
+            }
         }
     }
 }

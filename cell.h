@@ -7,7 +7,7 @@
 class Cell: public Subject {
     int r, c;
     bool blind = false;
-    std::string name = EMPTY;
+    std::string name = "empty";
 
     public:
         Cell(int row, int col);
