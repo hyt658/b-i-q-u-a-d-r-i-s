@@ -20,3 +20,4 @@
 #define HEAVY "heavy"
 #define FORCE "force"
 #define ALIAS "alias"
+#define EMPTY "empty"
