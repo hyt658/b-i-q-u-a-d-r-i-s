@@ -28,8 +28,7 @@ class Board: public Observer {
         void assignNextBlock(std::string type);
         void controlBlock(std::string command);
         int checkCancel();
-        void setDebuff(std::string type);
-        void printBoard();
+        void setDebuff(std::string type, std::string block);
         void notify(int n=0, int m=0) override;
         ~Board();
 };

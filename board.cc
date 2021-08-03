@@ -10,10 +10,12 @@ using std::vector;
 // helper functions
 //////////////////////////////////////////////////////////////////////
 
+// square n
 int square(int n) {
     return (n * n);
 }
 
+// return corresponding level by given n
 Level* judgeLevel(int n) {
     if (n == 0) {
         // return new level0();
@@ -157,18 +159,19 @@ int Board::checkCancel() {
     return cleaned_line;
 }
 
-void Board::setDebuff(string type) {
-    if (type == "blind") {
-        for (int i = 2; i < 11; ++i) {
-            for (int j = 2; j < 8; ++j) {
-                
+void Board::setDebuff(string type, string block) {
+    if (type == BLIND) {
+        for (int row = 2; row < 11; ++row) {
+            for (int col = 2; col < 8; ++col) {
+                theBoard[row][col].setBlind(true);
             }
         }
+    } else if (type == HEAVY) {
+        lv->applyHeavy();
+    } else {
+        delete curr_blcok;
+        curr_blcok = lv->createCertainBlock(block, this);
     }
-}
-
-void Board::printBoard() {
-    
 }
 
 int Board::getScore() {

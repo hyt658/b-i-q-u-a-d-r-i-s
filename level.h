@@ -9,6 +9,7 @@ class Level {
         virtual Block* createRandBlock(Board* board) = 0;
         virtual Block* createCertainBlock(std::string type, Board* board) = 0;
         int getlevel();
+        void applyHeavy();
 };
 
 #endif

@@ -8,11 +8,16 @@ using std::string;
 using std::istream;
 using std::ifstream;
 
+
+//////////////////////////////////////////////////////////////////////
+// helper functions
+//////////////////////////////////////////////////////////////////////
+
 // go through a turn for given board (player)
 // return 0 if one turn ends normally and go to next turn
 // return 1 if the current players wants to restart the game
 // return 2 if the player is lost 
-int oneTurn(Board& b) {
+int oneTurn(Board& curr, Board& oppnent) {
     istream* input = &cin;
     while (true) {
         cout << "Input your command:" << endl;
@@ -21,25 +26,25 @@ int oneTurn(Board& b) {
         if (command == LEFT || command == RIGHT || command == DOWN ||
             command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
             command == DROP) {
-            b.controlBlock(command);
+            curr.controlBlock(command);
             if (command == DROP) break;
         } else if (command == SEQ) {
             string filename;
             cin >> filename;
             input = new ifstream{filename};
         } else if (command == RANDOM) {
-            if (b.getlevel() < 3) {
+            if (curr.getlevel() < 3) {
                 cout << "This command is not suitable for current level." << endl;
             }
             //未完
         } else if (command == NO_RANDOM) {
-            if (b.getlevel() < 3) {
+            if (curr.getlevel() < 3) {
                 cout << "This command is not suitable for current level." << endl;
             }
             //未完
         } else if (command == I || command == J || command == L ||
                    command == S || command == J || command == T) {
-            b.assignNextBlock(command);
+            curr.assignNextBlock(command);
         } else if (command == RESTART) {
             return 1;
         } else {
@@ -49,14 +54,16 @@ int oneTurn(Board& b) {
     if (input != &cin) delete input;
 
     // check cancels
-    if (b.checkCancel() >= 2) {
+    if (curr.checkCancel() >= 2) {
         cout << "You have cleared more than one row. You earn a special attack!" << endl;
         cout << "Input the special attack you want to apply to your opponent:" << endl;
         while (true) {
             string debuff;
             cin >> debuff;
             if (debuff == BLIND || debuff == HEAVY || debuff == FORCE) {
-                b.setDebuff(debuff);
+                string force_block;
+                if (debuff == FORCE) cin >> force_block;
+                oppnent.setDebuff(debuff, force_block);
                 break;
             } else {
                 cout << "Unknown special attack. Please enter again." << endl;
@@ -64,7 +71,7 @@ int oneTurn(Board& b) {
         }
     }
 
-    if (b.update() == 1) return 2;
+    if (curr.update() == 1) return 2;
     else return 0;
 }
 
@@ -83,6 +90,11 @@ int checkRestart(int n) {
     }
     return 0;
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// field methods
+//////////////////////////////////////////////////////////////////////
 
 Biquadris::Biquadris():
     b1{18, 11}, b2{18, 11}, highScore{0} {}
@@ -111,11 +123,11 @@ int Biquadris::play() {
     int b1_result, b2_result;
     while (true) {
         // check if restart the game
-        b1_result = oneTurn(b1);
+        b1_result = oneTurn(b1, b2);
         if ((b1_result == 1) && (checkRestart(2) == 1)) {
             return 1;
         }
-        b2_result = oneTurn(b2);
+        b2_result = oneTurn(b2, b1);
         if ((b1_result == 1) && (checkRestart(1) == 1)) {
             return 1;
         }

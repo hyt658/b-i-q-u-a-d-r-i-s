@@ -1,12 +1,12 @@
 #ifndef _BIQUADRIS_H_
 #define _BIQUADRIS_H_
 #include "board.h"
-
-class Board;
+#include "textDisplay.h"
 
 class Biquadris {
     Board b1, b2;
     int highScore;
+    TextDisplay* td;
     
     public:
         Biquadris();
