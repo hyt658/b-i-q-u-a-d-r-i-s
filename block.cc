@@ -6,7 +6,7 @@ bool Block::isHeavy() {
     return heavy;
 }
 
-void moveLeft(vector<vector<Cell>> board) {
+void Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
     for(i = 0; i < locations.size(); i++) {
         if(locations[i][1] >= 10 || board[locations[i][0]][locations[i][1]+1] != "empty") {
@@ -20,7 +20,7 @@ void moveLeft(vector<vector<Cell>> board) {
     }
 }
 
-void down(vector<vector<Cell>> board) {
+void Block::down(vector<vector<Cell>> board) {
     bool movable = true;
     for(i = 0; i < locations.size(); i++) {
         if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].isEmpty()==true) {
@@ -34,7 +34,7 @@ void down(vector<vector<Cell>> board) {
     }
 }
 
-void moveLeft(vector<vector<Cell>> board) {
+void Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
     for(i = 0; i < locations.size(); i++) {
         if(locations[i][1] >= 1 || board[locations[i][0]][locations[i][1]-1].isEmpty()==true) {
@@ -48,7 +48,7 @@ void moveLeft(vector<vector<Cell>> board) {
     }
 }
 
-void drop(vector<vector<Cell>> board) {
+void Block::drop(vector<vector<Cell>> board) {
     bool movable = true;
     while(movable) {
         for(size_t i = 0; i < locations.size(); i++) {
@@ -86,7 +86,7 @@ void Block::notify(int n, int m) {
     }
 }
 
-void notifyObservers() {
+void Block::notifyObservers() {
     for(auto i : observers) {
         i->notify(generateLv);
     }
@@ -101,7 +101,7 @@ bool Block::isFull(int idx, int a, int b, vector<vector<Cell>> board) {
     return true;
 }
 
-void tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board) {
+void Block::tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board) {
     if(isFull(0,a,b,board) && isFull(1,c,d,board) && isFull(2,e,f,board) && isFull(3,g,h,board) {
         locations[0][0]+=a;
         locations[0][1]+=b;
