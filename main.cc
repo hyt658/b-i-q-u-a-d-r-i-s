@@ -1,47 +1,12 @@
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <memory>
-#include <fstream>
-#include <algorithm>
-#include "test.h"
-using namespace std;
+#include "biquadris.h"
+using std::cin;
+using std::cout;
+using std::endl;
+using std::stoi;
+using std::fstream;
 
-class A {
-    vector<vector<int>> v;
-    public:
-        A(int n) {
-            for (int i = 0; i < 5; ++i) {
-                vector<int> temp;
-                for (int j = 0; j < 5; ++j) {
-                    temp.emplace_back(n);
-                }
-                v.emplace_back(temp);
-                temp.clear();
-            }
-        }
-        vector<vector<int>>& getV() {
-            return v;
-        }
-        void print() {
-            for (int i = 0; i < 5; ++i) {
-                for (int j = 0; j < 5; ++j) {
-                    cout << v[i][j] << endl;
-                }
-            }
-        }
-};
-
-vector<string> func() {
-    vector<string> next;
-    next = {"TTT        ", " T         "};
-    return next;
-}
-
-int main(int argc, char* argv[]) {
-        int start_level = 0;
+int main(int argc, char *argv[]) {
+    int start_level = 0;
     string path1 = "sequence1.txt";
     string path2 = "sequence2.txt";
     string usage = 
@@ -68,6 +33,7 @@ int main(int argc, char* argv[]) {
         } else {
             cout << "Unknown flag or inproper usage. "
                  << "Use flag \"-help\" to see the usage." << endl;
+            return 0;
         }
     } else if (argc == 3) {
         string flag1 = argv[1];
@@ -126,4 +92,13 @@ int main(int argc, char* argv[]) {
         cout << "Unknown flag. Use flag \"-help\" to see the usage." << endl;
         return 0;
     }
-} 
+
+    while (true) {
+        Biquadris game;
+        game.setup(start_level, path1, path2);
+        if (game.play() == 0) {
+            break;
+        }
+    }
+    return 0;
+}
