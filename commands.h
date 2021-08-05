@@ -12,6 +12,7 @@
 #define I "I"
 #define J "J"
 #define L "L"
+#define O "O"
 #define S "S"
 #define Z "Z"
 #define T "T"

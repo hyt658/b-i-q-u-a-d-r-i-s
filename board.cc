@@ -1,10 +1,8 @@
 #include "board.h"
-#include "commands.h"
 using std::cin;
 using std::cout;
 using std::endl;
-using std::string;
-using std::vector;
+
 
 //////////////////////////////////////////////////////////////////////
 // helper functions
@@ -16,17 +14,25 @@ int square(int n) {
 }
 
 // return corresponding level by given n
-Level* judgeLevel(int n) {
+Level* createLevel(int n, string path="") {
     if (n == 0) {
-        // return new level0();
+        // return new Level0{0, path};
     } else if (n == 1) {
-        // return new level1();
+        return new Level1{1};
     } else if (n == 2) {
-        // return new level2();
+        return new Level2{2};
     } else if (n == 3) {
-        // return new level3();
+        return new Level3{3};
     } else {
-        // return new level4();
+        // return new Level4{4};
+    }
+}
+
+void modifyAreaBlind(vector<vector<Cell>>& theboard, bool blind) {
+    for (int row = 2; row < 11; ++row) {
+        for (int col = 2; col < 8; ++col) {
+            theboard[row][col].setBlind(blind);
+        }
     }
 }
 
@@ -36,12 +42,12 @@ Level* judgeLevel(int n) {
 //////////////////////////////////////////////////////////////////////
 
 Board::Board(int row, int col):
-    score{0}, curr_blcok{nullptr}, next_block{nullptr} 
+    score{0}, random_generate{true}, curr_blcok{nullptr}, next_block{nullptr} 
 {
     for (int i = 0; i < row; ++i) {
         vector<Cell> temp;
         for (int j = 0; j < col; ++j) {
-            Cell c;
+            Cell c {i, j};
             temp.emplace_back(c);
         }
         theBoard.emplace_back(temp);
@@ -50,8 +56,8 @@ Board::Board(int row, int col):
     }
 }
 
-void Board::init(int n) {
-    lv = judgeLevel(n);
+void Board::init(int n, string path) {
+    lv = createLevel(n, path);
     curr_blcok = lv->createRandBlock(this);
     auto locations = curr_blcok->getLocation();
     for (auto location : locations) {
@@ -62,57 +68,98 @@ void Board::init(int n) {
     next_block = lv->createRandBlock(this);
 }
 
+int Board::getScore() {
+    return score;
+}
+
 void Board::setLevel(int n) {
     delete lv;
-    lv = judgeLevel(n);
+    lv = createLevel(n);
     delete next_block;
     next_block = lv->createRandBlock(this);
 }
 
-int Board::getlevel() {
+int Board::getLevel() {
     return lv->getlevel();
 }
 
 void Board::levelUp() {
-    /*
-    int curr_lv = lv->getLvNum();
+    int curr_lv = lv->getlevel();
     if (curr_lv == 4) {
         cout << "You have already reach the hardest level." << endl;
     } else {
-        delete lv;
-        setlevel(curr_lv + 1);
+        setLevel(curr_lv + 1);
     }
-    */
 }
 
 void Board::levelDown() {
-    /*
-    int curr_lv = lv->getLvNum();
+    int curr_lv = lv->getlevel();
     if (curr_lv == 0) {
         cout << "You have already reach the easiest level." << endl;
     } else {
-        delete lv;
         setLevel(curr_lv - 1);
     }
-    */
 }
 
-int Board::update() {
-    Blocks.emplace_back(curr_blcok);
-    curr_blcok = next_block;
+void Board::update() {
+    Blocks.emplace_back(curr_blcok);    // store the current block
+    curr_blcok = next_block;            // update current block with next block
+
+    // generate next block, random or from file
+    if (random_generate) {
+        next_block = lv->createRandBlock(this);
+    } else {
+        string next;
+        infile >> next;
+        next_block = lv->createCertainBlock(next, this);
+    } 
+}
+
+bool Board::placeNextBlock() {
     auto locations = curr_blcok->getLocation();
     for (auto location : locations) {
         int row = location[0];
         int col = location[1];
         if (theBoard[row][col].getName() != "empty") {
             theBoard[row][col].setName("X");
-            return 1;
+            return false;
         } else {
             theBoard[row][col].setName(curr_blcok->getBlockType());
         }
     }
+    return true;
+}
+
+int Board::checkCancel() {
+    int cleaned_line = 0;
+    for (size_t i = 0; i < theBoard.size(); ++i) {
+        if (cellsPerRow[i] == theBoard[i].size()) {
+            for (size_t j = 0; j < theBoard[i].size(); ++j) {
+                theBoard[i][j].setName("empty");
+                theBoard[i][j].notifyObservers();
+                cleaned_line += 1;
+            }
+        }
+    }
+    score += square(cleaned_line + lv->getlevel());
+    return cleaned_line;
+}
+
+void Board::randomGenerate() {
+    if (infile.is_open()) infile.close();
+    random_generate = true;
+    delete next_block;
     next_block = lv->createRandBlock(this);
-    return 0;
+}
+
+void Board::fileGenerate(string path) {
+    infile.open(path);
+    if (!infile.is_open()) throw "file opened failed.";
+    random_generate = false;
+    delete next_block;
+    string next;
+    infile >> next;
+    next_block = lv->createCertainBlock(next, this);
 }
 
 void Board::assignNextBlock(string type) {
@@ -130,9 +177,10 @@ void Board::controlBlock(string command) {
     } else if (command == COUNTER_CLOCKWISE) {
         curr_blcok->rotate(false, theBoard);
     } else if (command == DOWN) { 
-        curr_blcok->down(theBoard);
+        //curr_blcok->down(theBoard);
     } else {
         curr_blcok->drop(theBoard);
+        modifyAreaBlind(theBoard, false);
     }
 
     // plot the locations on cells
@@ -141,31 +189,16 @@ void Board::controlBlock(string command) {
         int row = location[0];
         int col = location[1];
         theBoard[row][col].setName(curr_blcok->getBlockType());
-        if (command == "drop") theBoard[row][col].attach(curr_blcok);
-    }
-}
-
-int Board::checkCancel() {
-    int cleaned_line = 0;
-    for (size_t i = 0; i < theBoard.size(); ++i) {
-        if (cellsPerRow[i] == theBoard[i].size()) {
-            for (size_t j = 0; j < theBoard[i].size(); ++j) {
-                theBoard[i][j].setName("empty");
-                cleaned_line += 1;
-            }
+        if (command == "drop") {
+            theBoard[row][col].attach(curr_blcok);
+            cellsPerRow[row] += 1;
         }
     }
-    score += square(cleaned_line + lv->getlevel());
-    return cleaned_line;
 }
 
 void Board::setDebuff(string type, string block) {
     if (type == BLIND) {
-        for (int row = 2; row < 11; ++row) {
-            for (int col = 2; col < 8; ++col) {
-                theBoard[row][col].setBlind(true);
-            }
-        }
+        modifyAreaBlind(theBoard, true);
     } else if (type == HEAVY) {
         lv->applyHeavy();
     } else {
@@ -174,8 +207,29 @@ void Board::setDebuff(string type, string block) {
     }
 }
 
-int Board::getScore() {
-    return score;
+vector<string> Board::getNextBlock() {
+    vector<string> next;
+    string block_type = next_block->getBlockType();
+    if (block_type == I) {
+        next = {"IIII       ", "           "};
+    } else if (block_type == J) {
+        next = {"J          ", "JJJ        "};
+    } else if (block_type == O) {
+        next = {"OO         ", "OO         "};
+    } else if (block_type == L) {
+        next = {"   L       ", "LLL        "};
+    } else if (block_type == S) {
+        next = {" SS        ", "SS         "};
+    } else if (block_type == Z) {
+        next = {"ZZ         ", " ZZ        "};
+    } else {
+        next = {"TTT        ", " T         "};
+    }
+    return next;
+}
+
+string Board::printCell(int row, int col) {
+    return theBoard[row][col].getName();
 }
 
 void Board::notify(int n, int m) {
@@ -183,6 +237,7 @@ void Board::notify(int n, int m) {
 }
 
 Board::~Board() {
+    if (infile.is_open()) infile.close();
     for (auto block : Blocks) {
         delete block;
     }
