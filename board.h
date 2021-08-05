@@ -54,7 +54,7 @@ class Board: public Observer {
     Block* curr_blcok;
     Block* next_block;
     vector<Block*> Blocks;
-    vector<int> cellsPerRow;
+    vector<size_t> cellsPerRow;
     vector<vector<Cell>> theBoard;
     fstream infile;
 
