@@ -8,7 +8,7 @@ bool Block::isHeavy() {
 
 void Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
-    for(i = 0; i < locations.size(); i++) {
+    for(size_t i = 0; i < locations.size(); i++) {
         if(locations[i][1] >= 10 || board[locations[i][0]][locations[i][1]+1] != "empty") {
             movable = false;
         }
@@ -22,13 +22,13 @@ void Block::moveLeft(vector<vector<Cell>> board) {
 
 void Block::down(vector<vector<Cell>> board) {
     bool movable = true;
-    for(i = 0; i < locations.size(); i++) {
+    for(size_t i = 0; i < locations.size(); i++) {
         if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].isEmpty()==true) {
             movable = false;
         }
     }
     if(movable) {
-        for(i = 0; i < locations.size(); i++) {
+        for(size_t i = 0; i < locations.size(); i++) {
             locations[i][0]+=1;
         }
     }
@@ -36,7 +36,7 @@ void Block::down(vector<vector<Cell>> board) {
 
 void Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
-    for(i = 0; i < locations.size(); i++) {
+    for(size_t i = 0; i < locations.size(); i++) {
         if(locations[i][1] >= 1 || board[locations[i][0]][locations[i][1]-1].isEmpty()==true) {
             movable = false;
         }
@@ -69,7 +69,7 @@ std::string Block::getBlockType() {
 }
 
 bool Block::isEmpty() {
-    return theBlock.size() == 0;
+    return locations.size() == 0;
 }
 
 void Block::notify(int n, int m) {
