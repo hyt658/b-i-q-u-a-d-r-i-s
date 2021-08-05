@@ -14,7 +14,7 @@ void Block::moveLeft(vector<vector<Cell>> board) {
         }
     }
     if(movable) {
-        for(i = 0; i < locations.size(); i++) {
+        for(size_t i = 0; i < locations.size(); i++) {
             locations[i][1]+=1;
         }
     }
@@ -74,7 +74,7 @@ bool Block::isEmpty() {
 
 void Block::notify(int n, int m) {
     int idx = 0;
-    for(unsigned int i = 0; i < locations.size(); i++) {
+    for(size_t i = 0; i < locations.size(); i++) {
         if(locations[i][0] == n, locations[i][1] == m) {
             locations.erase(locations.begin() + idx);
             break;
