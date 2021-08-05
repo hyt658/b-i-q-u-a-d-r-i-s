@@ -42,6 +42,9 @@ using std::fstream;
 //      control the block with given command: left, right etc.
 //  - setDebuff(string type, string block): 
 //      set the debuff to the board. block is used when the debuff is force
+//  - getNextBlock(): return a vector of string to show the current block for print
+//  - printCell(int row, int col):
+//      print the cell on position (row, col). If it's empty, then reture a space
 //  - notify(int n, int m): 
 //      be notified when a block (subject) is fully cleared, then update the score
 //      n will be the level when the block is generated. m is useless
