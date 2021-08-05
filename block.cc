@@ -9,7 +9,7 @@ bool Block::isHeavy() {
 void Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
     for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][1] >= 10 || board[locations[i][0]][locations[i][1]+1] != "empty") {
+        if(locations[i][1] >= 10 || board[locations[i][0]][locations[i][1]+1].getName() != "empty") {
             movable = false;
         }
     }
@@ -23,7 +23,7 @@ void Block::moveLeft(vector<vector<Cell>> board) {
 void Block::down(vector<vector<Cell>> board) {
     bool movable = true;
     for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].isEmpty()==true) {
+        if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].getName()=="empty") {
             movable = false;
         }
     }
@@ -37,7 +37,7 @@ void Block::down(vector<vector<Cell>> board) {
 void Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
     for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][1] >= 1 || board[locations[i][0]][locations[i][1]-1].isEmpty()==true) {
+        if(locations[i][1] >= 1 || board[locations[i][0]][locations[i][1]-1].getName()=="empty") {
             movable = false;
         }
     }
@@ -52,7 +52,7 @@ void Block::drop(vector<vector<Cell>> board) {
     bool movable = true;
     while(movable) {
         for(size_t i = 0; i < locations.size(); i++) {
-            if(locations[i][0] + 1 >= 17 && board[locations[i][0]+1][locations[i][1]].isEmpty()!=true) {
+            if(locations[i][0] + 1 >= 17 && board[locations[i][0]+1][locations[i][1]].getName()!="empty") {
                 movable = false;
             }
         }
@@ -95,14 +95,14 @@ void Block::notifyObservers() {
 bool Block::isFull(int idx, int a, int b, vector<vector<Cell>> board) {
     int row = locations[idx][0] + a;
     int col = locations[idx][1] + b;
-    if(row < 0 || row > 17 || col < 0 || col > 10 || board[row][col] != empty) {
+    if(row < 0 || row > 17 || col < 0 || col > 10 || board[row][col].getName() != "empty") {
         return false;
     }
     return true;
 }
 
 void Block::tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board) {
-    if(isFull(0,a,b,board) && isFull(1,c,d,board) && isFull(2,e,f,board) && isFull(3,g,h,board) {
+    if(isFull(0,a,b,board) && isFull(1,c,d,board) && isFull(2,e,f,board) && isFull(3,g,h,board)) {
         locations[0][0]+=a;
         locations[0][1]+=b;
         locations[1][0]+=c;
