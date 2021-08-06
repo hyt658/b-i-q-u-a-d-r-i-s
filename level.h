@@ -1,6 +1,13 @@
 #ifndef _LEVEL_H_
 #define _LEVEL_H_
 #include "block.h"
+#include "iblock.h"
+#include "jblock.h"
+#include "lblock.h"
+#include "oblock.h"
+#include "sblock.h"
+#include "tblock.h"
+#include "zblock.h"
 #include "board.h"
 #define H "H"
 #define L "L"
