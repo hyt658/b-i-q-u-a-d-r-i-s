@@ -1,6 +1,8 @@
 #include "zblock.h"
 #include "block.h"
 
+using std::vector;
+
 ZBlock::ZBlock(bool isheavy): Block{"Z", isheavy} {
     vector<int> first;
     first.emplace_back(0);

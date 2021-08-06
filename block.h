@@ -5,13 +5,6 @@
 #include "subject.h"
 #include "observer.h"
 #include "board.h"
-#include "iblock.h"
-#include "jblock.h"
-#include "lblock.h"
-#include "oblock.h"
-#include "sblock.h"
-#include "zblock.h"
-#include "tblock.h"
 
 using std::vector;
 

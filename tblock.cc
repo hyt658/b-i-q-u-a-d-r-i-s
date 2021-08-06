@@ -2,6 +2,8 @@
 #include "block.h"
 #include <vector>
 
+using std::vector;
+
 TBlock::TBlock(bool isheavy) {
     vector<int> first;
     first.emplace_back(0);

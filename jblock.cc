@@ -1,6 +1,8 @@
 #include "jblock.h"
 #include "block.h"
 
+using std::vector;
+
 JBlock::JBlock(bool isheavy): Block{"J", isheavy} {
     vector<int> point;
     point.emplace_back(0);

@@ -3,10 +3,12 @@
 #include "block.h"
 #include <string>
 
+using std::vector;
+
 class ZBlock:public Block {
     public:
         ZBlock(bool isheavy);
-        void rotate(bool clockwise, vector<vector<Cell>> board) override;
+        virtual void rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 
 #endif
