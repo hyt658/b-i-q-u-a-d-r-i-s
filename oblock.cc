@@ -1,6 +1,8 @@
 #include "oblock.h"
 #include "block.h"
 
+using std::vector;
+
 OBlock::OBlock(bool isheavy): Block{"O", isheavy} {
     vector<int> first;
     first.emplace_back(0);
@@ -20,6 +22,6 @@ OBlock::OBlock(bool isheavy): Block{"O", isheavy} {
     locations.emplace_back(fourth);
 }
 
-void OBlock::rotate(bool clockwise) {
+void OBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     return;
 }

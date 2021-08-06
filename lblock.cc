@@ -1,6 +1,8 @@
 #include "lblock.h"
 #include "block.h"
 
+using std::vector;
+
 LBlock::LBlock(bool isheavy): Block{"L", isheavy} {
     for(int i = 0; i < 2; i++) {
         vector<int> position;
@@ -14,7 +16,7 @@ LBlock::LBlock(bool isheavy): Block{"L", isheavy} {
     locations.emplace_back(position);
 }
 
-void LBlock::rotate(bool clockwise) {
+void LBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     if(clockwise) {
         if(locations[0][0] == locations[1][0]) {
             if(locations[0][0] + 1 == locations[1][0]) {

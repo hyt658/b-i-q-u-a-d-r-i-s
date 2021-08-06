@@ -3,10 +3,12 @@
 #include "block.h"
 #include <string>
 
-class IBlock:public Block {
+using std::vector;
+
+class IBlock : public Block {
     public:
         IBlock(bool isheavy);
-        void rotate(bool clockwise, vector<vector<Cell>> board) override;
+        virtual void rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 
 #endif

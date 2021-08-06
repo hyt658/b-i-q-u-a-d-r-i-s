@@ -10,7 +10,7 @@ IBlock::IBlock(bool isheavy): Block{"I", isheavy} {
     }
 }
 
-void IBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
+void IBlock::rotate(bool clockwise, std::vector<std::vector<Cell>> board) {
     if((locations[0][0] == locations[1][0] && clockwise) || (locations[0][0] != locations[0][1] && !clockwise)) {
         tryRotate(-2, 1, -1, 0, 0, -1, 1, -2, board);
     }

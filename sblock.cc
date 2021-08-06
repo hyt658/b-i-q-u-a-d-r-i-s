@@ -1,6 +1,8 @@
 #include "sblock.h"
 #include "block.h"
 
+using std::vector;
+
 SBlock::SBlock(bool isheavy): Block{"S", isheavy} {
     vector<int> first;
     first.emplace_back(0);
