@@ -4,6 +4,7 @@
 #include <string>
 
 class Level0:public Level {
+    string path;
     public:
         Level0(int n);
         Block* createRandBlock(Board* board) override;

@@ -2,6 +2,14 @@
 #define _LEVEL_H_
 #include "block.h"
 #include "board.h"
+#define H "H"
+#define L "L"
+#define I "I"
+#define J "J"
+#define O "O"
+#define S "S"
+#define T "T"
+#define Z "Z"
 
 class Level {
     int lv;
