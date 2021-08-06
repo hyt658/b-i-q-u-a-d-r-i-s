@@ -4,8 +4,8 @@
 #include <iostream>
 using namespace std;
 
-Level0::Level0(int n): Level{n} {
-
+Level0::Level0(int n, string path): Level{n}, path{path}, count{0} {
+   (this->infile).open(this->path);
 }
 
 Block* Level0::createCertainBlock(std::string type, Board* board) {
@@ -31,31 +31,10 @@ Block* Level0::createCertainBlock(std::string type, Board* board) {
    return NB;
 }
 
-/*
-
 Block* Level0::createRandBlock(Board* board) {
-   ifstream infile;
-   infile.open(this->path);
-   
-
+   string next;
+   infile >> next;
    Block *NB;
-   if (ranum == 3 || ranum == 4) {
-      NB = createCertainBlock(I, board);
-   } else if (ranum == 5 || ranum == 6) {
-      NB = createCertainBlock(J, board);
-   } else if (ranum == 7 || ranum == 8) {
-      NB = createCertainBlock(L, board);
-   } else if (ranum == 9 || ranum == 10) {
-      NB = createCertainBlock(O, board);
-   } else if (ranum == 1) {
-      NB = createCertainBlock(S, board);
-   } else if (ranum == 11 || ranum == 12) {
-      NB = createCertainBlock(T, board);
-   } else if (ranum == 2) {
-      NB = createCertainBlock(Z, board);
-   } else {
-      throw("WRONG COMMAND");
-   }
+   NB = createCertainBlock(next, board);
    return NB;
 }
-*/
