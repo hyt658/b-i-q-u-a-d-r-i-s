@@ -16,7 +16,7 @@ int square(int n) {
 // return corresponding level by given n
 Level* createLevel(int n, string path="") {
     if (n == 0) {
-        // return new Level0{0, path};
+        return new Level0{0, path};
     } else if (n == 1) {
         return new Level1{1};
     } else if (n == 2) {
@@ -24,7 +24,7 @@ Level* createLevel(int n, string path="") {
     } else if (n == 3) {
         return new Level3{3};
     } else {
-        // return new Level4{4};
+        //return new Level4{4};
     }
 }
 

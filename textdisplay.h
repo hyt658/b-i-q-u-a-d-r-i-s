@@ -12,4 +12,4 @@ class TextDisplay {
         void draw(int hiScore);
 };
 
-#endif;
+#endif
