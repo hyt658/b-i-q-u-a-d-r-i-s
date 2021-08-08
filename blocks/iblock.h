@@ -5,10 +5,10 @@
 
 using std::vector;
 
-class IBlock : public Block {
+class IBlock: public Block{
     public:
         IBlock(bool isheavy);
-        virtual void rotate(bool clockwise, vector<vector<Cell>> board) override;
+        void rotate(bool clockwise, vector<vector<Cell>> board);
 };
 
 #endif

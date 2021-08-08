@@ -6,8 +6,8 @@
 class Level1:public Level {
     public:
         Level1(int n);
-        Block* createRandBlock(Board* board) override;
-        Block* createCertainBlock(std::string type, Board* board) override;
+        Block* createRandBlock(Observer* board) override;
+        Block* createCertainBlock(std::string type, Observer* board) override;
 };
 
 #endif

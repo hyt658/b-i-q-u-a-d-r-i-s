@@ -1,8 +1,8 @@
 #ifndef _CELL_H_
 #define _CELL_H_
-#include "commands.h"
 #include <string>
-#include "subject.h"
+#include "../commands.h"
+#include "../subject+observer/subject.h"
 
 class Cell: public Subject {
     int r, c;

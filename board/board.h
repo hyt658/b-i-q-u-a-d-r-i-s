@@ -3,13 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include "cell.h"
-#include "block.h"
-#include "level_zero.h"
-#include "level_one.h"
-#include "level_two.h"
-#include "level_three.h"
-#include "observer.h"
-#include "commands.h"
+#include "../subject+observer/observer.h"
+
 using std::string;
 using std::vector;
 using std::fstream;
@@ -49,6 +44,9 @@ using std::fstream;
 //      be notified when a block (subject) is fully cleared, then update the score
 //      n will be the level when the block is generated. m is useless
 //////////////////////////////////////////////////////////////////////////////////////
+
+class Block;
+class Level;
 
 class Board: public Observer {
     int score;

@@ -27,23 +27,9 @@ void Block::down(vector<vector<Cell>> board) {
             movable = false;
         }
     }
-    if(movable) {
+    if (movable) {
         for(size_t i = 0; i < locations.size(); i++) {
             locations[i][0]+=1;
-        }
-    }
-}
-
-void Block::moveLeft(vector<vector<Cell>> board) {
-    bool movable = true;
-    for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][1] >= 1 || board[locations[i][0]][locations[i][1]-1].getName()=="empty") {
-            movable = false;
-        }
-    }
-    if(movable) {
-        for(size_t i = 0; i < locations.size(); i++) {
-            locations[i][1]-=1;
         }
     }
 }
@@ -75,13 +61,13 @@ bool Block::isEmpty() {
 void Block::notify(int n, int m) {
     int idx = 0;
     for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][0] == n, locations[i][1] == m) {
+        if (locations[i][0] == n && locations[i][1] == m) {
             locations.erase(locations.begin() + idx);
             break;
         }
         idx++;
     }
-    if(locations.size() == 0) {
+    if (locations.size() == 0) {
         notifyObservers();
     }
 }
@@ -91,6 +77,7 @@ void Block::notifyObservers() {
         i->notify(generateLv);
     }
 }
+
 // This is a helper function that is used to determine whether the idx+1th points exists and is empty after adding a unit in its row and b units in its column.
 bool Block::isFull(int idx, int a, int b, vector<vector<Cell>> board) {
     int row = locations[idx][0] + a;

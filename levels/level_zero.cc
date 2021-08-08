@@ -1,14 +1,12 @@
 #include "level_zero.h"
-#include "level.h"
 #include <fstream>
-#include <iostream>
 using namespace std;
 
 Level0::Level0(int n, string path): Level{n}, path{path}, count{0} {
    (this->infile).open(this->path);
 }
 
-Block* Level0::createCertainBlock(std::string type, Board* board) {
+Block* Level0::createCertainBlock(std::string type, Observer* board) {
    Block *NB;
    if (type == I) {
       Block *NB = new IBlock(false);
@@ -31,7 +29,7 @@ Block* Level0::createCertainBlock(std::string type, Board* board) {
    return NB;
 }
 
-Block* Level0::createRandBlock(Board* board) {
+Block* Level0::createRandBlock(Observer* board) {
    string next;
    infile >> next;
    Block *NB;

@@ -1,4 +1,10 @@
 #include "board.h"
+#include "../blocks/block.h"
+#include "../levels/level_zero.h"
+#include "../levels/level_one.h"
+#include "../levels/level_two.h"
+#include "../levels/level_three.h"
+#include "../commands.h"
 using std::cin;
 using std::cout;
 using std::endl;

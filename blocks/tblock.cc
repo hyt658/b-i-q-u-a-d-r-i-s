@@ -1,10 +1,9 @@
-#inlcude "tblock.h"
-#include "block.h"
+#include "tblock.h"
 #include <vector>
 
 using std::vector;
 
-TBlock::TBlock(bool isheavy) {
+TBlock::TBlock(bool isheavy): Block{"I", isheavy} {
     vector<int> first;
     first.emplace_back(0);
     first.emplace_back(0);
@@ -13,7 +12,7 @@ TBlock::TBlock(bool isheavy) {
     second.emplace_back(0);
     second.emplace_back(1);
     locations.emplace_back(second);
-    vector<int> thrid;
+    vector<int> third;
     third.emplace_back(0);
     third.emplace_back(2);
     locations.emplace_back(third);

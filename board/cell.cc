@@ -1,5 +1,4 @@
 #include "cell.h"
-#include <string>
 
 Cell::Cell(int row, int col) : r{row}, c{col} {}
 
