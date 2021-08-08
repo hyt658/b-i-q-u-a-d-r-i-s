@@ -13,7 +13,7 @@ LBlock::LBlock(bool isheavy): Block{"L", isheavy} {
     vector<int> point;
     point.emplace_back(2);
     point.emplace_back(0);
-    locations.emplace_back(position);
+    locations.emplace_back(point);
 }
 
 void LBlock::rotate(bool clockwise, vector<vector<Cell>> board) {

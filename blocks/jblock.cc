@@ -7,7 +7,7 @@ JBlock::JBlock(bool isheavy): Block{"J", isheavy} {
     vector<int> point;
     point.emplace_back(0);
     point.emplace_back(0);
-    locations.emplace_back(position);
+    locations.emplace_back(point);
     for(int i = 0; i < 2; i++) {
         vector<int> position;
         position.emplace_back(1);
