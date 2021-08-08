@@ -4,7 +4,7 @@
 #include "../levels/level_one.h"
 #include "../levels/level_two.h"
 #include "../levels/level_three.h"
-#include "../commands.h"
+#include "../majors/commands.h"
 using std::cin;
 using std::cout;
 using std::endl;
