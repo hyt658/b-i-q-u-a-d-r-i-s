@@ -1,6 +1,6 @@
 #ifndef _BIQUADRIS_H_
 #define _BIQUADRIS_H_
-#include "board/textdisplay.h"
+#include "../board/textdisplay.h"
 
 //////////////////////////////////////////////////////////////////////
 // Biquadris: the control class of the entire game, responsible for
