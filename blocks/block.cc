@@ -20,6 +20,20 @@ void Block::moveLeft(vector<vector<Cell>> board) {
     }
 }
 
+void Block::moveRight(vector<vector<Cell>> board) {
+    bool movable = true;
+    for(size_t i = 0; i < locations.size(); i++) {
+        if(locations[i][1] < 1 || board[locations[i][0]][locations[i][1]-1].getName() != "empty") {
+            movable = false;
+        }
+    }
+    if(movable) {
+        for(size_t i = 0; i < locations.size(); i++) {
+            locations[i][1]-=1;
+        }
+    }
+}
+
 void Block::down(vector<vector<Cell>> board) {
     bool movable = true;
     for(size_t i = 0; i < locations.size(); i++) {
