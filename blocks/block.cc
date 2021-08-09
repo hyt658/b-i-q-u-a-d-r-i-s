@@ -1,4 +1,5 @@
 #include "block.h"
+#include <iostream>
 
 Block::Block(std::string new_type, bool isheavy) : type{new_type}, heavy{isheavy} {}
 
@@ -58,16 +59,15 @@ void Block::moveRight(vector<vector<Cell>> board) {
 
 void Block::drop(vector<vector<Cell>> board) {
     bool movable = true;
-    while(movable) {
+    while(true) {
         for(size_t i = 0; i < locations.size(); i++) {
             if(locations[i][0] + 1 >= 17 && board[locations[i][0]+1][locations[i][1]].getName()!="empty") {
                 movable = false;
+                break;
             }
         }
-        if(movable) {
-            for(size_t i = 0; i < locations.size(); i++) {
-                locations[i][0]+=1;
-            }
+        for(size_t i = 0; i < locations.size(); i++) {
+            locations[i][0]+=1;
         }
     }
 }
