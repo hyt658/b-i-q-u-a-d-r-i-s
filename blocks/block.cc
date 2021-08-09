@@ -92,6 +92,10 @@ void Block::notifyObservers() {
     }
 }
 
+vector<vector<int>>& Block::getLocation() {
+    return locations;
+}
+
 // This is a helper function that is used to determine whether the idx+1th points exists and is empty after adding a unit in its row and b units in its column.
 bool Block::isFull(int idx, int a, int b, vector<vector<Cell>> board) {
     int row = locations[idx][0] + a;
