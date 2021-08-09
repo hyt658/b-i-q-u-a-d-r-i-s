@@ -18,11 +18,12 @@ using std::max;
 // return 1 if the current players wants to restart the game
 // return 2 if the current player is lost 
 // return 3 if the oppnent is lost (caused by force)
-int oneTurn(Board& curr, Board& oppnent, int* highScore) {
+int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
     ifstream infile;
     istream* input = &cin;
     cin.exceptions(ios::eofbit|ios::failbit);
     infile.exceptions(ios::eofbit|ios::failbit);
+    td->draw(*highScore); 
     // control blocks
     while (true) {
         try {
@@ -33,14 +34,14 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore) {
                 command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
                 command == DROP) {
                 curr.controlBlock(command);
-                // td->draw(); 
+                td->draw(*highScore); 
                 if (command == DROP) {break;}    // end of control  
             } else if (command == SEQ) {
                 string filename;
                 cin >> filename;
                 infile.open(filename);
                 input = &infile;
-                if (!infile.is_open()) {          // 这里需要改动
+                if (!infile.is_open()) {         
                     cout << "File path does not exist. Please re-enter the path. "
                          << "You do not need to enter " << SEQ << " again," << endl;
                 }
@@ -50,7 +51,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore) {
                     cout << "This command is not suitable for current level." << endl;
                 }
                 curr.randomGenerate();
-                // td->draw();
+                td->draw(*highScore); 
             } else if (command == NO_RANDOM) {
                 if (curr.getLevel() < 3) {
                     cout << "This command is not suitable for current level." << endl;
@@ -66,11 +67,11 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore) {
                              << "You do not need to enter " << NO_RANDOM << " again." << endl;
                     }
                 }
-                // td->draw();
+                td->draw(*highScore); 
             } else if (command == I || command == J || command == L || command == O ||
                        command == S || command == J || command == T ) {
                 curr.assignNextBlock(command);
-                // td->draw();
+                td->draw(*highScore); 
             } else if (command == RESTART) {
                 return 1;
             } else {
@@ -86,7 +87,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore) {
 
     int cleaned_lines = curr.checkCancel();
     *highScore = max(*highScore, curr.getScore());
-    // td->draw();
+    td->draw(*highScore); 
     // check cancels and trig special attack
     if (cleaned_lines >= 2) {
         cout << "You have cleared more than one row. You earn a special attack!" << endl;
@@ -107,7 +108,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore) {
                     }
                 }
                 oppnent.setDebuff(debuff, force_block);
-                // td->draw();
+                td->draw(*highScore); 
                 if (!oppnent.placeNextBlock()) return 3;
                 break;
             } else {
@@ -159,11 +160,11 @@ int Biquadris::play() {
         try {
             // go through a trun for each player and check if someone 
             //   wants to restart the game
-            b1_result = oneTurn(b1, b2, &highScore);    // throw a string when eof
+            b1_result = oneTurn(b1, b2, &highScore, td);    // throw a string when eof
             if ((b1_result == 1) && (checkRestart(2) == true)) {
                 return 1;
             }
-            b2_result = oneTurn(b2, b1, &highScore);    // throw a string when eof
+            b2_result = oneTurn(b2, b1, &highScore, td);    // throw a string when eof
             if ((b1_result == 1) && (checkRestart(1) == true)) {
                 return 1;
             }
@@ -196,5 +197,5 @@ int Biquadris::play() {
 }
 
 Biquadris::~Biquadris() {
-    delete td;///
+    delete td;
 }

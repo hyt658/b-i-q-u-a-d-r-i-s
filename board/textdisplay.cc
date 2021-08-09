@@ -48,7 +48,6 @@ void TextDisplay::draw(int hiScore) {
         boardDisplay += b2_next_block[i];
         boardDisplay += "\n";
     }
-    boardDisplay += "\n";       // seperate line
 
     cout << boardDisplay << endl;
 }
