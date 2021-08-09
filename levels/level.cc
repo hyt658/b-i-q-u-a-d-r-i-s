@@ -4,4 +4,8 @@ Level::Level(int n): lv{n} {}
 
 int Level::getlevel() {
     return lv;
-};
+}
+
+void Level::applyHeavy() {
+
+}

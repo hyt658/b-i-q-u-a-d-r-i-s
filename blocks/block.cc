@@ -68,6 +68,10 @@ std::string Block::getBlockType() {
     return type;
 }
 
+vector<vector<int>> Block::getLocation() {
+    return locations;
+}
+
 bool Block::isEmpty() {
     return locations.size() == 0;
 }
@@ -90,10 +94,6 @@ void Block::notifyObservers() {
     for(auto i : observers) {
         i->notify(generateLv);
     }
-}
-
-vector<vector<int>>& Block::getLocation() {
-    return locations;
 }
 
 // This is a helper function that is used to determine whether the idx+1th points exists and is empty after adding a unit in its row and b units in its column.

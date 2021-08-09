@@ -34,7 +34,7 @@ class Block: public Subject, public Observer {
         void down(vector<vector<Cell>> board);
         void drop(vector<vector<Cell>> board);
         string getBlockType();
-        vector<vector<int>>& getLocation();
+        vector<vector<int>> getLocation();
         bool isHeavy();
         bool isEmpty();
         bool isFull(int idx, int a, int b, vector<vector<Cell>> board);
