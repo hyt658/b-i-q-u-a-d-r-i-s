@@ -6,6 +6,20 @@ bool Block::isHeavy() {
     return heavy;
 }
 
+void Block::down(vector<vector<Cell>> board) {
+    bool movable = true;
+    for(size_t i = 0; i < locations.size(); i++) {
+        if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].getName()=="empty") {
+            movable = false;
+        }
+    }
+    if (movable) {
+        for(size_t i = 0; i < locations.size(); i++) {
+            locations[i][0]+=1;
+        }
+    }
+}
+
 void Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
     for(size_t i = 0; i < locations.size(); i++) {
@@ -17,6 +31,10 @@ void Block::moveLeft(vector<vector<Cell>> board) {
         for(size_t i = 0; i < locations.size(); i++) {
             locations[i][1]+=1;
         }
+    }
+    if(heavy) {
+        down(board);
+        down(board);
     }
 }
 
@@ -32,19 +50,9 @@ void Block::moveRight(vector<vector<Cell>> board) {
             locations[i][1]-=1;
         }
     }
-}
-
-void Block::down(vector<vector<Cell>> board) {
-    bool movable = true;
-    for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].getName()=="empty") {
-            movable = false;
-        }
-    }
-    if (movable) {
-        for(size_t i = 0; i < locations.size(); i++) {
-            locations[i][0]+=1;
-        }
+    if(heavy) {
+        down(board);
+        down(board);
     }
 }
 
