@@ -177,17 +177,17 @@ void Board::controlBlock(string command) {
     auto old_location = curr_blcok->getLocation();
     bool success = false;
     if (command == LEFT) {
-        curr_blcok->moveLeft(theBoard);
+        success = curr_blcok->moveLeft(theBoard);
     } else if (command == RIGHT) {
-        curr_blcok->moveRight(theBoard);
+        success = curr_blcok->moveRight(theBoard);
     } else if (command == CLOCKWISE) {
-        curr_blcok->rotate(true, theBoard);
+        success = curr_blcok->rotate(true, theBoard);
     } else if (command == COUNTER_CLOCKWISE) {
-        curr_blcok->rotate(false, theBoard);
+        success = curr_blcok->rotate(false, theBoard);
     } else if (command == DOWN) { 
         success = curr_blcok->down(theBoard);
     } else {
-        curr_blcok->drop(theBoard);
+        success = curr_blcok->drop(theBoard);
         modifyAreaBlind(theBoard, false);
     }
 
@@ -201,7 +201,7 @@ void Board::controlBlock(string command) {
             int col_new = locations[i][1];
             theBoard[row_old][col_old].setName("empty");
             theBoard[row_new][col_new].setName(curr_blcok->getBlockType());
-            if (command == "drop") {
+            if (curr_blcok->isDropped()) {
                 theBoard[row_new][col_new].attach(curr_blcok);
                 cellsPerRow[row_new] += 1;
             }

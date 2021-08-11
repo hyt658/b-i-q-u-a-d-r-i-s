@@ -16,7 +16,7 @@ bool Block::down(vector<vector<Cell>> board) {
             return movable;
         }
     }
-    for(size_t i = 0; i < locations.size(); i++) {
+    for (size_t i = 0; i < locations.size(); i++) {
         locations[i][0]+=1;
         if (locations[i][0]+1 > 17 || board[locations[i][0]+1][locations[i][1]].getName() != "empty") {
             isdropped = true;
@@ -36,7 +36,7 @@ bool Block::moveRight(vector<vector<Cell>> board) {
     for (size_t i = 0; i < locations.size(); i++) {
         locations[i][1]+=1;
     }
-    if (heavy！= 0) {
+    if (heavy != 0) {
         for(int i = 0; i < heavy; i++) {
             down(board);
         }
@@ -63,10 +63,9 @@ bool Block::moveLeft(vector<vector<Cell>> board) {
     return movable;
 }
 
-void Block::drop(vector<vector<Cell>> board) {
-    bool movable = true;
-    while(down(board)) {
-    }
+bool Block::drop(vector<vector<Cell>> board) {
+    while(down(board)) {}
+    return true;
 }
 
 std::string Block::getBlockType() {
