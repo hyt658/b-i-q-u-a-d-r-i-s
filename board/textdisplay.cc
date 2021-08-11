@@ -34,6 +34,7 @@ void TextDisplay::draw(int hiScore) {
         for (int j = 0; j < COL; ++j) {
             string cell = b2->printCell(i, j);
             if (cell == "empty") cell = " ";
+            boardDisplay += cell;
         }
         boardDisplay += "\n";
     }
