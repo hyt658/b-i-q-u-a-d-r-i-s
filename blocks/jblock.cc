@@ -3,7 +3,7 @@
 
 using std::vector;
 
-JBlock::JBlock(bool isheavy): Block{"J", isheavy} {
+JBlock::JBlock(bool heavy1, bool heavy2): Block{"J", heavy1, heavy2} {
     vector<int> point;
     point.emplace_back(0);
     point.emplace_back(0);
@@ -19,37 +19,69 @@ JBlock::JBlock(bool isheavy): Block{"J", isheavy} {
 bool JBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     if(clockwise) {
         if(locations[0][0] == locations[1][0]) {
-            if(locations[0][0] + 1 == locations[1][0]) {
-                return tryRotate(-1, -1, 0, -2, 1, -1, -2, 0, board);
+            if(locations[0][1] + 1 == locations[1][1]) {
+                bool success = tryRotate(-1, -1, 0, -2, 1, -1, 2, 0, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
             else {
-                return tryRotate(1, 1, 0, 2, -1, 1, 2, 0, board);
+                bool success = tryRotate(1, 1, 0, 2, -1, 1, -2, 0, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
         }
         else {
-            if(locations[0][1] + 1 == locations[1][1]) {
-                return tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
+            if(locations[0][0] + 1 == locations[1][0]) {
+                bool success = tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
             else {
-                return tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
+                bool success = tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
         }
     }
     else {
-        if(locations[0][0] == locations[0][1]) {
-            if(locations[0][0] + 1 == locations[1][0]) {
-                return tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
+        if(locations[0][0] == locations[1][0]) {
+            if(locations[0][1] + 1 == locations[1][1]) {
+                bool success = tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
             else {
-                return tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
+                bool success = tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
         }
         else {
-            if(locations[0][1] + 1 == locations[1][1]) {
-                return tryRotate(1, 1, 0, 2, -1, 1, -2, 0, board);
+            if(locations[0][0] + 1 == locations[1][0]) {
+                bool success = tryRotate(1, 1, 0, 2, -1, 1, -2, 0, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
             else {
-                return tryRotate(-1, -1, 0, -2, 1, -1, -2, 0, board);
+                bool success = tryRotate(-1, -1, 0, -2, 1, -1, 2, 0, board);
+                if(success && level_heavy) {
+                    down(board);
+                }
+                return success;
             }
         }
     }

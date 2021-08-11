@@ -7,7 +7,7 @@ using std::vector;
 
 class IBlock: public Block{
     public:
-        IBlock(bool isheavy);
+        IBlock(bool heavy1, bool heavy2);
         bool rotate(bool clockwise, vector<vector<Cell>> board);
 };
 

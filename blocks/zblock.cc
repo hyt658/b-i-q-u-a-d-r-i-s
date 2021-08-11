@@ -3,7 +3,7 @@
 
 using std::vector;
 
-ZBlock::ZBlock(bool isheavy): Block{"Z", isheavy} {
+ZBlock::ZBlock(bool heavy1, bool heavy2): Block{"Z", heavy1, heavy2} {
     vector<int> first;
     first.emplace_back(0);
     first.emplace_back(0);
@@ -23,11 +23,19 @@ ZBlock::ZBlock(bool isheavy): Block{"Z", isheavy} {
 }
 
 bool ZBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
-    if((locations[0][0] == locations[1][0] && clockwise) || (locations[0][0] != locations[1][0] && !clockwise)){
-        return tryRotate(-1, 1, 0, 0, -1, -1, 0, -1, board);
+    if(locations[0][0] == locations[1][0]){
+        bool success = tryRotate(-1, 1, 0, 0, -1, -1, 0, -1, board);
+        if(success && level_heavy) {
+            down(board);
+        }
+        return success;
     }
     else {
-        return tryRotate(1, -1, 0, 0, 1, 1, 0, 1, board);
+        bool success = tryRotate(1, -1, 0, 0, 1, 1, 0, 1, board);
+        if(success && level_heavy) {
+            down(board);
+        }
+        return success;
     }
 }
 
