@@ -1,11 +1,7 @@
 #include "block.h"
 #include <iostream>
 
-Block::Block(std::string new_type, bool isheavy) : type{new_type}, heavy{isheavy} {}
-
-bool Block::isHeavy() {
-    return heavy;
-}
+Block::Block(std::string new_type, bool heavy1, heavy2) : type{new_type}, level_heavy{heavy1}, debuff_heavy{heavy2} {}
 
 bool Block::contain(int idx, int ver, int hor) {
     for (size_t i = 0; i < locations.size(); i++) {
@@ -44,13 +40,13 @@ bool Block::moveRight(vector<vector<Cell>> board) {
     }
     for (size_t i = 0; i < locations.size(); i++) {
         locations[i][1]+=1;
-        std::cout<<"("<<locations[i][0]<<","<<locations[i][1]<<") ";
     }
-    std::cout<<std::endl;
-    if (heavy != 0) {
-        for(int i = 0; i < heavy; i++) {
-            down(board);
-        }
+    if (level_heavy) {
+        down(board);
+    }
+    if (debuff_heavy) {
+        down(board);
+        down(board);
     }
     return movable;
 }
@@ -66,10 +62,12 @@ bool Block::moveLeft(vector<vector<Cell>> board) {
     for(size_t i = 0; i < locations.size(); i++) {
             locations[i][1]-=1;
     }
-    if (heavy != 0) {
-        for(int i = 0; i < heavy; i++) {
-            down(board);
-        }
+    if (level_heavy) {
+        down(board);
+    }
+    if (debuff_heavy) {
+        down(board);
+        down(board);
     }
     return movable;
 }

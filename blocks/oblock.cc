@@ -3,7 +3,7 @@
 
 using std::vector;
 
-OBlock::OBlock(bool isheavy): Block{"O", isheavy} {
+OBlock::OBlock(bool heavy1, bool heavy2): Block{"O", heavy1, heavy2} {
     vector<int> first;
     first.emplace_back(0);
     first.emplace_back(0);
@@ -23,5 +23,8 @@ OBlock::OBlock(bool isheavy): Block{"O", isheavy} {
 }
 
 bool OBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
+    if(level_heavy) {
+        down(board);
+    }
     return true;
 }

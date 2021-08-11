@@ -13,7 +13,8 @@ class Block: public Subject, public Observer {
     protected:
         int generateLv;
         string type;
-        int heavy;
+        bool level_heavy;
+        bool debuff_heavy;
         bool isdropped = false;
         vector<vector<int>> locations;
         /*
@@ -28,7 +29,7 @@ class Block: public Subject, public Observer {
         */
 
     public:
-        Block(string new_type, bool isheavy);
+        Block(string new_type, bool heavy1, bool heavy2);
         virtual bool rotate(bool clockwise, vector<vector<Cell>> board) = 0;
         bool moveLeft(vector<vector<Cell>> board);
         bool moveRight(vector<vector<Cell>> board);
@@ -36,7 +37,6 @@ class Block: public Subject, public Observer {
         bool drop(vector<vector<Cell>> board);
         string getBlockType();
         vector<vector<int>> getLocation();
-        bool isHeavy();
         bool isEmpty();
         bool isFull(int idx, int a, int b, vector<vector<Cell>> board);
         void notify(int n=0, int m=0) override;

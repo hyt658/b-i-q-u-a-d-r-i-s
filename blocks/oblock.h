@@ -7,7 +7,7 @@ using std::vector;
 
 class OBlock:public Block {
     public:
-        OBlock(bool isheavy);
+        OBlock(bool heavy1, bool heavy2);
         virtual bool rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 
