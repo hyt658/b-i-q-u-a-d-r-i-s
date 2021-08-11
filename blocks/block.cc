@@ -44,7 +44,9 @@ bool Block::moveRight(vector<vector<Cell>> board) {
     }
     for (size_t i = 0; i < locations.size(); i++) {
         locations[i][1]+=1;
+        std::cout<<"("<<locations[i][0]<<","<<locations[i][1]<<") ";
     }
+    std::cout<<std::endl;
     if (heavy != 0) {
         for(int i = 0; i < heavy; i++) {
             down(board);
@@ -113,7 +115,7 @@ void Block::notifyObservers() {
 bool Block::isFull(int idx, int a, int b, vector<vector<Cell>> board) {
     int row = locations[idx][0] + a;
     int col = locations[idx][1] + b;
-    if(row < 0 || row > 17 || col < 0 || col > 10 || board[row][col].getName() != "empty") {
+    if(row < 0 || row > 17 || col < 0 || col > 10 || (board[row][col].getName() != "empty" && !contain(idx, a, b))) {
         return false;
     }
     return true;
