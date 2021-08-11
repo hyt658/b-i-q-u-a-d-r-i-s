@@ -173,7 +173,9 @@ void Board::assignNextBlock(string type) {
     next_block = lv->createCertainBlock(type, this);
 }
 
-void Board::controlBlock(string command) {      
+void Board::controlBlock(string command) {
+    auto old_location = curr_blcok->getLocation();
+    bool success = false;
     if (command == LEFT) {
         curr_blcok->moveLeft(theBoard);
     } else if (command == RIGHT) {
@@ -183,21 +185,26 @@ void Board::controlBlock(string command) {
     } else if (command == COUNTER_CLOCKWISE) {
         curr_blcok->rotate(false, theBoard);
     } else if (command == DOWN) { 
-        //curr_blcok->down(theBoard);
+        success = curr_blcok->down(theBoard);
     } else {
         curr_blcok->drop(theBoard);
         modifyAreaBlind(theBoard, false);
     }
 
-    // plot the locations on cells
-    auto locations = curr_blcok->getLocation();
-    for (auto location : locations) {
-        int row = location[0];
-        int col = location[1];
-        theBoard[row][col].setName(curr_blcok->getBlockType());
-        if (command == "drop") {
-            theBoard[row][col].attach(curr_blcok);
-            cellsPerRow[row] += 1;
+    if (success) {
+        // change old locations back to empty and plot the locations on cells
+        auto locations = curr_blcok->getLocation();
+        for (size_t i = 0; i < locations.size(); ++i) {
+            int row_old = old_location[i][0];
+            int col_old = old_location[i][1];
+            int row_new = locations[i][0];
+            int col_new = locations[i][1];
+            theBoard[row_old][col_old].setName("empty");
+            theBoard[row_new][col_new].setName(curr_blcok->getBlockType());
+            if (command == "drop") {
+                theBoard[row_new][col_new].attach(curr_blcok);
+                cellsPerRow[row_new] += 1;
+            }
         }
     }
 }
