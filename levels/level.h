@@ -10,7 +10,9 @@
 #include "../majors/commands.h"
 
 class Level {
-    int lv;
+    protected:
+        int lv;
+        bool heavy;
 
     public:
         Level(int n);

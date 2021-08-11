@@ -37,25 +37,39 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
                 td->draw(*highScore);
                 if (command == DROP) {break;}    // end of control  
             } else if (command == SEQ) {
-                string filename;
-                cin >> filename;
-                infile.open(filename);
-                input = &infile;
-                if (!infile.is_open()) {         
-                    cout << "File path does not exist. Please re-enter the path. "
-                         << "You do not need to enter " << SEQ << " again," << endl;
+                bool jump_out = false;
+                while (true) {
+                    string filename;
+                    cin >> filename;
+                    infile.open(filename);
+                    if (!infile.is_open()) {         
+                        cout << "File path does not exist. Please re-enter the path. "
+                             << "You do not need to enter " << SEQ << " again.\n" 
+                             << "You also can input \"quit\" to skip." << endl;
+                    } else {
+                        break;
+                    }
+
+                    if (filename == "quit") {
+                        jump_out = true;
+                        break;
+                    }
                 }
-                input = new ifstream{filename};
+                if (jump_out) continue;
+                input = &infile;
             } else if (command == RANDOM) {
                 if (curr.getLevel() < 3) {
-                    cout << "This command is not suitable for current level." << endl;
+                    cout << "This command is not suitable for the current level." << endl;
+                    continue;
                 }
                 curr.randomGenerate();
                 td->draw(*highScore); 
             } else if (command == NO_RANDOM) {
                 if (curr.getLevel() < 3) {
-                    cout << "This command is not suitable for current level." << endl;
+                    cout << "This command is not suitable for the current level." << endl;
+                    continue;
                 }
+                bool jump_out = false;
                 while (true) {
                     string path;
                     cin >> path;
@@ -64,9 +78,15 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
                         break;
                     } catch (string&) {
                         cout << "Cannot find such file. Please re-enter the path. "
-                             << "You do not need to enter " << NO_RANDOM << " again." << endl;
+                             << "You do not need to enter " << NO_RANDOM << " again.\n"
+                             << "You also can input \"quit\" to skip." << endl;
+                    }
+                    if (path == "quit") {
+                        jump_out = true;
+                        break;
                     }
                 }
+                if (jump_out) continue;
                 td->draw(*highScore); 
             } else if (command == I || command == J || command == L || command == O ||
                        command == S || command == J || command == T ) {
@@ -162,10 +182,13 @@ int Biquadris::play() {
         try {
             // go through a trun for each player and check if someone 
             //   wants to restart the game
+            cout << "Player 1's turn:" << endl;
             b1_result = oneTurn(b1, b2, &highScore, td);    // throw a string when eof
             if ((b1_result == 1) && (checkRestart(2) == true)) {
                 return 1;
             }
+
+            cout << "Player 2's turn:" << endl;
             b2_result = oneTurn(b2, b1, &highScore, td);    // throw a string when eof
             if ((b2_result == 1) && (checkRestart(1) == true)) {
                 return 1;

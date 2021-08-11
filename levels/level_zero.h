@@ -4,14 +4,14 @@
 #include <fstream>
 
 class Level0: public Level {
-    int count = 0;
-    string path;
+    std::string path;
     std::ifstream infile;
 
     public:
         Level0(int n, string path);
         Block* createRandBlock(Observer* board) override;
         Block* createCertainBlock(std::string type, Observer* board) override;
+        ~Level0();
 };
 
 #endif

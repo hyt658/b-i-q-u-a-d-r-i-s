@@ -7,5 +7,5 @@ int Level::getlevel() {
 }
 
 void Level::applyHeavy() {
-
+    heavy = true;
 }

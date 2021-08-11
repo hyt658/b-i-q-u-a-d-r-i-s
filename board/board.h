@@ -61,7 +61,7 @@ class Board: public Observer {
 
     public:
         Board(int row, int col);
-        void init(int n, string path);
+        void init(int n, string path="");
         int getScore();
         void setLevel(int n);
         int getLevel();
