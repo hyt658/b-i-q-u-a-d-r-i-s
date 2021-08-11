@@ -1,6 +1,5 @@
 #include "jblock.h"
 #include "block.h"
-#include <iostream>
 
 using std::vector;
 
@@ -22,52 +21,36 @@ bool JBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     if(clockwise) {
         if(locations[0][0] == locations[1][0]) {
             if(locations[0][0] + 1 == locations[1][0]) {
-                success = tryRotate(-1, -1, 0, -2, 1, -1, -2, 0, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(-1, -1, 0, -2, 1, -1, -2, 0, board);
             }
             else {
-                success= tryRotate(1, 1, 0, 2, -1, 1, 2, 0, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(1, 1, 0, 2, -1, 1, 2, 0, board);
             }
         }
         else {
             if(locations[0][1] + 1 == locations[1][1]) {
-                success= tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
             }
             else {
-                success= tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
             }
         }
     }
     else {
         if(locations[0][0] == locations[0][1]) {
             if(locations[0][0] + 1 == locations[1][0]) {
-                success= tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(-1, 1, -2, 0, -1, -1, 0, -2, board);
             }
             else {
-                success= tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(1, -1, 2, 0, 1, 1, 0, 2, board);
             }
         }
         else {
             if(locations[0][1] + 1 == locations[1][1]) {
-                success= tryRotate(1, 1, 0, 2, -1, 1, -2, 0, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(1, 1, 0, 2, -1, 1, -2, 0, board);
             }
             else {
-                success= tryRotate(-1, -1, 0, -2, 1, -1, -2, 0, board);
-                std::cout<<success<<std::endl;
-                return success;
+                return tryRotate(-1, -1, 0, -2, 1, -1, -2, 0, board);
             }
         }
     }
