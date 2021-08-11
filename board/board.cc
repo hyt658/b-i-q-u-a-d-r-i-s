@@ -174,7 +174,7 @@ void Board::assignNextBlock(string type) {
 }
 
 void Board::controlBlock(string command) {
-    auto old_location = curr_blcok->getLocation();
+    auto old_locations = curr_blcok->getLocation();
     bool success = false;
     if (command == LEFT) {
         success = curr_blcok->moveLeft(theBoard);
@@ -192,14 +192,18 @@ void Board::controlBlock(string command) {
     }
 
     if (success) {
-        // change old locations back to empty and plot the locations on cells
+        // change old locations back to empty
         auto locations = curr_blcok->getLocation();
+        for (size_t i = 0; i < old_locations.size(); ++i) {
+            int row_old = old_locations[i][0];
+            int col_old = old_locations[i][1];
+            theBoard[row_old][col_old].setName("empty");
+        }
+
+        // plot the locations on cells
         for (size_t i = 0; i < locations.size(); ++i) {
-            int row_old = old_location[i][0];
-            int col_old = old_location[i][1];
             int row_new = locations[i][0];
             int col_new = locations[i][1];
-            theBoard[row_old][col_old].setName("empty");
             theBoard[row_new][col_new].setName(curr_blcok->getBlockType());
             if (curr_blcok->isDropped()) {
                 theBoard[row_new][col_new].attach(curr_blcok);
