@@ -181,9 +181,9 @@ void Board::controlBlock(string command) {
     } else if (command == RIGHT) {
         success = curr_blcok->moveRight(theBoard);
     } else if (command == CLOCKWISE) {
-        success = curr_blcok->rotate(true, theBoard);
+        //success = curr_blcok->rotate(true, theBoard);
     } else if (command == COUNTER_CLOCKWISE) {
-        success = curr_blcok->rotate(false, theBoard);
+        //success = curr_blcok->rotate(false, theBoard);
     } else if (command == DOWN) { 
         success = curr_blcok->down(theBoard);
     } else {
