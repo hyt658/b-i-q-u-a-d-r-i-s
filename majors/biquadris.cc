@@ -33,8 +33,8 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
             if (command == LEFT || command == RIGHT || command == DOWN ||
                 command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
                 command == DROP) {
-                curr.controlBlock(command);
-                td->draw(*highScore); 
+                curr.controlBlock(command); 
+                td->draw(*highScore);
                 if (command == DROP) {break;}    // end of control  
             } else if (command == SEQ) {
                 string filename;
@@ -87,7 +87,9 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
 
     int cleaned_lines = curr.checkCancel();
     *highScore = max(*highScore, curr.getScore());
-    td->draw(*highScore); 
+    if (cleaned_lines > 0) {
+        td->draw(*highScore); 
+    }
     // check cancels and trig special attack
     if (cleaned_lines >= 2) {
         cout << "You have cleared more than one row. You earn a special attack!" << endl;
