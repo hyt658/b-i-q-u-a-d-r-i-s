@@ -35,7 +35,7 @@ Level* createLevel(int n, string path="") {
 }
 
 void modifyAreaBlind(vector<vector<Cell>>& theboard, bool blind) {
-    for (int row = 2; row < 11; ++row) {
+    for (int row = 5; row < 14; ++row) {
         for (int col = 2; col < 8; ++col) {
             theboard[row][col].setBlind(blind);
         }
