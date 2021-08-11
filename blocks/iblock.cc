@@ -1,5 +1,4 @@
 #include "iblock.h"
-#include "block.h"
 
 IBlock::IBlock(bool heavy1, bool heavy2): Block{"I", heavy1, heavy2} {
     for(int i = 0; i < 4; i++) {
@@ -16,10 +15,10 @@ bool IBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
         if(success && level_heavy) {
             down(board);
         }
-        return success
+        return success;
     }
     else {
-        return tryRotate(2, -1, 1, 0, 0, 1, -1, 2, board);
+        bool success = tryRotate(2, -1, 1, 0, 0, 1, -1, 2, board);
         if(success && level_heavy) {
             down(board);
         }

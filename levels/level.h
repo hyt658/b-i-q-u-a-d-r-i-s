@@ -12,10 +12,11 @@
 class Level {
     protected:
         int lv;
-        bool heavy;
+        bool lv_heavy;
+        bool debuff_heavy;
 
     public:
-        Level(int n);
+        Level(int n, bool heavy);
         virtual Block* createRandBlock(Observer* board) = 0;
         virtual Block* createCertainBlock(std::string type, Observer* board) = 0;
         int getlevel();

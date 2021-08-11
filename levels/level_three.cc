@@ -1,26 +1,24 @@
 #include "level_three.h"
 #include "level.h"
 
-Level3::Level3(int n): Level{n} {
-    heavy = 1;
-}
+Level3::Level3(int n): Level{n, true} {}
 
 Block* Level3::createCertainBlock(std::string type, Observer* board) {
     Block *NB;
     if (type == I) {
-        NB = new IBlock(heavy);
+        NB = new IBlock(lv_heavy, debuff_heavy);
     } else if (type == J) {
-        NB = new JBlock(heavy);
+        NB = new JBlock(lv_heavy, debuff_heavy);
     } else if (type == L) {
-        NB = new LBlock(heavy);
+        NB = new LBlock(lv_heavy, debuff_heavy);
     } else if (type == O) {
-        NB = new OBlock(heavy);
+        NB = new OBlock(lv_heavy, debuff_heavy);
     } else if (type == S) {
-        NB = new SBlock(heavy);
+        NB = new SBlock(lv_heavy, debuff_heavy);
     } else if (type == T) {
-        NB = new TBlock(heavy);
+        NB = new TBlock(lv_heavy, debuff_heavy);
     } else if (type == Z) {
-        NB = new ZBlock(heavy);
+        NB = new ZBlock(lv_heavy, debuff_heavy);
     }
     NB->attach(board);
     return NB;

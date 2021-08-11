@@ -2,26 +2,26 @@
 #include <fstream>
 using namespace std;
 
-Level0::Level0(int n, string path): Level{n}, path{path} {
+Level0::Level0(int n, string path): Level{n, false}, path{path} {
     infile.open(path);
 }
 
 Block* Level0::createCertainBlock(std::string type, Observer* board) {
     Block *NB;
     if (type == I) {
-        NB = new IBlock(heavy);
+        NB = new IBlock(lv_heavy, debuff_heavy);
     } else if (type == J) {
-        NB = new JBlock(heavy);
+        NB = new JBlock(lv_heavy, debuff_heavy);
     } else if (type == L) {
-        NB = new LBlock(heavy);
+        NB = new LBlock(lv_heavy, debuff_heavy);
     } else if (type == O) {
-        NB = new OBlock(heavy);
+        NB = new OBlock(lv_heavy, debuff_heavy);
     } else if (type == S) {
-        NB = new SBlock(heavy);
+        NB = new SBlock(lv_heavy, debuff_heavy);
     } else if (type == T) {
-        NB = new TBlock(heavy);
+        NB = new TBlock(lv_heavy, debuff_heavy);
     } else if (type == Z) {
-        NB = new ZBlock(heavy);
+        NB = new ZBlock(lv_heavy, debuff_heavy);
     }
     NB->attach(board);
     return NB;

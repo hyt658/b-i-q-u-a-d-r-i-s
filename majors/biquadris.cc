@@ -36,6 +36,10 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
                 curr.controlBlock(command); 
                 td->draw(*highScore);
                 if (command == DROP) {break;}    // end of control  
+            } else if (command == LV_UP) {
+                curr.levelUp();
+            } else if (command == LV_DWON) {
+                curr.levelDown();
             } else if (command == SEQ) {
                 bool jump_out = false;
                 while (true) {
