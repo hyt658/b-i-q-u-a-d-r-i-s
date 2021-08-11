@@ -36,7 +36,7 @@ bool Block::moveRight(vector<vector<Cell>> board) {
     for (size_t i = 0; i < locations.size(); i++) {
         locations[i][1]+=1;
     }
-    if (heavy！= 0) {
+    if (heavy != 0) {
         for(int i = 0; i < heavy; i++) {
             down(board);
         }
@@ -64,7 +64,6 @@ bool Block::moveLeft(vector<vector<Cell>> board) {
 }
 
 void Block::drop(vector<vector<Cell>> board) {
-    bool movable = true;
     while(down(board)) {
     }
 }
