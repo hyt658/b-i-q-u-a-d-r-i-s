@@ -6,19 +6,19 @@ Level2::Level2(int n): Level{n, false} {}
 Block* Level2::createCertainBlock(std::string type, Observer* board) {
     Block *NB;
     if (type == I) {
-        NB = new IBlock(lv_heavy, debuff_heavy);
+        NB = new IBlock(lv_heavy, debuff_heavy, 2);
     } else if (type == J) {
-        NB = new JBlock(lv_heavy, debuff_heavy);
+        NB = new JBlock(lv_heavy, debuff_heavy, 2);
     } else if (type == L) {
-        NB = new LBlock(lv_heavy, debuff_heavy);
+        NB = new LBlock(lv_heavy, debuff_heavy, 2);
     } else if (type == O) {
-        NB = new OBlock(lv_heavy, debuff_heavy);
+        NB = new OBlock(lv_heavy, debuff_heavy, 2);
     } else if (type == S) {
-        NB = new SBlock(lv_heavy, debuff_heavy);
+        NB = new SBlock(lv_heavy, debuff_heavy, 2);
     } else if (type == T) {
-        NB = new TBlock(lv_heavy, debuff_heavy);
+        NB = new TBlock(lv_heavy, debuff_heavy, 2);
     } else if (type == Z) {
-        NB = new ZBlock(lv_heavy, debuff_heavy);
+        NB = new ZBlock(lv_heavy, debuff_heavy, 2);
     }
     NB->attach(board);
     return NB;

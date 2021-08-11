@@ -3,7 +3,7 @@
 
 using std::vector;
 
-TBlock::TBlock(bool heavy1, bool heavy2): Block{"I", heavy1, heavy2} {
+TBlock::TBlock(bool heavy1, bool heavy2, int lv): Block{"I", heavy1, heavy2, lv} {
     vector<int> first;
     first.emplace_back(0);
     first.emplace_back(0);

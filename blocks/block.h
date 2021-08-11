@@ -29,7 +29,7 @@ class Block: public Subject, public Observer {
         */
 
     public:
-        Block(string new_type, bool heavy1, bool heavy2);
+        Block(string new_type, bool heavy1, bool heavy2, int lv);
         virtual bool rotate(bool clockwise, vector<vector<Cell>> board) = 0;
         bool moveLeft(vector<vector<Cell>> board);
         bool moveRight(vector<vector<Cell>> board);

@@ -2,7 +2,7 @@
 
 using std::vector;
 
-OBlock::OBlock(bool heavy1, bool heavy2): Block{"O", heavy1, heavy2} {
+OBlock::OBlock(bool heavy1, bool heavy2, int lv): Block{"O", heavy1, heavy2, lv} {
     vector<int> first;
     first.emplace_back(0);
     first.emplace_back(0);

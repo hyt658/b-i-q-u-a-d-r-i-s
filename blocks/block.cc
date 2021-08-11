@@ -1,8 +1,8 @@
 #include "block.h"
 #include <iostream>
 
-Block::Block(std::string new_type, bool heavy1, bool heavy2) : 
-    type{new_type}, level_heavy{heavy1}, debuff_heavy{heavy2} {}
+Block::Block(std::string new_type, bool heavy1, bool heavy2, int lv) : 
+    type{new_type}, level_heavy{heavy1}, debuff_heavy{heavy2}, generateLv{lv} {}
 
 bool Block::contain(int idx, int ver, int hor) {
     for (size_t i = 0; i < locations.size(); i++) {

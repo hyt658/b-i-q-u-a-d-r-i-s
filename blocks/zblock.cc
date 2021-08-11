@@ -2,7 +2,7 @@
 
 using std::vector;
 
-ZBlock::ZBlock(bool heavy1, bool heavy2): Block{"Z", heavy1, heavy2} {
+ZBlock::ZBlock(bool heavy1, bool heavy2, int lv): Block{"Z", heavy1, heavy2, lv} {
     vector<int> first;
     first.emplace_back(0);
     first.emplace_back(0);

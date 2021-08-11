@@ -2,7 +2,7 @@
 
 using std::vector;
 
-JBlock::JBlock(bool heavy1, bool heavy2): Block{"J", heavy1, heavy2} {
+JBlock::JBlock(bool heavy1, bool heavy2, int lv): Block{"J", heavy1, heavy2, lv} {
     vector<int> point;
     point.emplace_back(0);
     point.emplace_back(0);

@@ -3,7 +3,7 @@
 
 using std::vector;
 
-LBlock::LBlock(bool heavy1, bool heavy2): Block{"L", heavy1, heavy2} {
+LBlock::LBlock(bool heavy1, bool heavy2, int lv): Block{"L", heavy1, heavy2, lv} {
     vector<int> point;
     point.emplace_back(0);
     point.emplace_back(2);

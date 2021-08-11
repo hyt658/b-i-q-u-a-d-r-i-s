@@ -1,6 +1,6 @@
 #include "iblock.h"
 
-IBlock::IBlock(bool heavy1, bool heavy2): Block{"I", heavy1, heavy2} {
+IBlock::IBlock(bool heavy1, bool heavy2, int lv): Block{"I", heavy1, heavy2, lv} {
     for(int i = 0; i < 4; i++) {
         vector<int> position;
         position.emplace_back(0);
