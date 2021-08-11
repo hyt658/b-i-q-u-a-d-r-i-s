@@ -43,6 +43,7 @@ class Block: public Subject, public Observer {
         void notifyObservers() override;
         bool tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board);
         bool isDropped();
+        bool contain(int idx, int ver, int hor);
 };
 
 #endif
