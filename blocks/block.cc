@@ -7,10 +7,10 @@ bool Block::isHeavy() {
     return heavy;
 }
 
-void Block::down(vector<vector<Cell>> board) {
+bool Block::down(vector<vector<Cell>> board) {
     bool movable = true;
     for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][0] < 17 || board[locations[i][0]+1][locations[i][1]].getName()=="empty") {
+        if(locations[i][0]+1 > 17 || board[locations[i][0]+1][locations[i][1]].getName() != "empty") {
             movable = false;
         }
     }
@@ -19,6 +19,7 @@ void Block::down(vector<vector<Cell>> board) {
             locations[i][0]+=1;
         }
     }
+    return movable;
 }
 
 void Block::moveLeft(vector<vector<Cell>> board) {

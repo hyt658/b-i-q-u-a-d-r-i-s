@@ -31,7 +31,7 @@ class Block: public Subject, public Observer {
         virtual void rotate(bool clockwise, vector<vector<Cell>> board) = 0;
         void moveLeft(vector<vector<Cell>> board);
         void moveRight(vector<vector<Cell>> board);
-        void down(vector<vector<Cell>> board);
+        bool down(vector<vector<Cell>> board);
         void drop(vector<vector<Cell>> board);
         string getBlockType();
         vector<vector<int>> getLocation();
