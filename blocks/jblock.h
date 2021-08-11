@@ -8,7 +8,7 @@ using std::vector;
 class JBlock:public Block {
     public:
         JBlock(bool isheavy);
-        virtual void rotate(bool clockwise, vector<vector<Cell>> board) override;
+        virtual bool rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 
 #endif

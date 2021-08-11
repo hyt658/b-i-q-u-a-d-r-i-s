@@ -22,6 +22,6 @@ OBlock::OBlock(bool isheavy): Block{"O", isheavy} {
     locations.emplace_back(fourth);
 }
 
-void OBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
-    return;
+bool OBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
+    return true;
 }

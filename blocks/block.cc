@@ -110,7 +110,7 @@ bool Block::isFull(int idx, int a, int b, vector<vector<Cell>> board) {
     return true;
 }
 
-void Block::tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board) {
+bool Block::tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board) {
     if(isFull(0,a,b,board) && isFull(1,c,d,board) && isFull(2,e,f,board) && isFull(3,g,h,board)) {
         locations[0][0]+=a;
         locations[0][1]+=b;
@@ -120,6 +120,10 @@ void Block::tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, ve
         locations[2][1]+=f;
         locations[3][0]+=g;
         locations[3][1]+=h;
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
