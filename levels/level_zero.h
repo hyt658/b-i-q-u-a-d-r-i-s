@@ -4,7 +4,7 @@
 #include <fstream>
 
 class Level0: public Level {
-    int count;
+    int count = 0;
     string path;
     std::ifstream infile;
 

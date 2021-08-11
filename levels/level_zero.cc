@@ -2,7 +2,7 @@
 #include <fstream>
 using namespace std;
 
-Level0::Level0(int n, string path): Level{n}, path{path}, count{0} {
+Level0::Level0(int n, string path): Level{n}, path{path} {
    (this->infile).open(this->path);
 }
 

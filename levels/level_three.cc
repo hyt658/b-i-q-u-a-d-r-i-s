@@ -6,19 +6,19 @@ Level3::Level3(int n): Level{n} {}
 Block* Level3::createCertainBlock(std::string type, Observer* board) {
       Block *NB;
    if (type == I) {
-      Block *NB = new IBlock(true);
+      NB = new IBlock(true);
    } else if (type == J) {
-      Block *NB = new JBlock(true);
+      NB = new JBlock(true);
    } else if (type == L) {
-      Block *NB = new LBlock(true);
+      NB = new LBlock(true);
    } else if (type == O) {
-      Block *NB = new OBlock(true);
+      NB = new OBlock(true);
    } else if (type == S) {
-      Block *NB = new SBlock(true);
+      NB = new SBlock(true);
    } else if (type == T) {
-      Block *NB = new TBlock(true);
+      NB = new TBlock(true);
    } else if (type == Z) {
-      Block *NB = new ZBlock(true);
+      NB = new ZBlock(true);
    } else {
       throw("WRONG COMMAND");
    }

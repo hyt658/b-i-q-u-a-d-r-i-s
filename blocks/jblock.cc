@@ -17,7 +17,6 @@ JBlock::JBlock(bool isheavy): Block{"J", isheavy} {
 }
 
 bool JBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
-    bool success;
     if(clockwise) {
         if(locations[0][0] == locations[1][0]) {
             if(locations[0][0] + 1 == locations[1][0]) {
