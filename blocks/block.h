@@ -33,7 +33,7 @@ class Block: public Subject, public Observer {
         bool moveLeft(vector<vector<Cell>> board);
         bool moveRight(vector<vector<Cell>> board);
         bool down(vector<vector<Cell>> board);
-        void drop(vector<vector<Cell>> board);
+        bool drop(vector<vector<Cell>> board);
         string getBlockType();
         vector<vector<int>> getLocation();
         bool isHeavy();
