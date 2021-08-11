@@ -181,9 +181,9 @@ void Board::controlBlock(string command) {
     } else if (command == RIGHT) {
         success = curr_blcok->moveRight(theBoard);
     } else if (command == CLOCKWISE) {
-        //success = curr_blcok->rotate(true, theBoard);
+        success = curr_blcok->rotate(true, theBoard);
     } else if (command == COUNTER_CLOCKWISE) {
-        //success = curr_blcok->rotate(false, theBoard);
+        success = curr_blcok->rotate(false, theBoard);
     } else if (command == DOWN) { 
         success = curr_blcok->down(theBoard);
     } else {
@@ -230,7 +230,7 @@ vector<string> Board::getNextBlock() {
     } else if (block_type == O) {
         next = {"OO         ", "OO         "};
     } else if (block_type == L) {
-        next = {"   L       ", "LLL        "};
+        next = {"  L        ", "LLL        "};
     } else if (block_type == S) {
         next = {" SS        ", "SS         "};
     } else if (block_type == Z) {

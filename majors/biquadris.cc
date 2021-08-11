@@ -165,7 +165,7 @@ int Biquadris::play() {
                 return 1;
             }
             b2_result = oneTurn(b2, b1, &highScore, td);    // throw a string when eof
-            if ((b1_result == 1) && (checkRestart(1) == true)) {
+            if ((b2_result == 1) && (checkRestart(1) == true)) {
                 return 1;
             }
 
