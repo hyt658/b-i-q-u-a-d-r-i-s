@@ -13,7 +13,8 @@ class Block: public Subject, public Observer {
     protected:
         int generateLv;
         string type;
-        bool heavy;
+        int heavy;
+        bool isdropped = false;
         vector<vector<int>> locations;
         /*
         1. Block是cell的observer：
@@ -29,8 +30,8 @@ class Block: public Subject, public Observer {
     public:
         Block(string new_type, bool isheavy);
         virtual void rotate(bool clockwise, vector<vector<Cell>> board) = 0;
-        void moveLeft(vector<vector<Cell>> board);
-        void moveRight(vector<vector<Cell>> board);
+        bool moveLeft(vector<vector<Cell>> board);
+        bool moveRight(vector<vector<Cell>> board);
         bool down(vector<vector<Cell>> board);
         void drop(vector<vector<Cell>> board);
         string getBlockType();
@@ -41,6 +42,7 @@ class Block: public Subject, public Observer {
         void notify(int n=0, int m=0) override;
         void notifyObservers() override;
         void tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board);
+        bool isDropped();
 };
 
 #endif

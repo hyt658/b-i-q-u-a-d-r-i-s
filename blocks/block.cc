@@ -9,67 +9,63 @@ bool Block::isHeavy() {
 
 bool Block::down(vector<vector<Cell>> board) {
     bool movable = true;
-    for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][0]+1 > 17 || board[locations[i][0]+1][locations[i][1]].getName() != "empty") {
+    for (size_t i = 0; i < locations.size(); i++) {
+        if (locations[i][0]+1 > 17 || board[locations[i][0]+1][locations[i][1]].getName() != "empty") {
             movable = false;
+            isdropped = true;
+            return movable;
         }
     }
-    if (movable) {
-        for(size_t i = 0; i < locations.size(); i++) {
-            locations[i][0]+=1;
+    for(size_t i = 0; i < locations.size(); i++) {
+        locations[i][0]+=1;
+        if (locations[i][0]+1 > 17 || board[locations[i][0]+1][locations[i][1]].getName() != "empty") {
+            isdropped = true;
         }
     }
     return movable;
 }
 
-void Block::moveLeft(vector<vector<Cell>> board) {
+bool Block::moveRight(vector<vector<Cell>> board) {
     bool movable = true;
-    for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][1] >= 10 || board[locations[i][0]][locations[i][1]+1].getName() != "empty") {
+    for (size_t i = 0; i < locations.size(); i++) {
+        if (locations[i][1] >= 10 || board[locations[i][0]][locations[i][1]+1].getName() != "empty") {
             movable = false;
+            return movable;
         }
     }
-    if(movable) {
-        for(size_t i = 0; i < locations.size(); i++) {
-            locations[i][1]+=1;
+    for (size_t i = 0; i < locations.size(); i++) {
+        locations[i][1]+=1;
+    }
+    if (heavy！= 0) {
+        for(int i = 0; i < heavy; i++) {
+            down(board);
         }
     }
-    if(heavy) {
-        down(board);
-        down(board);
-    }
+    return movable;
 }
 
-void Block::moveRight(vector<vector<Cell>> board) {
+bool Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
-    for(size_t i = 0; i < locations.size(); i++) {
-        if(locations[i][1] < 1 || board[locations[i][0]][locations[i][1]-1].getName() != "empty") {
+    for (size_t i = 0; i < locations.size(); i++) {
+        if (locations[i][1] < 1 || board[locations[i][0]][locations[i][1]-1].getName() != "empty") {
             movable = false;
+            return movable;
         }
     }
-    if(movable) {
-        for(size_t i = 0; i < locations.size(); i++) {
+    for(size_t i = 0; i < locations.size(); i++) {
             locations[i][1]-=1;
+    }
+    if (heavy != 0) {
+        for(int i = 0; i < heavy; i++) {
+            down(board);
         }
     }
-    if(heavy) {
-        down(board);
-        down(board);
-    }
+    return movable;
 }
 
 void Block::drop(vector<vector<Cell>> board) {
     bool movable = true;
-    while(true) {
-        for(size_t i = 0; i < locations.size(); i++) {
-            if(locations[i][0] + 1 >= 17 && board[locations[i][0]+1][locations[i][1]].getName()!="empty") {
-                movable = false;
-                break;
-            }
-        }
-        for(size_t i = 0; i < locations.size(); i++) {
-            locations[i][0]+=1;
-        }
+    while(down(board)) {
     }
 }
 
@@ -126,4 +122,8 @@ void Block::tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, ve
         locations[3][0]+=g;
         locations[3][1]+=h;
     }
+}
+
+bool Block::isDropped() {
+    return isdropped;
 }
