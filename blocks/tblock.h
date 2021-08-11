@@ -5,7 +5,7 @@
 class TBlock: public Block {
     public:
         TBlock(bool isheavy);
-        virtual void rotate(bool clockwise, vector<vector<Cell>> board) override;
+        virtual bool rotate(bool clockwise, vector<vector<Cell>> board) override;
 };
 
 #endif

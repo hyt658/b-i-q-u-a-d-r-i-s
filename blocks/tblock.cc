@@ -22,40 +22,40 @@ TBlock::TBlock(bool isheavy): Block{"I", isheavy} {
     locations.emplace_back(fourth);
 }
 
-void TBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
+bool TBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     if(clockwise) {
         if(locations[0][0] == locations[1][0]) {
             if(locations[0][0] + 1 == locations[1][0]) {
-                tryRotate(-1, 1, 0, 0, 1, -1, -1, -1, board);
+                return tryRotate(-1, 1, 0, 0, 1, -1, -1, -1, board);
             }
             else {
-                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
+                return tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
         }
         else {
             if(locations[0][1] + 1 == locations[1][1]) {
-                tryRotate(-1, 1, 0, 0, 1, 1, 1, -1, board);
+                return tryRotate(-1, 1, 0, 0, 1, 1, 1, -1, board);
             }
             else {
-                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
+                return tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
         }
     }
     else {
         if(locations[0][0] == locations[1][0]) {
             if(locations[0][0] + 1 == locations[1][0]) {
-                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
+                return tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
             else {
-                tryRotate(-1, 1, 0, 0, 1, 1, 1, -1, board);
+                return tryRotate(-1, 1, 0, 0, 1, 1, 1, -1, board);
             }
         }
         else {
             if(locations[0][1] + 1 == locations[1][1]) {
-                tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
+                return tryRotate(1, -1, 0, 0, -1, 1, 1, 1, board);
             }
             else {
-                tryRotate(-1, 1, 0, 0, 1, -1, -1, -1, board);
+                return tryRotate(-1, 1, 0, 0, 1, -1, -1, -1, board);
             }
         }
     }

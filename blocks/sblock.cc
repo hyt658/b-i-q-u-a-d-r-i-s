@@ -22,11 +22,11 @@ SBlock::SBlock(bool isheavy): Block{"S", isheavy} {
     locations.emplace_back(fourth);
 }
 
-void SBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
+bool SBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     if((locations[0][0] == locations[1][0] && clockwise) || (locations[0][0] != locations[1][0] && !clockwise)){
-        tryRotate(-1, -2, 0, -1, -1, 0, 0, 1, board);
+        return tryRotate(-1, -2, 0, -1, -1, 0, 0, 1, board);
     }
     else {
-        tryRotate(1, 2, 0, 1, 1, 0, 0, -1, board);
+        return tryRotate(1, 2, 0, 1, 1, 0, 0, -1, board);
     }
 }

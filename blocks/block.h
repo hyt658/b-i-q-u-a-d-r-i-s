@@ -29,7 +29,7 @@ class Block: public Subject, public Observer {
 
     public:
         Block(string new_type, bool isheavy);
-        virtual void rotate(bool clockwise, vector<vector<Cell>> board) = 0;
+        virtual bool rotate(bool clockwise, vector<vector<Cell>> board) = 0;
         bool moveLeft(vector<vector<Cell>> board);
         bool moveRight(vector<vector<Cell>> board);
         bool down(vector<vector<Cell>> board);
@@ -41,7 +41,7 @@ class Block: public Subject, public Observer {
         bool isFull(int idx, int a, int b, vector<vector<Cell>> board);
         void notify(int n=0, int m=0) override;
         void notifyObservers() override;
-        void tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board);
+        bool tryRotate(int a, int b, int c, int d, int e, int f, int g, int h, vector<vector<Cell>> board);
         bool isDropped();
 };
 
