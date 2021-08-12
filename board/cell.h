@@ -13,6 +13,7 @@ class Cell: public Subject {
         Cell(int row, int col);
         void setBlind(bool state);
         bool isBlind();
+        void downRow(int n);
         void setName(std::string name_);
         std::string getName();
         void notifyObservers() override;

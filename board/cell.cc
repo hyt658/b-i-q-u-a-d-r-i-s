@@ -10,6 +10,10 @@ bool Cell::isBlind() {
     return blind;
 }
 
+void Cell::downRow(int n) {
+    r += n;
+}
+
 void Cell::setName(std::string name_) {
     name = name_;
 }

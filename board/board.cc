@@ -138,12 +138,28 @@ bool Board::placeNextBlock() {
 
 int Board::checkCancel() {
     int cleaned_line = 0;
-    for (size_t i = 0; i < theBoard.size(); ++i) {
-        if (cellsPerRow[i] == theBoard[i].size()) {
-            for (size_t j = 0; j < theBoard[i].size(); ++j) {
+    int row = theBoard.size();
+    int col = theBoard[0].size();
+
+    for (int i = 0; i < row; ++i) {
+        if (cellsPerRow[i] == col) {
+            vector<Cell> temp;
+            for (int j = 0; j < col; ++j) {
+                Cell c {0, j};
+                temp.emplace_back(c);
+
                 theBoard[i][j].setName("empty");
                 theBoard[i][j].notifyObservers();
             }
+
+            for (int j = i; j >= 0; --j) {
+                theBoard[j] = theBoard[j-1];
+                for (int j = 0; j < col; ++j) {
+                    theBoard[i][j].downRow(1);
+                }
+                cellsPerRow[j] = cellsPerRow[j-1];
+            }
+            theBoard[0] = temp;
             cleaned_line += 1;
         }
     }
