@@ -143,8 +143,8 @@ int Board::checkCancel() {
             for (size_t j = 0; j < theBoard[i].size(); ++j) {
                 theBoard[i][j].setName("empty");
                 theBoard[i][j].notifyObservers();
-                cleaned_line += 1;
             }
+            cleaned_line += 1;
         }
     }
     score += square(cleaned_line + lv->getlevel());
