@@ -1,11 +1,11 @@
-#ifndef __LEVEL_THREE_H__
-#define __LEVEL_THREE_H__
+#ifndef __LEVEL_FOUR_H__
+#define __LEVEL_FOUR_H__
 #include "level.h"
 #include <string>
 
-class Level3:public Level {
+class Level4:public Level {
     public:
-        Level3(int n, int seed);
+        Level4(int n, int seed);
         Block* createRandBlock(Observer* board) override;
         Block* createCertainBlock(std::string type, Observer* board) override;
 };

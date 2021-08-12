@@ -4,6 +4,7 @@
 #include "../levels/level_one.h"
 #include "../levels/level_two.h"
 #include "../levels/level_three.h"
+#include "../levels/level_four.h"
 #include "../majors/commands.h"
 using std::cin;
 using std::cout;
@@ -20,7 +21,7 @@ int square(int n) {
 }
 
 // return corresponding level by given n
-Level* createLevel(int n, string path="") {
+Level* createLevel(int n, int seed, string path) {
     if (n == 0) {
         return new Level0{0, path};
     } else if (n == 1) {
@@ -28,9 +29,9 @@ Level* createLevel(int n, string path="") {
     } else if (n == 2) {
         return new Level2{2};
     } else if (n == 3) {
-        return new Level3{3};
+        return new Level3{3, seed};
     } else {
-        //return new Level4{4};
+        return new Level4{4, seed};
     }
 }
 
@@ -62,8 +63,10 @@ Board::Board(int row, int col):
     }
 }
 
-void Board::init(int n, string path) {
-    lv = createLevel(n, path);
+void Board::init(int n, int seed, string path) {
+    generate_seed = seed;
+    lv0_path = path;
+    lv = createLevel(n, generate_seed, lv0_path);
     curr_blcok = lv->createRandBlock(this);
     auto locations = curr_blcok->getLocation();
     for (auto location : locations) {
@@ -80,7 +83,7 @@ int Board::getScore() {
 
 void Board::setLevel(int n) {
     delete lv;
-    lv = createLevel(n);
+    lv = createLevel(n, generate_seed, lv0_path);
     delete next_block;
     next_block = lv->createRandBlock(this);
 }
@@ -163,7 +166,19 @@ int Board::checkCancel() {
             cleaned_line += 1;
         }
     }
-    score += square(cleaned_line + lv->getlevel());
+
+    if (cleaned_line > 0) {
+        score += square(cleaned_line + lv->getlevel());
+        if (lv->getlevel() == 4) lv->resetBlockNum();
+    } else if ((lv->getlevel() == 4) && (lv->getBlockNum() % 5 == 0)) {
+        for (size_t i = theBoard.size()-1; i >= 0; --i) {
+            if (theBoard[i][5].getName() == "empty") {
+                theBoard[i][5].setName("*");
+                break;
+            }
+        }
+    }
+    
     return cleaned_line;
 }
 

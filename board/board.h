@@ -54,14 +54,16 @@ class Board: public Observer {
     Level* lv;
     Block* curr_blcok;
     Block* next_block;
-    vector<Block*> Blocks;
-    vector<size_t> cellsPerRow;
+    string lv0_path;
+    int generate_seed;
     vector<vector<Cell>> theBoard;
+    vector<Block*> Blocks;
+    vector<int> cellsPerRow;
     fstream infile;
 
     public:
         Board(int row, int col);
-        void init(int n, string path="");
+        void init(int n, int seed, string path);
         int getScore();
         void setLevel(int n);
         int getLevel();

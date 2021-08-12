@@ -21,7 +21,7 @@ class Biquadris {
     
     public:
         Biquadris();
-        void setup(int start_level, string path1, string path2); 
+        void setup(int start_level, int seed, string path1, string path2); 
         int play();  
         ~Biquadris();   
 };

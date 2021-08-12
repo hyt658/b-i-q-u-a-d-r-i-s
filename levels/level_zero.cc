@@ -1,5 +1,4 @@
 #include "level_zero.h"
-#include <fstream>
 using namespace std;
 
 Level0::Level0(int n, string path): Level{n, false}, path{path} {

@@ -19,7 +19,6 @@ using std::max;
 // return 2 if the current player is lost 
 // return 3 if the oppnent is lost (caused by force)
 int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istream** input) {
-    td->draw(*highScore); 
     // control blocks
     while (true) {
         try {
@@ -142,8 +141,12 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
     }
 
     curr.update();
-    if (curr.placeNextBlock()) return 0;
-    else return 2;
+    if (curr.placeNextBlock()) {
+        return 0;
+    } else {
+        td->draw(*highScore);
+        return 2;
+    };
 }
 
 // n represents player. Ask about if player n agrees to restart the game
@@ -173,9 +176,9 @@ Biquadris::Biquadris():
     td = new TextDisplay{&b1, &b2};
 }     
 
-void Biquadris::setup(int start_level, string path1, string path2) {
-    b1.init(start_level, path1);
-    b2.init(start_level, path2);
+void Biquadris::setup(int start_level, int seed, string path1, string path2) {
+    b1.init(start_level, seed, path1);
+    b2.init(start_level, seed, path2);
 }
 
 int Biquadris::play() {
@@ -183,6 +186,7 @@ int Biquadris::play() {
     istream* in = &cin;
     istream** input = &in;
     cin.exceptions(ios::eofbit|ios::failbit);
+    td->draw(highScore); 
     while (true) {
         try {
             // go through a trun for each player and check if someone 

@@ -12,6 +12,7 @@
 class Level {
     protected:
         int lv;
+        int block_num;
         bool lv_heavy;
         bool debuff_heavy;
 
@@ -21,6 +22,8 @@ class Level {
         virtual Block* createCertainBlock(std::string type, Observer* board) = 0;
         int getlevel();
         void applyHeavy();
+        int getBlockNum();
+        void resetBlockNum();
         virtual ~Level() = default;
 };
 

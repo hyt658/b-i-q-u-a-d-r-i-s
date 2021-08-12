@@ -1,7 +1,7 @@
 #include "level.h"
 
 Level::Level(int n, bool heavy): 
-    lv{n}, lv_heavy{heavy}, debuff_heavy{false} {}
+    lv{n}, block_num{-1}, lv_heavy{heavy}, debuff_heavy{false} {}
 
 int Level::getlevel() {
     return lv;
@@ -9,4 +9,12 @@ int Level::getlevel() {
 
 void Level::applyHeavy() {
     debuff_heavy = true;
+}
+
+int Level::getBlockNum() {
+    return block_num;
+}
+
+void Level::resetBlockNum() {
+    block_num = -1;
 }

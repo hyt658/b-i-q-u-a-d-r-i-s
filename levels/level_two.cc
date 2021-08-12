@@ -1,5 +1,4 @@
 #include "level_two.h"
-#include "level.h"
 
 Level2::Level2(int n): Level{n, false} {}
 

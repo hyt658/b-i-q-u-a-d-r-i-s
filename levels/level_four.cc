@@ -1,10 +1,10 @@
-#include "level_three.h"
+#include "level_four.h"
 
-Level3::Level3(int n, int seed): Level{n, true} {
+Level4::Level4(int n, int seed): Level{n, true} {
     srand(seed);
 }
 
-Block* Level3::createCertainBlock(std::string type, Observer* board) {
+Block* Level4::createCertainBlock(std::string type, Observer* board) {
     Block *NB;
     if (type == I) {
         NB = new IBlock(lv_heavy, debuff_heavy, 3);
@@ -22,10 +22,11 @@ Block* Level3::createCertainBlock(std::string type, Observer* board) {
         NB = new ZBlock(lv_heavy, debuff_heavy, 3);
     }
     NB->attach(board);
+    block_num += 1;
     return NB;
 }
 
-Block* Level3::createRandBlock(Observer* board) {
+Block* Level4::createRandBlock(Observer* board) {
     int ranum = rand() % (9-1+1) + 1;    // rand num in [1, 9]
     Block *NB;
     if (ranum == 1) {
