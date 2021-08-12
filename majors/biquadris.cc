@@ -18,18 +18,14 @@ using std::max;
 // return 1 if the current players wants to restart the game
 // return 2 if the current player is lost 
 // return 3 if the oppnent is lost (caused by force)
-int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
-    ifstream infile;
-    istream* input = &cin;
-    cin.exceptions(ios::eofbit|ios::failbit);
-    infile.exceptions(ios::eofbit|ios::failbit);
+int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istream** input) {
     td->draw(*highScore); 
     // control blocks
     while (true) {
         try {
             cout << "Input your command:" << endl;
             string command;
-            *input >> command;  
+            **input >> command;  
             if (command == LEFT || command == RIGHT || command == DOWN ||
                 command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
                 command == DROP) {
@@ -41,16 +37,18 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
             } else if (command == LV_DWON) {
                 curr.levelDown();
             } else if (command == SEQ) {
+                string filename;
                 bool jump_out = false;
                 while (true) {
-                    string filename;
-                    cin >> filename;
-                    infile.open(filename);
-                    if (!infile.is_open()) {         
+                    **input >> filename;
+                    ifstream temp;
+                    temp.open(filename);
+                    if (!temp.is_open()) {         
                         cout << "File path does not exist. Please re-enter the path. "
                              << "You do not need to enter " << SEQ << " again.\n" 
                              << "You also can input \"quit\" to skip." << endl;
                     } else {
+                        temp.close();
                         break;
                     }
 
@@ -60,7 +58,8 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
                     }
                 }
                 if (jump_out) continue;
-                input = &infile;
+                *input = new ifstream{filename};
+                (*input)->exceptions(ios::eofbit|ios::failbit);
             } else if (command == RANDOM) {
                 if (curr.getLevel() < 3) {
                     cout << "This command is not suitable for the current level." << endl;
@@ -76,7 +75,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
                 bool jump_out = false;
                 while (true) {
                     string path;
-                    cin >> path;
+                    **input >> path;
                     try {
                         curr.fileGenerate(path);
                         break;
@@ -107,7 +106,6 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td) {
             throw end_msg;
         }
     }
-    if (input != &cin) infile.close();    // close the infile if it is opened
 
     int cleaned_lines = curr.checkCancel();
     *highScore = max(*highScore, curr.getScore());
@@ -182,18 +180,21 @@ void Biquadris::setup(int start_level, string path1, string path2) {
 
 int Biquadris::play() {
     int b1_result, b2_result;
+    istream* in = &cin;
+    istream** input = &in;
+    cin.exceptions(ios::eofbit|ios::failbit);
     while (true) {
         try {
             // go through a trun for each player and check if someone 
             //   wants to restart the game
             cout << "Player 1's turn:" << endl;
-            b1_result = oneTurn(b1, b2, &highScore, td);    // throw a string when eof
+            b1_result = oneTurn(b1, b2, &highScore, td, input);    // throw a string when eof
             if ((b1_result == 1) && (checkRestart(2) == true)) {
                 return 1;
             }
 
             cout << "Player 2's turn:" << endl;
-            b2_result = oneTurn(b2, b1, &highScore, td);    // throw a string when eof
+            b2_result = oneTurn(b2, b1, &highScore, td, input);    // throw a string when eof
             if ((b2_result == 1) && (checkRestart(1) == true)) {
                 return 1;
             }
@@ -207,9 +208,14 @@ int Biquadris::play() {
                 break;
             }
         } catch (string&) {
+            // delete input if it's not cin
+            if (*input != &cin) delete *input;
             return 0;
         }
     }
+
+    // delete input if it's not cin
+    if (*input != &cin) delete *input;    
 
     // after a game
     cout << "Do you want to play again? (y/n)" << endl;
