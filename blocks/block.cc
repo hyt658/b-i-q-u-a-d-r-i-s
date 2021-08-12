@@ -16,7 +16,7 @@ bool Block::contain(int idx, int ver, int hor) {
 bool Block::down(vector<vector<Cell>> board) {
     bool movable = true;
     for (size_t i = 0; i < locations.size(); i++) {
-        if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty" && !contain(i, 1, 0))) {
+        if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
             movable = false;
             isdropped = true;
             return movable;
@@ -24,17 +24,18 @@ bool Block::down(vector<vector<Cell>> board) {
     }
     for (size_t i = 0; i < locations.size(); i++) {
         locations[i][0]+=1;
-        if (locations[i][0]+1 > 17 || board[locations[i][0]+1][locations[i][1]].getName() != "empty") {
+        if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
             isdropped = true;
         }
     }
+    std::cout<<isdropped<<std::endl;
     return movable;
 }
 
 bool Block::moveRight(vector<vector<Cell>> board) {
     bool movable = true;
     for (size_t i = 0; i < locations.size(); i++) {
-        if (locations[i][1] >= 10 || (board[locations[i][0]][locations[i][1]+1].getName() != "empty" && !contain(i, 0, 1))) {
+        if (locations[i][1] >= 10 || (board[locations[i][0]][locations[i][1]+1].getName() != "empty")) {
             movable = false;
             return movable;
         }
@@ -55,7 +56,7 @@ bool Block::moveRight(vector<vector<Cell>> board) {
 bool Block::moveLeft(vector<vector<Cell>> board) {
     bool movable = true;
     for (size_t i = 0; i < locations.size(); i++) {
-        if (locations[i][1] < 1 || (board[locations[i][0]][locations[i][1]-1].getName() != "empty" && !contain(i, 0, -1))) {
+        if (locations[i][1] < 1 || (board[locations[i][0]][locations[i][1]-1].getName() != "empty")) {
             movable = false;
             return movable;
         }
@@ -114,7 +115,7 @@ void Block::notifyObservers() {
 bool Block::isFull(int idx, int a, int b, vector<vector<Cell>> board) {
     int row = locations[idx][0] + a;
     int col = locations[idx][1] + b;
-    if(row < 0 || row > 17 || col < 0 || col > 10 || (board[row][col].getName() != "empty" && !contain(idx, a, b))) {
+    if(row < 0 || row > 17 || col < 0 || col > 10 || (board[row][col].getName() != "empty")) {
         return false;
     }
     return true;
