@@ -28,9 +28,9 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
             if (command == LEFT || command == RIGHT || command == DOWN ||
                 command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
                 command == DROP) {
-                curr.controlBlock(command); 
+                bool end = curr.controlBlock(command); 
                 td->draw(*highScore);
-                if (command == DROP) {break;}    // end of control  
+                if (end) break;    // end of control  
             } else if (command == LV_UP) {
                 curr.levelUp();
             } else if (command == LV_DWON) {

@@ -204,9 +204,10 @@ void Board::assignNextBlock(string type) {
     next_block = lv->createCertainBlock(type, this);
 }
 
-void Board::controlBlock(string command) {
+bool Board::controlBlock(string command) {
+    bool dropped = false;   // if the block cannot go further down
+    bool success = false;   // if the command works successfully
     auto old_locations = curr_blcok->getLocation();
-    bool success = false;
     if (command == LEFT) {
         success = curr_blcok->moveLeft(theBoard);
     } else if (command == RIGHT) {
@@ -236,12 +237,17 @@ void Board::controlBlock(string command) {
             int row_new = locations[i][0];
             int col_new = locations[i][1];
             theBoard[row_new][col_new].setName(curr_blcok->getBlockType());
+
+            // if dropped, attach the block as cells' observer
+            // block will be notified when its any cell is cancelled
             if (curr_blcok->isDropped()) {
                 theBoard[row_new][col_new].attach(curr_blcok);
                 cellsPerRow[row_new] += 1;
+                dropped = true;
             }
         }
     }
+    return dropped;
 }
 
 void Board::setDebuff(string type, string block) {

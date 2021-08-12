@@ -35,6 +35,8 @@ using std::fstream;
 //  - assignNextBlock(string type): let the next block be the given type
 //  - controlBlock(string command): 
 //      control the block with given command: left, right etc.
+//      return true if the block cannot go down anymore (dropped)
+//      return false otherwise
 //  - setDebuff(string type, string block): 
 //      set the debuff to the board. block is used when the debuff is force
 //  - getNextBlock(): return a vector of string to show the current block for print
@@ -75,7 +77,7 @@ class Board: public Observer {
         void randomGenerate();
         void fileGenerate(string path);
         void assignNextBlock(string type);
-        void controlBlock(string command);
+        bool controlBlock(string command);
         void setDebuff(string type, string block);
         vector<string> getNextBlock();
         string printCell(int row, int col);
