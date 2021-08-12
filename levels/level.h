@@ -18,12 +18,12 @@ class Level {
 
     public:
         Level(int n, bool heavy);
-        virtual Block* createRandBlock(Observer* board) = 0;
-        virtual Block* createCertainBlock(std::string type, Observer* board) = 0;
         int getlevel();
         void applyHeavy();
         int getBlockNum();
         void resetBlockNum();
+        virtual Block* createRandBlock(Observer* board) = 0;
+        virtual Block* createCertainBlock(std::string type, Observer* board) = 0;
         virtual ~Level() = default;
 };
 

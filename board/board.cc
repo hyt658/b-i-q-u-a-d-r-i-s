@@ -68,13 +68,14 @@ void Board::init(int n, int seed, string path) {
     lv0_path = path;
     lv = createLevel(n, generate_seed, lv0_path);
     curr_blcok = lv->createRandBlock(this);
+    next_block = lv->createRandBlock(this);
+
     auto locations = curr_blcok->getLocation();
     for (auto location : locations) {
         int row = location[0];
         int col = location[1];
         theBoard[row][col].setName(curr_blcok->getBlockType());
     }
-    next_block = lv->createRandBlock(this);
 }
 
 int Board::getScore() {
@@ -84,7 +85,10 @@ int Board::getScore() {
 void Board::setLevel(int n) {
     delete lv;
     lv = createLevel(n, generate_seed, lv0_path);
+    string curr_type = curr_blcok->getBlockType();
+    delete curr_blcok;
     delete next_block;
+    curr_blcok = lv->createCertainBlock(curr_type, this);
     next_block = lv->createRandBlock(this);
 }
 
@@ -92,21 +96,20 @@ int Board::getLevel() {
     return lv->getlevel();
 }
 
-void Board::levelUp() {
+void Board::levelChange(bool up) {
     int curr_lv = lv->getlevel();
-    if (curr_lv == 4) {
+    if (up) {
+        if (curr_lv == 4) {
         cout << "You have already reach the hardest level." << endl;
+        } else {
+            setLevel(curr_lv + 1);
+        }
     } else {
-        setLevel(curr_lv + 1);
-    }
-}
-
-void Board::levelDown() {
-    int curr_lv = lv->getlevel();
-    if (curr_lv == 0) {
-        cout << "You have already reach the easiest level." << endl;
-    } else {
-        setLevel(curr_lv - 1);
+        if (curr_lv == 0) {
+            cout << "You have already reach the easiest level." << endl;
+        } else {
+            setLevel(curr_lv - 1);
+        }
     }
 }
 
@@ -125,18 +128,19 @@ void Board::update() {
 }
 
 bool Board::placeNextBlock() {
+    bool placed = true;
     auto locations = curr_blcok->getLocation();
     for (auto location : locations) {
         int row = location[0];
         int col = location[1];
         if (theBoard[row][col].getName() != "empty") {
-            theBoard[row][col].setName("X");
-            return false;
+            theBoard[row][col].setName("-");
+            placed = false;
         } else {
             theBoard[row][col].setName(curr_blcok->getBlockType());
         }
     }
-    return true;
+    return placed;
 }
 
 int Board::checkCancel() {
@@ -178,7 +182,6 @@ int Board::checkCancel() {
             }
         }
     }
-    
     return cleaned_line;
 }
 
@@ -207,32 +210,38 @@ void Board::assignNextBlock(string type) {
 bool Board::controlBlock(string command) {
     bool dropped = false;   // if the block cannot go further down
     bool success = false;   // if the command works successfully
+
+    // create a temp board where change curr_block's cells back to empty 
     auto old_locations = curr_blcok->getLocation();
+    vector<vector<Cell>> temp = theBoard;
+    for (size_t i = 0; i < old_locations.size(); ++i) {
+        int row_old = old_locations[i][0];
+        int col_old = old_locations[i][1];
+        temp[row_old][col_old].setName("empty");
+    }
+
+    // try to move block
     if (command == LEFT) {
-        success = curr_blcok->moveLeft(theBoard);
+        success = curr_blcok->moveLeft(temp);
     } else if (command == RIGHT) {
-        success = curr_blcok->moveRight(theBoard);
+        success = curr_blcok->moveRight(temp);
     } else if (command == CLOCKWISE) {
-        success = curr_blcok->rotate(true, theBoard);
+        success = curr_blcok->rotate(true, temp);
     } else if (command == COUNTER_CLOCKWISE) {
-        success = curr_blcok->rotate(false, theBoard);
+        success = curr_blcok->rotate(false, temp);
     } else if (command == DOWN) { 
-        success = curr_blcok->down(theBoard);
+        success = curr_blcok->down(temp);
     } else {
-        success = curr_blcok->drop(theBoard);
-        modifyAreaBlind(theBoard, false);
+        success = curr_blcok->drop(temp);
+        modifyAreaBlind(temp, false);
     }
 
     if (success) {
-        // change old locations back to empty
-        auto locations = curr_blcok->getLocation();
-        for (size_t i = 0; i < old_locations.size(); ++i) {
-            int row_old = old_locations[i][0];
-            int col_old = old_locations[i][1];
-            theBoard[row_old][col_old].setName("empty");
-        }
+        // if block moved successed, overwrite theBoard with temp
+        theBoard = temp;
 
-        // plot the locations on cells
+        // plot the new locations of block on theBoard
+        auto locations = curr_blcok->getLocation();
         for (size_t i = 0; i < locations.size(); ++i) {
             int row_new = locations[i][0];
             int col_new = locations[i][1];

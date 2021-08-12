@@ -13,14 +13,32 @@ using std::max;
 // helper functions
 //////////////////////////////////////////////////////////////////////
 
+// n represents player. Ask about if player n agrees to restart the game
+// return 0 means disagree, return true means agree
+bool checkRestart() {
+    cout << "Does another player agree to restart? (y/n)" << endl;
+    string ans;
+    cin >> ans;
+    if (ans == "y") {
+        return true;
+    } else if (ans == "n") {
+        cout << "The game is continued." << endl;
+    } else {
+        cout << "Unknow answer. The game is continued." << endl;
+    }
+    return false;
+}
+
 // go through a turn for given board (player)
 // return 0 if one turn ends normally and go to next turn
 // return 1 if the current players wants to restart the game
 // return 2 if the current player is lost 
 // return 3 if the oppnent is lost (caused by force)
 int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istream** input) {
+    td->draw(*highScore);
     // control blocks
-    while (true) {
+    bool end = false;
+    while (!end) {
         try {
             cout << "Input your command:" << endl;
             string command;
@@ -28,13 +46,11 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
             if (command == LEFT || command == RIGHT || command == DOWN ||
                 command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
                 command == DROP) {
-                bool end = curr.controlBlock(command); 
-                td->draw(*highScore);
-                if (end) break;    // end of control  
+                end = curr.controlBlock(command);  // end = true when dropped 
             } else if (command == LV_UP) {
-                curr.levelUp();
+                curr.levelChange(true); 
             } else if (command == LV_DWON) {
-                curr.levelDown();
+                curr.levelChange(false); 
             } else if (command == SEQ) {
                 string filename;
                 bool jump_out = false;
@@ -64,8 +80,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
                     cout << "This command is not suitable for the current level." << endl;
                     continue;
                 }
-                curr.randomGenerate();
-                td->draw(*highScore); 
+                curr.randomGenerate(); 
             } else if (command == NO_RANDOM) {
                 if (curr.getLevel() < 3) {
                     cout << "This command is not suitable for the current level." << endl;
@@ -88,17 +103,20 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
                         break;
                     }
                 }
-                if (jump_out) continue;
-                td->draw(*highScore); 
+                if (jump_out) continue; 
             } else if (command == I || command == J || command == L || command == O ||
                        command == S || command == J || command == T ) {
-                curr.assignNextBlock(command);
-                td->draw(*highScore); 
+                curr.assignNextBlock(command); 
             } else if (command == RESTART) {
-                return 1;
+                if (checkRestart()) {
+                    cout << "Game restarted.\n" << endl;
+                    return 1;
+                }
             } else {
                 cout << "Unknown command. Please try again." << endl;
+                continue;
             }
+            if (command != SEQ) td->draw(*highScore);
         } catch (ios::failure&) {
             string end_msg = "EOF quit game.";
             cout << end_msg << endl;
@@ -131,8 +149,8 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
                     }
                 }
                 oppnent.setDebuff(debuff, force_block);
-                td->draw(*highScore); 
-                if (!oppnent.placeNextBlock()) return 3;
+                bool opp_placed = oppnent.placeNextBlock();
+                if (!opp_placed) return 3;
                 break;
             } else {
                 cout << "Unknown special attack. Please try again." << endl;
@@ -141,28 +159,8 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
     }
 
     curr.update();
-    if (curr.placeNextBlock()) {
-        return 0;
-    } else {
-        td->draw(*highScore);
-        return 2;
-    };
-}
-
-// n represents player. Ask about if player n agrees to restart the game
-// return 0 means disagree, return true means agree
-bool checkRestart(int n) {
-    cout << "Does player " << n << " agree to restart? (y/n)" << endl;
-    string ans;
-    cin >> ans;
-    if (ans == "y") {
-        return true;
-    } else if (ans == "n") {
-        cout << "The game is continued." << endl;
-    } else {
-        cout << "Unknow answer. The game is continued." << endl;
-    }
-    return false;
+    if (curr.placeNextBlock()) return 0;
+    else return 2;
 }
 
 
@@ -186,29 +184,35 @@ int Biquadris::play() {
     istream* in = &cin;
     istream** input = &in;
     cin.exceptions(ios::eofbit|ios::failbit);
-    td->draw(highScore); 
     while (true) {
         try {
             // go through a trun for each player and check if someone 
             //   wants to restart the game
             cout << "Player 1's turn:" << endl;
             b1_result = oneTurn(b1, b2, &highScore, td, input);    // throw a string when eof
-            if ((b1_result == 1) && (checkRestart(2) == true)) {
+            if (b1_result == 1) {
                 return 1;
+            } else if (b1_result == 2) {
+                td->draw(highScore);
+                cout << "player 1 is lost. The overlapped cell(s) is/are marked in -" << endl;
+                break;
+            } else if (b1_result == 3) {
+                td->draw(highScore);
+                cout << "player 2 is lost. The overlapped cell(s) is/are marked in -" << endl;
+                break;
             }
 
             cout << "Player 2's turn:" << endl;
             b2_result = oneTurn(b2, b1, &highScore, td, input);    // throw a string when eof
-            if ((b2_result == 1) && (checkRestart(1) == true)) {
+            if (b2_result == 1) {
                 return 1;
-            }
-
-            // check if someone is lost
-            if (b1_result == 2 || b2_result == 3) {
-                cout << "player 1 is lost. The overlapped cell(s) is/are marked in X" << endl;
+            } else if (b2_result == 2) {
+                td->draw(highScore);
+                cout << "player 2 is lost. The overlapped cell(s) is/are marked in -" << endl;
                 break;
-            } else if (b2_result == 2 || b1_result == 3) {
-                cout << "player 2 is lost. The overlapped cell(s) is/are marked in X" << endl;
+            } else if (b1_result == 3) {
+                td->draw(highScore);
+                cout << "player 1 is lost. The overlapped cell(s) is/are marked in -" << endl;
                 break;
             }
         } catch (string&) {

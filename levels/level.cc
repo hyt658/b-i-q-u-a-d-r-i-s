@@ -16,5 +16,5 @@ int Level::getBlockNum() {
 }
 
 void Level::resetBlockNum() {
-    block_num = -1;
+    block_num = 0;
 }

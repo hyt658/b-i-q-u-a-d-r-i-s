@@ -17,8 +17,9 @@ using std::fstream;
 //  - getScore(): get the current score
 //  - setLevel(n): set the current level to level n
 //  - getLevel(n): get the current level
-//  - levelUp(): increase one level up
-//  - levelDown(): decrease one level down
+//  - levelChange(up):
+//      if up is true, increase one level up
+//      otherwise, decrease one level down
 //  - update(): update the board and ready for next turn
 //  - placeNextBlock(): 
 //      place the next block on the top of the board (its initial place).
@@ -69,8 +70,7 @@ class Board: public Observer {
         int getScore();
         void setLevel(int n);
         int getLevel();
-        void levelUp();
-        void levelDown();
+        void levelChange(bool up);
         void update();
         bool placeNextBlock();
         int checkCancel();
