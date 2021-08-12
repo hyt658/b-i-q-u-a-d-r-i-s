@@ -23,14 +23,14 @@ ZBlock::ZBlock(bool heavy1, bool heavy2, int lv): Block{"Z", heavy1, heavy2, lv}
 
 bool ZBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
     if(locations[0][0] == locations[1][0]){
-        bool success = tryRotate(-1, 1, 0, 0, -1, -1, 0, -1, board);
+        bool success = tryRotate(-1, 1, 0, 0, -1, -1, 0, -2, board);
         if(success && level_heavy) {
             down(board);
         }
         return success;
     }
     else {
-        bool success = tryRotate(1, -1, 0, 0, 1, 1, 0, 1, board);
+        bool success = tryRotate(1, -1, 0, 0, 1, 1, 0, 2, board);
         if(success && level_heavy) {
             down(board);
         }
