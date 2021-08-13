@@ -27,7 +27,7 @@ bool IBlock::rotate(bool clockwise, vector<vector<Cell>> board, int multiplier) 
         }
     }
     if(level_heavy && moved) {
-        down(board);
+        down(board, 1);
     }
     return moved;
 }

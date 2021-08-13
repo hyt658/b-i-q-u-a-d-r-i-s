@@ -17,7 +17,7 @@ bool Block::down(vector<vector<Cell>> board, int multiplier) {
     bool movable = true;
     bool moved = false;
     bool success = true;
-    for(int i = 0; i < multiplier && success; i++) {
+    for(int m = 0; m < multiplier && success; m++) {
         for (size_t i = 0; i < locations.size(); i++) {
             if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
                 isdropped = true;
@@ -54,7 +54,7 @@ bool Block::moveRight(vector<vector<Cell>> board, int multiplier) {
                 break;
             }
             else {
-                moved = true
+                moved = true;
             }
         }
         for (size_t i = 0; i < locations.size() && success; i++) {
@@ -62,11 +62,10 @@ bool Block::moveRight(vector<vector<Cell>> board, int multiplier) {
         }
     }
     if (level_heavy) {
-        down(board);
+        down(board, 1);
     }
     if (debuff_heavy) {
-        down(board);
-        down(board);
+        down(board, 2);
     }
     return movable;
 }
@@ -94,17 +93,16 @@ bool Block::moveLeft(vector<vector<Cell>> board, int multiplier) {
         }
     }
     if (level_heavy) {
-        down(board);
+        down(board, 1);
     }
     if (debuff_heavy) {
-        down(board);
-        down(board);
+        down(board, 2);
     }
     return movable;
 }
 
 bool Block::drop(vector<vector<Cell>> board) {
-    while(down(board)) {}
+    down(board, 15);
     return true;
 }
 

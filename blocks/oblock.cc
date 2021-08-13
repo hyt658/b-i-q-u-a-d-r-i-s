@@ -23,7 +23,7 @@ OBlock::OBlock(bool heavy1, bool heavy2, int lv): Block{"O", heavy1, heavy2, lv}
 
 bool OBlock::rotate(bool clockwise, vector<vector<Cell>> board, int multiplier) {
     if(level_heavy) {
-        down(board);
+        down(board, 1);
     }
     return true;
 }

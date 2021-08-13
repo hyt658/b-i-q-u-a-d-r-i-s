@@ -37,7 +37,7 @@ bool ZBlock::rotate(bool clockwise, vector<vector<Cell>> board, int multipler) {
         }
     }
     if(level_heavy && moved) {
-        down(board);
+        down(board, 1);
     }
     return moved;
 }
