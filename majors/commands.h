@@ -6,6 +6,7 @@ using std::string;
 using std::map;
 
 class Commands {
+    int counter = 0;
     map<string, string> dict;
     
     public:
