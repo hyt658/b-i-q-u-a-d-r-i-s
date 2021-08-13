@@ -330,4 +330,7 @@ Board::~Board() {
     for (auto block : Blocks) {
         delete block;
     }
+    delete lv;
+    delete curr_block;
+    delete next_block;
 }
