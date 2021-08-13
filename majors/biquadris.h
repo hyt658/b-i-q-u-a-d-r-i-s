@@ -1,6 +1,7 @@
 #ifndef _BIQUADRIS_H_
 #define _BIQUADRIS_H_
 #include "../board/textdisplay.h"
+#include "../board/graphics.h"
 
 //////////////////////////////////////////////////////////////////////
 // Biquadris: the control class of the entire game, responsible for
@@ -18,6 +19,7 @@ class Biquadris {
     Board b1, b2;
     int highScore;
     TextDisplay* td;
+    Graphics* graphic;
     
     public:
         Biquadris();
