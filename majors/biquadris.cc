@@ -32,9 +32,7 @@ bool checkRestart() {
 void Biquadris::draw() {
     td->draw(highScore);
     if (!text) {
-        graphic->updateScore(highScore);
         graphic->Overwrite(highScore);
-        //graphic->printNext();
     }
 }
 
@@ -133,7 +131,7 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                 }
                 if (jump_out) continue; 
             } else if (command == I || command == J || command == L || command == O ||
-                       command == S || command == J || command == T ) {
+                       command == S || command == Z || command == T ) {
                 curr.assignNextBlock(command); 
             } else if (command == RESTART) {
                 if (checkRestart()) {
