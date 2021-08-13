@@ -39,7 +39,7 @@ void Graphics::Overwrite(int hiScore) {
                 w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::A);
             }
             else if(cell == "?") {
-                w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::B);
+                w->drawString(j * 10, (i+4)*10, "?");
             }
         }
         for (int j = 0; j < COL; ++j) {
@@ -66,7 +66,7 @@ void Graphics::Overwrite(int hiScore) {
                 w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::A);
             }
             else if(cell == "?") {
-                w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::B);
+                w->drawString(150 + j * 10, (i+4)*10, "?");
             }
         }
     }
