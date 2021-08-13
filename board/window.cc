@@ -30,7 +30,7 @@ Xwindow::Xwindow(int width, int height) {
   // Set up colours.
   XColor xcolour;
   Colormap cmap;
-  char color_vals[9][10]={"white", "black", "red", "green", "blue", "purple", "A", "B", "C"};
+  char color_vals[7][10]={"white", "black", "red", "green", "blue"};
 
   cmap=DefaultColormap(d,DefaultScreen(d));
   for(int i=0; i < 5; ++i) {
@@ -50,7 +50,7 @@ Xwindow::Xwindow(int width, int height) {
 
   XSynchronize(d,True);
 
-  usleep(1);
+  usleep(1000);
 }
 
 Xwindow::~Xwindow() {

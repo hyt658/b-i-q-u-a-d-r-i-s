@@ -40,7 +40,7 @@ void Graphics::Overwrite(int hiScore) {
                 w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::Red);
             }
             else if(cell == "L") {
-                w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::C);
+                w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::A);
             }
             else if(cell == "O") {
                 w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::Green);
@@ -52,7 +52,7 @@ void Graphics::Overwrite(int hiScore) {
                 w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::Purple);
             }
             else if(cell == "Z") {
-                w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::A);
+                w->fillRectangle(j * 10, (i+4)*10, 10, 10, Xwindow::B);
             }
             else if(cell == "?") {
                 w->drawString(j * 10, (i+4)*10, "?");
@@ -67,7 +67,7 @@ void Graphics::Overwrite(int hiScore) {
                 w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::Red);
             }
             else if(cell == "L") {
-                w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::C);
+                w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::A);
             }
             else if(cell == "O") {
                 w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::Green);
@@ -79,7 +79,7 @@ void Graphics::Overwrite(int hiScore) {
                 w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::Purple);
             }
             else if(cell == "Z") {
-                w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::A);
+                w->fillRectangle(150 + j * 10, (i+4)*10, 10, 10, Xwindow::B);
             }
             else if(cell == "?") {
                 w->drawString(150 + j * 10, (i+4)*10, "?");
@@ -97,7 +97,7 @@ void Graphics::Overwrite(int hiScore) {
                     w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Red);
                 }
                 else if(next[m].substr(i, 1) == "L") {
-                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::C);
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::A);
                 }
                 else if(next[m].substr(i, 1) == "O") {
                     w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Green);
@@ -109,7 +109,7 @@ void Graphics::Overwrite(int hiScore) {
                     w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Purple);
                 }
                 else if(next[m].substr(i, 1) == "Z") {
-                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::A);
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::B);
                 }
             }
         }
@@ -124,7 +124,7 @@ void Graphics::Overwrite(int hiScore) {
                     w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Red);
                 }
                 else if(next[m].substr(i, 1) == "L") {
-                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::C);
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::A);
                 }
                 else if(next[m].substr(i, 1) == "O") {
                     w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Green);
@@ -136,7 +136,7 @@ void Graphics::Overwrite(int hiScore) {
                     w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Purple);
                 }
                 else if(next[m].substr(i, 1) == "Z") {
-                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::A);
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::B);
                 }
             }
         }
