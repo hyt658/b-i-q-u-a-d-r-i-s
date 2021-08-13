@@ -30,8 +30,12 @@ bool checkRestart() {
 }
 
 void Biquadris::draw() {
-    if (!text) graphic->Overwrite(highScore);
     td->draw(highScore);
+    if (!text) {
+        graphic->updateScore(highScore);
+        graphic->Overwrite(highScore);
+        //graphic->printNext();
+    }
 }
 
 // go through a turn for given board (player)

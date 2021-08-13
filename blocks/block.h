@@ -9,6 +9,17 @@
 using std::string;
 using std::vector;
 
+/*
+    1. Block is the observer of Cell:
+        A Block can be the observer of multiple Cells, but each Cell has 
+        one subject Block. Once a Cell is empty, it will notify its
+        observer Block (the one it belongs to) and this Block will erase
+        the Cell inside.
+    2. Block is also the Subject of Board:
+        Once Block has no Cells, it will notify the Board it belongs to,
+        and this Board will increase the score.
+*/
+
 class Block: public Subject, public Observer {
     protected:
         int generateLv;
@@ -17,16 +28,6 @@ class Block: public Subject, public Observer {
         bool debuff_heavy;
         bool isdropped = false;
         vector<vector<int>> locations;
-        /*
-        1. Block是cell的observer：
-            一个Block可以是多个Cell的observer，但每个Cell只有一个Subject Block。
-            当Cell被设置成empty时，会call观察他的Block（其实就是他所在的Block）
-            的notify()，让该Block内部的cell数量-1。推荐使用一个int变量去记录每个
-            Block observe的Cell的数量。
-        2. Block也是Board的subject:
-            当Block的Cell数量为0的时候，会call观察他的Board的notiy()然后在Board
-            里加分。加分你不用管，做好在Cell数量为0，call observerNotify()就行。
-        */
 
     public:
         Block(string new_type, bool heavy1, bool heavy2, int lv);
