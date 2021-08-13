@@ -21,7 +21,7 @@ OBlock::OBlock(bool heavy1, bool heavy2, int lv): Block{"O", heavy1, heavy2, lv}
     locations.emplace_back(fourth);
 }
 
-bool OBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
+bool OBlock::rotate(bool clockwise, vector<vector<Cell>> board, int multiplier) {
     if(level_heavy) {
         down(board);
     }

@@ -8,7 +8,7 @@ using std::vector;
 class SBlock:public Block {
     public:
         SBlock(bool heavy1, bool heavy2, int lv);
-        virtual bool rotate(bool clockwise, vector<vector<Cell>> board) override;
+        virtual bool rotate(bool clockwise, vector<vector<Cell>> board, int multiplier) override;
 };
 
 #endif

@@ -21,20 +21,24 @@ ZBlock::ZBlock(bool heavy1, bool heavy2, int lv): Block{"Z", heavy1, heavy2, lv}
     locations.emplace_back(fourth);
 }
 
-bool ZBlock::rotate(bool clockwise, vector<vector<Cell>> board) {
+bool ZBlock::rotate(bool clockwise, vector<vector<Cell>> board, int multipler) {
+    bool success = true;
+    bool moved = false;
     if(locations[0][0] == locations[1][0]){
-        bool success = tryRotate(-1, 1, 0, 0, -1, -1, 0, -2, board);
-        if(success && level_heavy) {
-            down(board);
+        success = tryRotate(-1, 1, 0, 0, -1, -1, 0, -2, board);
+        if(success) {
+            moved = true;
         }
-        return success;
     }
     else {
-        bool success = tryRotate(1, -1, 0, 0, 1, 1, 0, 2, board);
-        if(success && level_heavy) {
-            down(board);
+        success = tryRotate(1, -1, 0, 0, 1, 1, 0, 2, board);
+        if(success) {
+            moved = true;
         }
-        return success;
     }
+    if(level_heavy && moved) {
+        down(board);
+    }
+    return moved;
 }
 

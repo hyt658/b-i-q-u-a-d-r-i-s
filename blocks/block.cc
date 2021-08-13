@@ -13,35 +13,53 @@ bool Block::contain(int idx, int ver, int hor) {
     return false;
 }
 
-bool Block::down(vector<vector<Cell>> board) {
+bool Block::down(vector<vector<Cell>> board, int multiplier) {
     bool movable = true;
-    for (size_t i = 0; i < locations.size(); i++) {
-        if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
-            movable = false;
-            isdropped = true;
-            return movable;
+    bool moved = false;
+    bool success = true;
+    for(int i = 0; i < multiplier && success; i++) {
+        for (size_t i = 0; i < locations.size(); i++) {
+            if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
+                isdropped = true;
+                if(!moved) {
+                    movable = false;
+                    return movable;
+                }
+                success = false;
+                break;
+            }
+        }
+        for (size_t i = 0; i < locations.size() && success; i++) {
+            locations[i][0]+=1;
+            if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
+                isdropped = true;
+            }
         }
     }
-    for (size_t i = 0; i < locations.size(); i++) {
-        locations[i][0]+=1;
-        if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
-            isdropped = true;
-        }
-    }
-    std::cout<<isdropped<<std::endl;
     return movable;
 }
 
-bool Block::moveRight(vector<vector<Cell>> board) {
+bool Block::moveRight(vector<vector<Cell>> board, int multiplier) {
     bool movable = true;
-    for (size_t i = 0; i < locations.size(); i++) {
-        if (locations[i][1] >= 10 || (board[locations[i][0]][locations[i][1]+1].getName() != "empty")) {
-            movable = false;
-            return movable;
+    bool moved = false;
+    bool success = true;
+    for(int i = 0; i < multiplier; i++) {
+        for (size_t i = 0; i < locations.size(); i++) {
+            if (locations[i][1] >= 10 || board[locations[i][0]][locations[i][1]+1].getName() != "empty") {
+                if(!moved) {
+                    movable = false;
+                    return movable;
+                }
+                success = false;
+                break;
+            }
+            else {
+                moved = true
+            }
         }
-    }
-    for (size_t i = 0; i < locations.size(); i++) {
-        locations[i][1]+=1;
+        for (size_t i = 0; i < locations.size() && success; i++) {
+            locations[i][1]+=1;
+        }
     }
     if (level_heavy) {
         down(board);
@@ -53,16 +71,27 @@ bool Block::moveRight(vector<vector<Cell>> board) {
     return movable;
 }
 
-bool Block::moveLeft(vector<vector<Cell>> board) {
+bool Block::moveLeft(vector<vector<Cell>> board, int multiplier) {
     bool movable = true;
-    for (size_t i = 0; i < locations.size(); i++) {
-        if (locations[i][1] < 1 || (board[locations[i][0]][locations[i][1]-1].getName() != "empty")) {
-            movable = false;
-            return movable;
+    bool moved = false;
+    bool success = true;
+    for(int i = 0; i < multiplier; i++) {
+        for (size_t i = 0; i < locations.size() && success; i++) {
+            if (locations[i][1] < 1 || board[locations[i][0]][locations[i][1]-1].getName() != "empty") {
+                if(!moved) {
+                   movable = false;
+                   return movable;
+                }
+                success = false;
+                break;
+            }
+            else {
+                moved = true;
+            }
         }
-    }
-    for(size_t i = 0; i < locations.size(); i++) {
+        for(size_t i = 0; i < locations.size() && success; i++) {
             locations[i][1]-=1;
+        }
     }
     if (level_heavy) {
         down(board);

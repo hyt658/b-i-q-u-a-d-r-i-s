@@ -30,10 +30,10 @@ class Block: public Subject, public Observer {
 
     public:
         Block(string new_type, bool heavy1, bool heavy2, int lv);
-        virtual bool rotate(bool clockwise, vector<vector<Cell>> board) = 0;
-        bool moveLeft(vector<vector<Cell>> board);
-        bool moveRight(vector<vector<Cell>> board);
-        bool down(vector<vector<Cell>> board);
+        virtual bool rotate(bool clockwise, vector<vector<Cell>> board, int multiplier) = 0;
+        bool moveLeft(vector<vector<Cell>> board, int multiplier);
+        bool moveRight(vector<vector<Cell>> board, int multiplier);
+        bool down(vector<vector<Cell>> board, int multiplier);
         bool drop(vector<vector<Cell>> board);
         string getBlockType();
         vector<vector<int>> getLocation();
