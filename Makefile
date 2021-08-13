@@ -7,11 +7,11 @@ EXEC=biquadris
 
 # First target in the makefile is the default target.
 # Note that the LIBFLAGS must come last in the command
-$(EXEC): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(EXEC)
+${EXEC} : ${OBJECTS}
+	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC} -lX11
 
 %.o: %.cc 
-	$(CXX) -c -o $@ $< $(CXXFLAGS) 
+	$(CXX) -c -o $@ $< $(CXXFLAGS) -lX11
 
 -include ${DEPENDS}
 

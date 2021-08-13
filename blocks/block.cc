@@ -14,7 +14,6 @@ bool Block::contain(int idx, int ver, int hor) {
 }
 
 bool Block::down(vector<vector<Cell>> board, int multiplier) {
-    bool movable = true;
     bool moved = false;
     bool success = true;
     for(int m = 0; m < multiplier && success; m++) {
@@ -22,8 +21,7 @@ bool Block::down(vector<vector<Cell>> board, int multiplier) {
             if (locations[i][0]+1 > 17 || (board[locations[i][0]+1][locations[i][1]].getName() != "empty")) {
                 isdropped = true;
                 if(!moved) {
-                    movable = false;
-                    return movable;
+                    return moved;
                 }
                 success = false;
                 break;
@@ -36,7 +34,7 @@ bool Block::down(vector<vector<Cell>> board, int multiplier) {
             }
         }
     }
-    return movable;
+    return moved;
 }
 
 bool Block::moveRight(vector<vector<Cell>> board, int multiplier) {
