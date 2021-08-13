@@ -49,7 +49,13 @@ void modifyAreaBlind(vector<vector<Cell>>& theboard, bool blind) {
 //////////////////////////////////////////////////////////////////////
 
 Board::Board(int row, int col):
-    score{0}, random_generate{true}, curr_blcok{nullptr}, next_block{nullptr} 
+    score{0}, 
+    random_generate{true}, 
+    curr_blcok{nullptr}, 
+    next_block{nullptr}, 
+    drop_times{1}, 
+    lv0_path{""},
+    generate_seed{0}
 {
     for (int i = 0; i < row; ++i) {
         vector<Cell> temp;
@@ -96,19 +102,23 @@ int Board::getLevel() {
     return lv->getlevel();
 }
 
-void Board::levelChange(bool up) {
+void Board::levelChange(bool up, int multiplier) {
     int curr_lv = lv->getlevel();
     if (up) {
         if (curr_lv == 4) {
-        cout << "You have already reach the hardest level." << endl;
+            cout << "You have already reach the hardest level (lv4)." << endl;
+        } else if (curr_lv + multiplier > 4) {
+            setLevel(4);
         } else {
-            setLevel(curr_lv + 1);
+            setLevel(curr_lv + multiplier);
         }
     } else {
         if (curr_lv == 0) {
-            cout << "You have already reach the easiest level." << endl;
+            cout << "You have already reach the easiest level (lv0)." << endl;
+        } else if (curr_lv - multiplier < 0) {
+            setLevel(0);
         } else {
-            setLevel(curr_lv - 1);
+            setLevel(curr_lv - multiplier);
         }
     }
 }
@@ -207,7 +217,7 @@ void Board::assignNextBlock(string type) {
     next_block = lv->createCertainBlock(type, this);
 }
 
-bool Board::controlBlock(string command) {
+bool Board::controlBlock(string command, int multiplier) {
     bool dropped = false;   // if the block cannot go further down
     bool success = false;   // if the command works successfully
 
@@ -222,15 +232,15 @@ bool Board::controlBlock(string command) {
 
     // try to move block
     if (command == LEFT) {
-        success = curr_blcok->moveLeft(temp);
+        success = curr_blcok->moveLeft(temp, multiplier);
     } else if (command == RIGHT) {
-        success = curr_blcok->moveRight(temp);
+        success = curr_blcok->moveRight(temp, multiplier);
     } else if (command == CLOCKWISE) {
-        success = curr_blcok->rotate(true, temp);
+        success = curr_blcok->rotate(true, temp, multiplier);
     } else if (command == COUNTER_CLOCKWISE) {
-        success = curr_blcok->rotate(false, temp);
+        success = curr_blcok->rotate(false, temp, multiplier);
     } else if (command == DOWN) { 
-        success = curr_blcok->down(temp);
+        success = curr_blcok->down(temp, multiplier);
     } else {
         success = curr_blcok->drop(temp);
         modifyAreaBlind(temp, false);

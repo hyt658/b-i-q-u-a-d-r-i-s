@@ -38,19 +38,37 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
     td->draw(*highScore);
     // control blocks
     bool end = false;
+    int drop_times = 0;
     while (!end) {
         try {
-            cout << "Input your command:" << endl;
+            // multiple drops
+            if (drop_times != 0) {
+                end = curr.controlBlock(DROP, 1);   // 1 is dummy parameter here
+                drop_times -= 1;
+                continue;
+            }
+
+            int multiplier;
             string command;
-            **input >> command;  
+            cout << "Input your command:" << endl;
+            **input >> multiplier >> command;
+            if (!((*input)->good())) {
+                (*input)->clear();
+                **input >> command;
+                multiplier = 1;
+            }
+
             if (command == LEFT || command == RIGHT || command == DOWN ||
                 command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
                 command == DROP) {
-                end = curr.controlBlock(command);  // end = true when dropped 
+                if (command == DROP && multiplier != 1) {
+                    drop_times = multiplier - 1;
+                }
+                end = curr.controlBlock(command, multiplier);  // end = true when dropped 
             } else if (command == LV_UP) {
-                curr.levelChange(true); 
+                curr.levelChange(true, multiplier); 
             } else if (command == LV_DWON) {
-                curr.levelChange(false); 
+                curr.levelChange(false, multiplier); 
             } else if (command == SEQ) {
                 string filename;
                 bool jump_out = false;
