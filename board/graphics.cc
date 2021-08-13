@@ -14,6 +14,22 @@ Graphics::Graphics(Board* b1, Board* b2) :
     }
 
 void Graphics::Overwrite(int hiScore) {
+    w->fillRectangle(0, 0, 500, 500, Xwindow::White);
+    string hi_score = to_string(hiScore);
+    string b1_score = to_string(b1->getScore());
+    string b1_level = to_string(b1->getLevel());
+    string b2_score = to_string(b2->getScore());
+    string b2_level = to_string(b2->getLevel());
+    // the header
+    string HiScore = "HiScore: ";
+    string Score = "Score: ";
+    string Level = "Level: ";
+    w->drawString(0, 10, HiScore+hi_score);
+    w->drawString(0, 20, Score+b1_score);
+    w->drawString(150, 20, Score+b2_score);
+    w->drawString(0, 30, Level+b1_level);
+    w->drawString(150, 30, Level+b2_level);
+    w->fillRectangle(0, 40, 500, 110, Xwindow::White); 
     for (int i = 0; i < ROW; ++i) {
         for (int j = 0; j < COL; ++j) {
             string cell = b1->printCell(i, j);
@@ -70,84 +86,64 @@ void Graphics::Overwrite(int hiScore) {
             }
         }
     }
+        w->drawString(0, 230, "Next: ");
+        vector<string> next = b1->getNextBlock();
+        for(int m = 0; m < 2; m++) {
+            for(int i = 0; i < 11; i++) {
+                if(next[m].substr(i, 1) == "I") {
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Black);
+                }
+                if(next[m].substr(i, 1) == "J") {
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Red);
+                }
+                else if(next[m].substr(i, 1) == "L") {
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::C);
+                }
+                else if(next[m].substr(i, 1) == "O") {
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Green);
+                }
+                else if(next[m].substr(i, 1) == "S") {
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Blue);
+                }
+                else if(next[m].substr(i, 1) == "T") {
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Purple);
+                }
+                else if(next[m].substr(i, 1) == "Z") {
+                    w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::A);
+                }
+            }
+        }
+        w->drawString(150, 230, "Next: ");
+        next = b2->getNextBlock();
+        for(unsigned int m = 0; m < 2; m++) {
+            for(int i = 0; i < 11; i++) {
+                if(next[m].substr(i, 1) == "I") {
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Black);
+                }
+                if(next[m].substr(i, 1) == "J") {
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Red);
+                }
+                else if(next[m].substr(i, 1) == "L") {
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::C);
+                }
+                else if(next[m].substr(i, 1) == "O") {
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Green);
+                }
+                else if(next[m].substr(i, 1) == "S") {
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Blue);
+                }
+                else if(next[m].substr(i, 1) == "T") {
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::Purple);
+                }
+                else if(next[m].substr(i, 1) == "Z") {
+                    w->fillRectangle(150 + i * 10, 240 + m *10, 10, 10, Xwindow::A);
+                }
+            }
+        }
 }
 
-void Graphics::updateScore(int hiScore) {
-    string hi_score = to_string(hiScore);
-    string b1_score = to_string(b1->getScore());
-    string b1_level = to_string(b1->getLevel());
-    string b2_score = to_string(b2->getScore());
-    string b2_level = to_string(b2->getLevel());
-    w->fillRectangle(0, 0, 500, 40, Xwindow::White);
-    // the header
-    string HiScore = "HiScore: ";
-    string Score = "Score: ";
-    string Level = "Level: ";
-    w->drawString(0, 10, HiScore+hi_score);
-    w->drawString(0, 20, Score+b1_score);
-    w->drawString(150, 20, Score+b2_score);
-    w->drawString(0, 30, Level+b1_level);
-    w->drawString(150, 30, Level+b2_level);
-}
 
 Graphics::~Graphics() {
     delete w;
-}
-
-void Graphics::printNext(Block *block, Board *b) {
-    w->fillRectangle(0, 240, 500, 50, Xwindow::White);
-    vector<vector<int>> locations = block->getLocation();
-    if(b == b1) {
-        w->drawString(0, 230, "Next: ");
-        for(int i = 0; i < 4; i++) {
-            if(block->getBlockType() == "I") {
-                w->fillRectangle(locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Black);
-            }
-            if(block->getBlockType() == "J") {
-                w->fillRectangle(locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Red);
-            }
-            else if(block->getBlockType() == "L") {
-                w->fillRectangle(locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::C);
-            }
-            else if(block->getBlockType() == "O") {
-                w->fillRectangle(locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Green);
-            }
-            else if(block->getBlockType() == "S") {
-                w->fillRectangle(locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Blue);
-            }
-            else if(block->getBlockType() == "T") {
-                w->fillRectangle(locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Purple);
-            }
-            else if(block->getBlockType() == "Z") {
-                w->fillRectangle(locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::A);
-            }
-        }
-    }
-    else {
-        w->drawString(150, 230, "Next: ");
-        for(int i = 0; i < 4; i++) {
-            if(block->getBlockType() == "I") {
-                w->fillRectangle(150 + locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Black);
-            }
-            if(block->getBlockType() == "J") {
-                w->fillRectangle(150 + locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Red);
-            }
-            else if(block->getBlockType() == "L") {
-                w->fillRectangle(150 + locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::C);
-            }
-            else if(block->getBlockType() == "O") {
-                w->fillRectangle(150 + locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Green);
-            }
-            else if(block->getBlockType() == "S") {
-                w->fillRectangle(150 + locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Blue);
-            }
-            else if(block->getBlockType() == "T") {
-                w->fillRectangle(150 + locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::Purple);
-            }
-            else if(block->getBlockType() == "Z") {
-                w->fillRectangle(150 + locations[i][1] * 10, 240 + (locations[i][0] - 3) *10, 10, 10, Xwindow::A);
-            }
-        }
-    }
 }
 
