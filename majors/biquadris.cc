@@ -169,7 +169,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
 //////////////////////////////////////////////////////////////////////
 
 Biquadris::Biquadris():
-    b1{18, 11}, b2{18, 11}, highScore{0}    // 15 + 3 (extra) rows, 11 colums
+    b1{18, 11}, b2{18, 11}, highScore{0}    // 15 + 3 (reserved) rows, 11 colums
 {
     td = new TextDisplay{&b1, &b2};
 }     
