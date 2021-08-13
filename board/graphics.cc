@@ -86,7 +86,6 @@ void Graphics::Overwrite(int hiScore) {
             }
         }
     }
-    if(b == b1) {
         w->drawString(0, 230, "Next: ");
         vector<string> next = b1->getNextBlock();
         for(int m = 0; m < 2; m++) {
@@ -114,7 +113,6 @@ void Graphics::Overwrite(int hiScore) {
                 }
             }
         }
-    }
         w->drawString(150, 230, "Next: ");
         next = b2->getNextBlock();
         for(unsigned int m = 0; m < 2; m++) {
@@ -142,7 +140,6 @@ void Graphics::Overwrite(int hiScore) {
                 }
             }
         }
-    }
 }
 
 
