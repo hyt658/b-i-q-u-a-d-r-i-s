@@ -89,7 +89,7 @@ void Graphics::Overwrite(int hiScore) {
     if(b == b1) {
         w->drawString(0, 230, "Next: ");
         vector<string> next = b1->getNextBlock();
-        for(unsigned int m = 0; m < 2; m++) {
+        for(int m = 0; m < 2; m++) {
             for(int i = 0; i < 11; i++) {
                 if(next[m].substr(i, 1) == "I") {
                     w->fillRectangle(i * 10, 240 + m *10, 10, 10, Xwindow::Black);
