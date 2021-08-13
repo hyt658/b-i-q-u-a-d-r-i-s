@@ -3,7 +3,7 @@
 IBlock::IBlock(bool heavy1, bool heavy2, int lv): Block{"I", heavy1, heavy2, lv} {
     for(int i = 0; i < 4; i++) {
         vector<int> position;
-        position.emplace_back(0);
+        position.emplace_back(3);
         position.emplace_back(i);
         locations.emplace_back(position);
     }

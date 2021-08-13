@@ -5,12 +5,12 @@ using std::vector;
 
 LBlock::LBlock(bool heavy1, bool heavy2, int lv): Block{"L", heavy1, heavy2, lv} {
     vector<int> point;
-    point.emplace_back(0);
+    point.emplace_back(3);
     point.emplace_back(2);
     locations.emplace_back(point);
     for(int i = 2; i >= 0; i--) {
         vector<int> position;
-        position.emplace_back(1);
+        position.emplace_back(4);
         position.emplace_back(i);
         locations.emplace_back(position);
     }
