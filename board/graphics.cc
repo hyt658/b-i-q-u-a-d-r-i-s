@@ -1,8 +1,6 @@
-#include "graphics.h"
 #include <string.h>
-#include "window.h"
-#include "../blocks/block.h"
 #include <vector>
+#include "graphics.h"
 
 using namespace std;
 

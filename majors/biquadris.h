@@ -2,6 +2,7 @@
 #define _BIQUADRIS_H_
 #include "../board/textdisplay.h"
 #include "../board/graphics.h"
+#include "commands.h"
 
 //////////////////////////////////////////////////////////////////////
 // Biquadris: the control class of the entire game, responsible for
@@ -20,6 +21,7 @@ class Biquadris {
     Board b1, b2;
     int highScore;
     bool text;
+    Commands commands;
     TextDisplay* td;
     Graphics* graphic;
 

@@ -7,19 +7,19 @@ Level0::Level0(int n, string path): Level{n, false}, path{path} {
 
 Block* Level0::createCertainBlock(std::string type, Observer* board) {
     Block *NB;
-    if (type == I) {
+    if (type == "I") {
         NB = new IBlock(lv_heavy, debuff_heavy, 0);
-    } else if (type == J) {
+    } else if (type == "J") {
         NB = new JBlock(lv_heavy, debuff_heavy, 0);
-    } else if (type == L) {
+    } else if (type == "L") {
         NB = new LBlock(lv_heavy, debuff_heavy, 0);
-    } else if (type == O) {
+    } else if (type == "O") {
         NB = new OBlock(lv_heavy, debuff_heavy, 0);
-    } else if (type == S) {
+    } else if (type == "S") {
         NB = new SBlock(lv_heavy, debuff_heavy, 0);
-    } else if (type == T) {
+    } else if (type == "T") {
         NB = new TBlock(lv_heavy, debuff_heavy, 0);
-    } else if (type == Z) {
+    } else if (type == "Z") {
         NB = new ZBlock(lv_heavy, debuff_heavy, 0);
     }
     NB->attach(board);

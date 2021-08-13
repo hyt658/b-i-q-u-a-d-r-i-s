@@ -2,7 +2,6 @@
 #define _GRAPHICS_
 #include "window.h"
 #include "board.h"
-#include "../blocks/block.h"
 using std::vector;
 
 class Graphics {

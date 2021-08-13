@@ -5,7 +5,6 @@
 #include "../levels/level_two.h"
 #include "../levels/level_three.h"
 #include "../levels/level_four.h"
-#include "../majors/commands.h"
 using std::cin;
 using std::cout;
 using std::endl;
@@ -231,15 +230,15 @@ bool Board::controlBlock(string command, int multiplier) {
     }
 
     // try to move block
-    if (command == LEFT) {
+    if (command == "left") {
         success = curr_block->moveLeft(temp, multiplier);
-    } else if (command == RIGHT) {
+    } else if (command == "right") {
         success = curr_block->moveRight(temp, multiplier);
-    } else if (command == CLOCKWISE) {
+    } else if (command == "clockwise") {
         success = curr_block->rotate(true, temp, multiplier);
-    } else if (command == COUNTER_CLOCKWISE) {
+    } else if (command == "counterclockwise") {
         success = curr_block->rotate(false, temp, multiplier);
-    } else if (command == DOWN) { 
+    } else if (command == "down") { 
         success = curr_block->down(temp, multiplier);
     } else {
         success = curr_block->drop(temp);
@@ -270,9 +269,9 @@ bool Board::controlBlock(string command, int multiplier) {
 }
 
 void Board::setDebuff(string type, string block) {
-    if (type == BLIND) {
+    if (type == "blind") {
         modifyAreaBlind(theBoard, true);
-    } else if (type == HEAVY) {
+    } else if (type == "heavy") {
         string curr_type = curr_block->getBlockType();
         string next_type = next_block->getBlockType();
         delete curr_block;
@@ -296,17 +295,17 @@ void Board::setDebuff(string type, string block) {
 vector<string> Board::getNextBlock() {
     vector<string> next;
     string block_type = next_block->getBlockType();
-    if (block_type == I) {
+    if (block_type == "I") {
         next = {"IIII       ", "           "};
-    } else if (block_type == J) {
+    } else if (block_type == "J") {
         next = {"J          ", "JJJ        "};
-    } else if (block_type == O) {
+    } else if (block_type == "O") {
         next = {"OO         ", "OO         "};
-    } else if (block_type == L) {
+    } else if (block_type == "L") {
         next = {"  L        ", "LLL        "};
-    } else if (block_type == S) {
+    } else if (block_type == "S") {
         next = {" SS        ", "SS         "};
-    } else if (block_type == Z) {
+    } else if (block_type == "Z") {
         next = {"ZZ         ", " ZZ        "};
     } else {
         next = {"TTT        ", " T         "};

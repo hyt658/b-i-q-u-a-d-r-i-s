@@ -50,7 +50,7 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
         try {
             // multiple drops
             if (drop_times != 0) {
-                end = curr.controlBlock(DROP, 1);   // 1 is dummy parameter here
+                end = curr.controlBlock("drop", 1);   // 1 is dummy parameter here
                 drop_times -= 1;
                 continue;
             }
@@ -65,19 +65,21 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                 **input >> command;
                 multiplier = 1;
             }
+            command = commands.translateCommand(command);
 
-            if (command == LEFT || command == RIGHT || command == DOWN ||
-                command == CLOCKWISE || command == COUNTER_CLOCKWISE ||
-                command == DROP) {
-                if (command == DROP && multiplier != 1) {
+            // response to the command
+            if (command == "left" || command == "right" || command == "down" ||
+                command == "clockwise" || command == "counterclockwise" ||
+                command == "drop") {
+                if (command == "drop" && multiplier != 1) {
                     drop_times = multiplier - 1;
                 }
                 end = curr.controlBlock(command, multiplier);  // end = true when dropped 
-            } else if (command == LV_UP) {
+            } else if (command == "levelup") {
                 curr.levelChange(true, multiplier); 
-            } else if (command == LV_DWON) {
+            } else if (command == "leveldown") {
                 curr.levelChange(false, multiplier); 
-            } else if (command == SEQ) {
+            } else if (command == "sequence") {
                 string filename;
                 bool jump_out = false;
                 while (true) {
@@ -86,7 +88,7 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                     temp.open(filename);
                     if (!temp.is_open()) {         
                         cout << "File path does not exist. Please re-enter the path. "
-                             << "You do not need to enter " << SEQ << " again.\n" 
+                             << "You do not need to enter \"sequence\" again.\n" 
                              << "You also can input \"quit\" to skip." << endl;
                     } else {
                         temp.close();
@@ -101,13 +103,13 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                 if (jump_out) continue;
                 *input = new ifstream{filename};
                 (*input)->exceptions(ios::eofbit);
-            } else if (command == RANDOM) {
+            } else if (command == "random") {
                 if (curr.getLevel() < 3) {
                     cout << "This command is not suitable for the current level." << endl;
                     continue;
                 }
                 curr.randomGenerate(); 
-            } else if (command == NO_RANDOM) {
+            } else if (command == "norandom") {
                 if (curr.getLevel() < 3) {
                     cout << "This command is not suitable for the current level." << endl;
                     continue;
@@ -121,7 +123,7 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                         break;
                     } catch (string&) {
                         cout << "Cannot find such file. Please re-enter the path. "
-                             << "You do not need to enter " << NO_RANDOM << " again.\n"
+                             << "You do not need to enter \"norandom\" again.\n"
                              << "You also can input \"quit\" to skip." << endl;
                     }
                     if (path == "quit") {
@@ -130,75 +132,35 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                     }
                 }
                 if (jump_out) continue; 
-            } else if (command == I || command == J || command == L || command == O ||
-                       command == S || command == Z || command == T ) {
+            } else if (command == "I" || command == "J" || command == "L" || command == "O" ||
+                       command == "S" || command == "Z" || command == "T") {
                 curr.assignNextBlock(command); 
-            } else if (command == RESTART) {
+            } else if (command == "restart") {
                 if (checkRestart()) {
                     cout << "Game restarted.\n" << endl;
                     return 1;
                 }
-            } /* else if (command == ALIAS) {
+            } else if (command == "alias") {
                 string old_command, new_command;
                 while (true) {
-                    cin >> old_command >> new_command;
-                    if (old_command == LEFT) {
-                        LEFT = new_command;
-                    } else if (old_command == RIGHT) {
-                        RIGHT = new_command;
-                    } else if (old_command == DOWN) {
-                        DOWN = new_command;
-                    } else if (old_command == CLOCKWISE) {
-                        CLOCKWISE = new_command;
-                    } else if (old_command == COUNTER_CLOCKWISE) {
-                        COUNTER_CLOCKWISE = new_command;
-                    } else if (old_command == DROP) {
-                        DROP = new_command;
-                    } else if (old_command == LV_UP) {
-                        LV_UP = new_command;
-                    } else if (old_command == LV_DWON) {
-                        LV_DWON = new_command;
-                    } else if (old_command == NO_RANDOM) {
-                        NO_RANDOM = new_command;
-                    } else if (old_command == RANDOM) {
-                        RANDOM = new_command;
-                    }else if (old_command == SEQ) {
-                        SEQ = new_command;
-                    } else if (old_command == I) {
-                        I = new_command;
-                    } else if (old_command == J) {
-                        J = new_command;
-                    } else if (old_command == L) {
-                        L = new_command;
-                    } else if (old_command == O) {
-                        O = new_command;
-                    } else if (old_command == S) {
-                        S = new_command;
-                    } else if (old_command == Z) {
-                        Z = new_command;
-                    } else if (old_command == T) {
-                        T = new_command;
-                    } else if (old_command == RESTART) {
-                        RESTART = new_command;
-                    } else if (old_command == BLIND) {
-                        BLIND = new_command;
-                    } else if (old_command == HEAVY) {
-                        HEAVY = new_command;
-                    } else if (old_command == FORCE) {
-                        FORCE = new_command;
-                    } else {
-                        cout << "the original command is unknow. Please try again. "
-                             << "You do not need to enter " << ALIAS << " again." << endl;
-                        continue;
+                    **input >> old_command >> new_command;
+                    if (old_command == "alias") {
+                        cout << "You cannot overwrite the command alias." << endl;
+                        break;
                     }
-                    break;
+                    bool end = commands.alias(old_command, new_command);
+                    if (!end) {
+                        cout << "The original command is unknow. Please try again. "
+                             << "You do not need to enter \"alias\" again." << endl;
+                    } else {
+                        break;
+                    }
                 }
-            } */
-            else {
+            } else {
                 cout << "Unknown command. Please try again." << endl;
                 continue;
             }
-            if (command != SEQ) {
+            if (command != "sequence" && command != "alias") {
                 draw();
             }
         } catch (ios::failure&) {
@@ -219,21 +181,23 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
         cout << "Input the special attack you want to apply to your opponent:" << endl;
         while (true) {
             string debuff;
-            cin >> debuff;
-            if (debuff == BLIND || debuff == HEAVY || debuff == FORCE) {
+            **input >> debuff;
+            debuff = commands.translateCommand(debuff);
+            if (debuff == "blind" || debuff == "heavy" || debuff == "force") {
                 string force_block;
-                while (debuff == FORCE) {
-                    cin >> force_block;
-                    if (force_block == I || force_block == J || force_block == L || force_block == O ||
-                        force_block == S || force_block == Z || force_block == T) {
+                while (debuff == "force") {
+                    **input >> force_block;
+                    force_block = commands.translateCommand(force_block);
+                    if (force_block == "I" || force_block == "J" || force_block == "L" || force_block == "O" ||
+                        force_block == "S" || force_block == "Z" || force_block == "T") {
                         break;
                     } else {
                         cout << "Unkown block. Please re-enter the forced block. "
-                             << "You do not need to enter " << FORCE << " again." << endl;
+                             << "You do not need to enter \"force\" again." << endl;
                     }
                 }
                 oppnent.setDebuff(debuff, force_block);
-                if (debuff == FORCE && !oppnent.placeNextBlock()) {
+                if (debuff == "force" && !oppnent.placeNextBlock()) {
                     return 3;
                 }
                 break;

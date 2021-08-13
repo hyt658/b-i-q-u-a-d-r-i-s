@@ -1,5 +1,4 @@
 #include "textdisplay.h"
-#include "window.h"
 
 using std::to_string;
 using std::cout;

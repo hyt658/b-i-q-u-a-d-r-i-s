@@ -7,7 +7,6 @@
 #include "../blocks/sblock.h"
 #include "../blocks/tblock.h"
 #include "../blocks/zblock.h"
-#include "../majors/commands.h"
 
 class Level {
     protected:
