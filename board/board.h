@@ -57,6 +57,7 @@ class Board: public Observer {
     Level* lv;
     Block* curr_blcok;
     Block* next_block;
+    int drop_times;
     string lv0_path;
     int generate_seed;
     vector<vector<Cell>> theBoard;
@@ -70,14 +71,14 @@ class Board: public Observer {
         int getScore();
         void setLevel(int n);
         int getLevel();
-        void levelChange(bool up);
+        void levelChange(bool up, int multiplier);
         void update();
         bool placeNextBlock();
         int checkCancel();
         void randomGenerate();
         void fileGenerate(string path);
         void assignNextBlock(string type);
-        bool controlBlock(string command);
+        bool controlBlock(string command, int multiplier);
         void setDebuff(string type, string block);
         vector<string> getNextBlock();
         string printCell(int row, int col);
