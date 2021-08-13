@@ -78,7 +78,7 @@ void Graphics::updateScore(int hiScore) {
     string b1_level = to_string(b1->getLevel());
     string b2_score = to_string(b2->getScore());
     string b2_level = to_string(b2->getLevel());
-    w->fillRectangle(0, 0, 500, 500, Xwindow::White);
+    w->fillRectangle(0, 0, 500, 40, Xwindow::White);
     // the header
     string HiScore = "HiScore: ";
     string Score = "Score: ";
