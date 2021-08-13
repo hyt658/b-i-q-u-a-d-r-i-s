@@ -147,10 +147,18 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                     if (old_command == "alias") {
                         cout << "You cannot overwrite the command alias." << endl;
                         break;
+                    } else if (old_command == new_command) {
+                        cout << "You cannot alias a command with itself." << endl;
+                        break;
                     }
-                    bool end = commands.alias(old_command, new_command);
-                    if (!end) {
+                    
+                    int end = commands.alias(old_command, new_command);
+                    if (end == 0) {
                         cout << "The original command is unknow. Please try again. "
+                             << "You do not need to enter \"alias\" again." << endl;
+                    } else if (end == 1) {
+                        cout << "The new command has been aliased on other commands. "
+                             << "Please try again.\n" 
                              << "You do not need to enter \"alias\" again." << endl;
                     } else {
                         break;

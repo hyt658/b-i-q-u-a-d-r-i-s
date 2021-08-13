@@ -37,13 +37,14 @@ string Commands::translateCommand(string name) {
     }
 }
 
-bool Commands::alias(string old_command, string new_command) {
+int Commands::alias(string old_command, string new_command) {
+    if (dict.count("new_command")) return 1;
     for (auto pair : dict) {
         if (pair.second == old_command) {
             dict[new_command] = old_command;
             dict["none"] = new_command;
-            return true;
+            return 2;
         }
     }
-    return false;
+    return 0;
 }

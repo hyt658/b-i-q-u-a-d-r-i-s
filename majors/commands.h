@@ -11,7 +11,7 @@ class Commands {
     public:
         Commands();
         string translateCommand(string name);
-        bool alias(string old_command, string new_command);
+        int alias(string old_command, string new_command);
 };
 
 #endif
