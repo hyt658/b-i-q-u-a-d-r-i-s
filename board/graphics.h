@@ -13,8 +13,6 @@ class Graphics {
         Graphics(Board* b1, Board* b2);
         ~Graphics();
         void Overwrite(int hiScore);
-        void printNext(Block *block, Board *b);
-        void updateScore(int hiScore);
 };
 
 
