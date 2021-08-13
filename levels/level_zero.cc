@@ -5,28 +5,28 @@ Level0::Level0(int n, string path): Level{n, false}, path{path} {
     infile.open(path);
 }
 
-Block* Level0::createCertainBlock(std::string type, Observer* board) {
-    Block *NB;
+shared_ptr<Block> Level0::createCertainBlock(std::string type, Observer* board) {
+    shared_ptr<Block> NB;
     if (type == "I") {
-        NB = new IBlock(lv_heavy, debuff_heavy, 0);
+        NB = make_shared<IBlock> (lv_heavy, debuff_heavy, 0);
     } else if (type == "J") {
-        NB = new JBlock(lv_heavy, debuff_heavy, 0);
+        NB = make_shared<JBlock> (lv_heavy, debuff_heavy, 0);
     } else if (type == "L") {
-        NB = new LBlock(lv_heavy, debuff_heavy, 0);
+        NB = make_shared<LBlock> (lv_heavy, debuff_heavy, 0);
     } else if (type == "O") {
-        NB = new OBlock(lv_heavy, debuff_heavy, 0);
+        NB = make_shared<OBlock> (lv_heavy, debuff_heavy, 0);
     } else if (type == "S") {
-        NB = new SBlock(lv_heavy, debuff_heavy, 0);
+        NB = make_shared<SBlock> (lv_heavy, debuff_heavy, 0);
     } else if (type == "T") {
-        NB = new TBlock(lv_heavy, debuff_heavy, 0);
+        NB = make_shared<TBlock> (lv_heavy, debuff_heavy, 0);
     } else if (type == "Z") {
-        NB = new ZBlock(lv_heavy, debuff_heavy, 0);
+        NB = make_shared<ZBlock> (lv_heavy, debuff_heavy, 0);
     }
     NB->attach(board);
     return NB;
 }
 
-Block* Level0::createRandBlock(Observer* board) {
+shared_ptr<Block> Level0::createRandBlock(Observer* board) {
     string next;
     infile >> next;
     if (infile.eof()) {
@@ -34,7 +34,7 @@ Block* Level0::createRandBlock(Observer* board) {
         infile.open(path);
         infile >> next;
     }
-    Block *NB = createCertainBlock(next, board);;
+    shared_ptr<Block> NB = createCertainBlock(next, board);;
     return NB;
 }
 

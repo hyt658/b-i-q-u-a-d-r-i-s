@@ -20,18 +20,20 @@ int square(int n) {
 }
 
 // return corresponding level by given n
-Level* createLevel(int n, int seed, string path) {
+shared_ptr<Level> createLevel(int n, int seed, string path) {
+    shared_ptr<Level> lv;
     if (n == 0) {
-        return new Level0{0, path};
+        lv = make_shared<Level0> (0, path);
     } else if (n == 1) {
-        return new Level1{1};
+        lv = make_shared<Level1> (1);
     } else if (n == 2) {
-        return new Level2{2};
+        lv = make_shared<Level2> (2);
     } else if (n == 3) {
-        return new Level3{3, seed};
+        lv = make_shared<Level3> (3, seed);
     } else {
-        return new Level4{4, seed};
+        lv = make_shared<Level4> (4, seed);
     }
+    return lv;
 }
 
 void modifyAreaBlind(vector<vector<Cell>>& theboard, bool blind) {
@@ -49,9 +51,7 @@ void modifyAreaBlind(vector<vector<Cell>>& theboard, bool blind) {
 
 Board::Board(int row, int col):
     score{0}, 
-    random_generate{true}, 
-    curr_block{nullptr}, 
-    next_block{nullptr}, 
+    random_generate{true},
     drop_times{1}, 
     lv0_path{""},
     generate_seed{0}
@@ -88,11 +88,8 @@ int Board::getScore() {
 }
 
 void Board::setLevel(int n) {
-    delete lv;
     lv = createLevel(n, generate_seed, lv0_path);
     string curr_type = curr_block->getBlockType();
-    delete curr_block;
-    delete next_block;
     curr_block = lv->createCertainBlock(curr_type, this);
     next_block = lv->createRandBlock(this);
 }
@@ -123,7 +120,6 @@ void Board::levelChange(bool up, int multiplier) {
 }
 
 void Board::update() {
-    Blocks.emplace_back(curr_block);    // store the current block
     curr_block = next_block;            // update current block with next block
 
     // generate next block, random or from file
@@ -197,7 +193,6 @@ int Board::checkCancel() {
 void Board::randomGenerate() {
     if (infile.is_open()) infile.close();
     random_generate = true;
-    delete next_block;
     next_block = lv->createRandBlock(this);
 }
 
@@ -205,14 +200,12 @@ void Board::fileGenerate(string path) {
     infile.open(path);
     if (!infile.is_open()) throw "file opened failed.";
     random_generate = false;
-    delete next_block;
     string next;
     infile >> next;
     next_block = lv->createCertainBlock(next, this);
 }
 
 void Board::assignNextBlock(string type) {
-    delete next_block;
     next_block = lv->createCertainBlock(type, this);
 }
 
@@ -259,7 +252,7 @@ bool Board::controlBlock(string command, int multiplier) {
             // if dropped, attach the block as cells' observer
             // block will be notified when its any cell is cancelled
             if (curr_block->isDropped()) {
-                theBoard[row_new][col_new].attach(curr_block);
+                theBoard[row_new][col_new].attach(curr_block.get());
                 cellsPerRow[row_new] += 1;
                 dropped = true;
             }
@@ -274,8 +267,6 @@ void Board::setDebuff(string type, string block) {
     } else if (type == "heavy") {
         string curr_type = curr_block->getBlockType();
         string next_type = next_block->getBlockType();
-        delete curr_block;
-        delete next_block;
         lv->applyHeavy();
         curr_block = lv->createCertainBlock(curr_type, this);
         next_block = lv->createCertainBlock(next_type, this);
@@ -287,7 +278,6 @@ void Board::setDebuff(string type, string block) {
             int col = location[1];
             theBoard[row][col].setName("empty");
         }
-        delete curr_block;
         curr_block = lv->createCertainBlock(block, this);
     }
 }
@@ -327,10 +317,4 @@ void Board::notify(int n, int m) {
 
 Board::~Board() {
     if (infile.is_open()) infile.close();
-    for (auto block : Blocks) {
-        delete block;
-    }
-    delete lv;
-    delete curr_block;
-    delete next_block;
 }

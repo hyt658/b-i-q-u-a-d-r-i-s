@@ -228,7 +228,7 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
 Biquadris::Biquadris():
     b1{18, 11}, b2{18, 11}, highScore{0}    // 15 + 3 (reserved) rows, 11 colums
 {
-    td = new TextDisplay{&b1, &b2};
+    td = make_shared<TextDisplay>(&b1, &b2);
     graphic = nullptr;
 }     
 
@@ -237,7 +237,7 @@ void Biquadris::setup(int start_level, int seed, string path1,
     text = text_only;
     b1.init(start_level, seed, path1);
     b2.init(start_level, seed, path2);
-    if (!text) graphic = new Graphics{&b1, &b2};
+    if (!text) graphic = make_shared<Graphics>(&b1, &b2);
 }
 
 int Biquadris::play() {
@@ -300,7 +300,3 @@ int Biquadris::play() {
     }
 }
 
-Biquadris::~Biquadris() {
-    delete td;
-    delete graphic;
-}

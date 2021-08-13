@@ -7,10 +7,9 @@ using std::vector;
 class Graphics {
     Board* b1;
     Board* b2;
-    Xwindow *w;
+    shared_ptr<Xwindow> w;
     public:
         Graphics(Board* b1, Board* b2);
-        ~Graphics();
         void Overwrite(int hiScore);
 };
 

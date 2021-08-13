@@ -22,8 +22,8 @@ class Biquadris {
     int highScore;
     bool text;
     Commands commands;
-    TextDisplay* td;
-    Graphics* graphic;
+    shared_ptr<TextDisplay> td;
+    shared_ptr<Graphics> graphic;
 
     // private methods documentation see implementation file
     void draw();
@@ -33,7 +33,6 @@ class Biquadris {
         Biquadris();
         void setup(int start_level, int seed, string path1, string path2, bool only_text); 
         int play();  
-        ~Biquadris();   
 };
 
 #endif

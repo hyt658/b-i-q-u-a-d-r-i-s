@@ -2,12 +2,15 @@
 #define _BOARD_H_
 #include <iostream>
 #include <fstream>
+#include <memory>
 #include "cell.h"
 #include "../subject+observer/observer.h"
 
 using std::string;
 using std::vector;
 using std::fstream;
+using std::shared_ptr;
+using std::make_shared;
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Board: responsible for handling everything happens on a board
@@ -54,14 +57,13 @@ class Level;
 class Board: public Observer {
     int score;
     bool random_generate;
-    Level* lv;
-    Block* curr_block;
-    Block* next_block;
+    shared_ptr<Level> lv;
+    shared_ptr<Block> curr_block;
+    shared_ptr<Block> next_block;
     int drop_times;
     string lv0_path;
     int generate_seed;
     vector<vector<Cell>> theBoard;
-    vector<Block*> Blocks;
     vector<int> cellsPerRow;
     fstream infile;
 

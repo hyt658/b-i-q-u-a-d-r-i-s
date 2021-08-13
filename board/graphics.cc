@@ -8,8 +8,10 @@ const int ROW = 18;
 const int COL = 11;
 
 Graphics::Graphics(Board* b1, Board* b2) :
-    b1{b1}, b2{b2}, w{new Xwindow(500, 500)} {
-    }
+    b1{b1}, b2{b2}
+{
+    w = make_shared<Xwindow>(500, 500);
+}
 
 void Graphics::Overwrite(int hiScore) {
     w->fillRectangle(0, 0, 500, 500, Xwindow::White);
@@ -138,10 +140,5 @@ void Graphics::Overwrite(int hiScore) {
                 }
             }
         }
-}
-
-
-Graphics::~Graphics() {
-    delete w;
 }
 

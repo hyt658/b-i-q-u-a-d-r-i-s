@@ -2,30 +2,30 @@
 
 Level1::Level1(int n): Level{n, false} {}
 
-Block* Level1::createCertainBlock(std::string type, Observer* board) {
-    Block *NB;
+shared_ptr<Block> Level1::createCertainBlock(std::string type, Observer* board) {
+    shared_ptr<Block> NB;
     if (type == "I") {
-        NB = new IBlock(lv_heavy, debuff_heavy, 1);
+        NB = make_shared<IBlock> (lv_heavy, debuff_heavy, 1);
     } else if (type == "J") {
-        NB = new JBlock(lv_heavy, debuff_heavy, 1);
+        NB = make_shared<JBlock> (lv_heavy, debuff_heavy, 1);
     } else if (type == "L") {
-        NB = new LBlock(lv_heavy, debuff_heavy, 1);
+        NB = make_shared<IBlock> (lv_heavy, debuff_heavy, 1);
     } else if (type == "O") {
-        NB = new OBlock(lv_heavy, debuff_heavy, 1);
+        NB = make_shared<OBlock> (lv_heavy, debuff_heavy, 1);
     } else if (type == "S") {
-        NB = new SBlock(lv_heavy, debuff_heavy, 1);
+        NB = make_shared<SBlock> (lv_heavy, debuff_heavy, 1);
     } else if (type == "T") {
-        NB = new TBlock(lv_heavy, debuff_heavy, 1);
+        NB = make_shared<TBlock> (lv_heavy, debuff_heavy, 1);
     } else if (type == "Z") {
-        NB = new ZBlock(lv_heavy, debuff_heavy, 1);
+        NB = make_shared<ZBlock> (lv_heavy, debuff_heavy, 1);
     }
     NB->attach(board);
     return NB;
 }
 
-Block* Level1::createRandBlock(Observer* board) {
+shared_ptr<Block> Level1::createRandBlock(Observer* board) {
     int ranum = rand() % (12-1+1) + 1;   // rand num in [1, 12]
-    Block *NB;
+    shared_ptr<Block> NB;
     if (ranum == 3 || ranum == 4) {
         NB = createCertainBlock("I", board);
     } else if (ranum == 5 || ranum == 6) {
