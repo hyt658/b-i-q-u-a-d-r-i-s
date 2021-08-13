@@ -27,14 +27,21 @@ Commands::Commands() {
 }
 
 string Commands::translateCommand(string name) {
-    return dict[name];
+    while (true) {
+        string next = dict[name];
+        if (next != name) {
+            name = next;
+        } else {
+            return next;
+        }
+    }
 }
 
 bool Commands::alias(string old_command, string new_command) {
     for (auto pair : dict) {
         if (pair.second == old_command) {
-            dict.erase(pair.first);
             dict[new_command] = old_command;
+            dict["none"] = new_command;
             return true;
         }
     }
