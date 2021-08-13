@@ -8,6 +8,7 @@ using std::fstream;
 int main(int argc, char *argv[]) {
     int start_level = 0;
     int seed = 0;
+    bool only_text = false;
     string path1 = "sequence1.txt";
     string path2 = "sequence2.txt";
     string usage = 
@@ -30,7 +31,7 @@ int main(int argc, char *argv[]) {
         try {
             string flag = argv[i];
             if (flag == "-text") {
-                // run with only text
+                only_text = true;
             } else if (flag == "-help") {
                 cout << usage << endl;
             } else if (flag == "-seed") {
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]) {
 
     while (true) {
         Biquadris game;
-        game.setup(start_level, seed, path1, path2);
+        game.setup(start_level, seed, path1, path2, only_text);
         if (game.play() == 0) {
             break;
         }

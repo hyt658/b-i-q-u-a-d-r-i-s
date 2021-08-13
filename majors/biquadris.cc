@@ -10,7 +10,7 @@ using std::max;
 
 
 //////////////////////////////////////////////////////////////////////
-// helper functions
+// helper functions + private methods
 //////////////////////////////////////////////////////////////////////
 
 // n represents player. Ask about if player n agrees to restart the game
@@ -29,15 +29,18 @@ bool checkRestart() {
     return false;
 }
 
+void Biquadris::draw() {
+    if (!text) graphic->Overwrite(highScore);
+    td->draw(highScore);
+}
+
 // go through a turn for given board (player)
 // return 0 if one turn ends normally and go to next turn
 // return 1 if the current players wants to restart the game
 // return 2 if the current player is lost 
 // return 3 if the oppnent is lost (caused by force)
-int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, 
-            Graphics* graphic, istream** input) {
-    td->draw(*highScore);
-    graphic->Overwrite(*highScore);
+int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
+    draw();
     // control blocks
     bool end = false;
     int drop_times = 0;
@@ -194,8 +197,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td,
                 continue;
             }
             if (command != SEQ) {
-                td->draw(*highScore);
-                graphic->Overwrite(*highScore);
+                draw();
             }
         } catch (ios::failure&) {
             string end_msg = "EOF quit game.";
@@ -205,10 +207,9 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td,
     }
 
     int cleaned_lines = curr.checkCancel();
-    *highScore = max(*highScore, curr.getScore());
+    highScore = max(highScore, curr.getScore());
     if (cleaned_lines > 0) {
-        td->draw(*highScore); 
-        graphic->Overwrite(*highScore);
+        draw();
     }
     // check cancels and trig special attack
     if (cleaned_lines >= 2) {
@@ -221,7 +222,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td,
                 string force_block;
                 while (debuff == FORCE) {
                     cin >> force_block;
-                    if (force_block == I || force_block == J || force_block == L ||
+                    if (force_block == I || force_block == J || force_block == L || force_block == O ||
                         force_block == S || force_block == Z || force_block == T) {
                         break;
                     } else {
@@ -254,12 +255,15 @@ Biquadris::Biquadris():
     b1{18, 11}, b2{18, 11}, highScore{0}    // 15 + 3 (reserved) rows, 11 colums
 {
     td = new TextDisplay{&b1, &b2};
-    graphic = new Graphics{&b1, &b2};
+    graphic = nullptr;
 }     
 
-void Biquadris::setup(int start_level, int seed, string path1, string path2) {
+void Biquadris::setup(int start_level, int seed, string path1, 
+                      string path2, bool text_only) {
+    text = text_only;
     b1.init(start_level, seed, path1);
     b2.init(start_level, seed, path2);
+    if (!text) graphic = new Graphics{&b1, &b2};
 }
 
 int Biquadris::play() {
@@ -272,33 +276,29 @@ int Biquadris::play() {
             // go through a trun for each player and check if someone 
             //   wants to restart the game
             cout << "Player 1's turn:" << endl;
-            b1_result = oneTurn(b1, b2, &highScore, td, graphic, input);    // throw a string when eof
+            b1_result = oneTurn(b1, b2, input);    // throw a string when eof
             if (b1_result == 1) {
                 return 1;
             } else if (b1_result == 2) {
-                td->draw(highScore);
-                graphic->Overwrite(highScore);
+                draw();
                 cout << "player 1 is lost. The overlapped cell(s) is/are marked in -" << endl;
                 break;
             } else if (b1_result == 3) {
-                td->draw(highScore);
-                graphic->Overwrite(highScore);
+                draw();
                 cout << "player 2 is lost. The overlapped cell(s) is/are marked in -" << endl;
                 break;
             }
 
             cout << "Player 2's turn:" << endl;
-            b2_result = oneTurn(b2, b1, &highScore, td, graphic, input);    // throw a string when eof
+            b2_result = oneTurn(b2, b1, input);    // throw a string when eof
             if (b2_result == 1) {
                 return 1;
             } else if (b2_result == 2) {
-                td->draw(highScore);
-                graphic->Overwrite(highScore);
+                draw();
                 cout << "player 2 is lost. The overlapped cell(s) is/are marked in -" << endl;
                 break;
             } else if (b1_result == 3) {
-                td->draw(highScore);
-                graphic->Overwrite(highScore);
+                draw();
                 cout << "player 1 is lost. The overlapped cell(s) is/are marked in -" << endl;
                 break;
             }
