@@ -26,6 +26,9 @@ bool Block::down(vector<vector<Cell>> board, int multiplier) {
                 success = false;
                 break;
             }
+            else {
+                moved = true;
+            }
         }
         for (size_t i = 0; i < locations.size() && success; i++) {
             locations[i][0]+=1;
