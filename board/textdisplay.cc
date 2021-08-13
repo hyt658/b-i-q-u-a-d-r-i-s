@@ -43,6 +43,7 @@ void TextDisplay::draw(int hiScore) {
     boardDisplay = boardDisplay + "-----------" + "                -----------\n";
 
     // next block area
+    boardDisplay += "Next:                      Next:      \n";
     vector<string> b1_next_block = b1->getNextBlock();
     vector<string> b2_next_block = b2->getNextBlock();
     for (int i = 0; i < 2; ++i) {

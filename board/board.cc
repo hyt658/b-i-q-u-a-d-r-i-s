@@ -51,7 +51,7 @@ void modifyAreaBlind(vector<vector<Cell>>& theboard, bool blind) {
 Board::Board(int row, int col):
     score{0}, 
     random_generate{true}, 
-    curr_blcok{nullptr}, 
+    curr_block{nullptr}, 
     next_block{nullptr}, 
     drop_times{1}, 
     lv0_path{""},
@@ -73,14 +73,14 @@ void Board::init(int n, int seed, string path) {
     generate_seed = seed;
     lv0_path = path;
     lv = createLevel(n, generate_seed, lv0_path);
-    curr_blcok = lv->createRandBlock(this);
+    curr_block = lv->createRandBlock(this);
     next_block = lv->createRandBlock(this);
 
-    auto locations = curr_blcok->getLocation();
+    auto locations = curr_block->getLocation();
     for (auto location : locations) {
         int row = location[0];
         int col = location[1];
-        theBoard[row][col].setName(curr_blcok->getBlockType());
+        theBoard[row][col].setName(curr_block->getBlockType());
     }
 }
 
@@ -91,10 +91,10 @@ int Board::getScore() {
 void Board::setLevel(int n) {
     delete lv;
     lv = createLevel(n, generate_seed, lv0_path);
-    string curr_type = curr_blcok->getBlockType();
-    delete curr_blcok;
+    string curr_type = curr_block->getBlockType();
+    delete curr_block;
     delete next_block;
-    curr_blcok = lv->createCertainBlock(curr_type, this);
+    curr_block = lv->createCertainBlock(curr_type, this);
     next_block = lv->createRandBlock(this);
 }
 
@@ -124,8 +124,8 @@ void Board::levelChange(bool up, int multiplier) {
 }
 
 void Board::update() {
-    Blocks.emplace_back(curr_blcok);    // store the current block
-    curr_blcok = next_block;            // update current block with next block
+    Blocks.emplace_back(curr_block);    // store the current block
+    curr_block = next_block;            // update current block with next block
 
     // generate next block, random or from file
     if (random_generate) {
@@ -139,7 +139,7 @@ void Board::update() {
 
 bool Board::placeNextBlock() {
     bool placed = true;
-    auto locations = curr_blcok->getLocation();
+    auto locations = curr_block->getLocation();
     for (auto location : locations) {
         int row = location[0];
         int col = location[1];
@@ -147,7 +147,7 @@ bool Board::placeNextBlock() {
             theBoard[row][col].setName("-");
             placed = false;
         } else {
-            theBoard[row][col].setName(curr_blcok->getBlockType());
+            theBoard[row][col].setName(curr_block->getBlockType());
         }
     }
     return placed;
@@ -222,7 +222,7 @@ bool Board::controlBlock(string command, int multiplier) {
     bool success = false;   // if the command works successfully
 
     // create a temp board where change curr_block's cells back to empty 
-    auto old_locations = curr_blcok->getLocation();
+    auto old_locations = curr_block->getLocation();
     vector<vector<Cell>> temp = theBoard;
     for (size_t i = 0; i < old_locations.size(); ++i) {
         int row_old = old_locations[i][0];
@@ -232,17 +232,17 @@ bool Board::controlBlock(string command, int multiplier) {
 
     // try to move block
     if (command == LEFT) {
-        success = curr_blcok->moveLeft(temp, multiplier);
+        success = curr_block->moveLeft(temp, multiplier);
     } else if (command == RIGHT) {
-        success = curr_blcok->moveRight(temp, multiplier);
+        success = curr_block->moveRight(temp, multiplier);
     } else if (command == CLOCKWISE) {
-        success = curr_blcok->rotate(true, temp, multiplier);
+        success = curr_block->rotate(true, temp, multiplier);
     } else if (command == COUNTER_CLOCKWISE) {
-        success = curr_blcok->rotate(false, temp, multiplier);
+        success = curr_block->rotate(false, temp, multiplier);
     } else if (command == DOWN) { 
-        success = curr_blcok->down(temp, multiplier);
+        success = curr_block->down(temp, multiplier);
     } else {
-        success = curr_blcok->drop(temp);
+        success = curr_block->drop(temp);
         modifyAreaBlind(temp, false);
     }
 
@@ -251,16 +251,16 @@ bool Board::controlBlock(string command, int multiplier) {
         theBoard = temp;
 
         // plot the new locations of block on theBoard
-        auto locations = curr_blcok->getLocation();
+        auto locations = curr_block->getLocation();
         for (size_t i = 0; i < locations.size(); ++i) {
             int row_new = locations[i][0];
             int col_new = locations[i][1];
-            theBoard[row_new][col_new].setName(curr_blcok->getBlockType());
+            theBoard[row_new][col_new].setName(curr_block->getBlockType());
 
             // if dropped, attach the block as cells' observer
             // block will be notified when its any cell is cancelled
-            if (curr_blcok->isDropped()) {
-                theBoard[row_new][col_new].attach(curr_blcok);
+            if (curr_block->isDropped()) {
+                theBoard[row_new][col_new].attach(curr_block);
                 cellsPerRow[row_new] += 1;
                 dropped = true;
             }
@@ -273,10 +273,23 @@ void Board::setDebuff(string type, string block) {
     if (type == BLIND) {
         modifyAreaBlind(theBoard, true);
     } else if (type == HEAVY) {
+        string curr_type = curr_block->getBlockType();
+        string next_type = next_block->getBlockType();
+        delete curr_block;
+        delete next_block;
         lv->applyHeavy();
+        curr_block = lv->createCertainBlock(curr_type, this);
+        next_block = lv->createCertainBlock(next_type, this);
     } else {
-        delete curr_blcok;
-        curr_blcok = lv->createCertainBlock(block, this);
+        // change the cells of old blocks back to empty
+        auto locations = curr_block->getLocation();
+        for (auto location : locations) {
+            int row = location[0];
+            int col = location[1];
+            theBoard[row][col].setName("empty");
+        }
+        delete curr_block;
+        curr_block = lv->createCertainBlock(block, this);
     }
 }
 
@@ -302,7 +315,11 @@ vector<string> Board::getNextBlock() {
 }
 
 string Board::printCell(int row, int col) {
-    return theBoard[row][col].getName();
+    if (theBoard[row][col].isBlind()) {
+        return "?";
+    } else {
+        return theBoard[row][col].getName();
+    }
 }
 
 void Board::notify(int n, int m) {

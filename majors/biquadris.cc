@@ -48,6 +48,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
                 continue;
             }
 
+            // receive commands normally
             int multiplier;
             string command;
             cout << "Input your command:" << endl;
@@ -92,7 +93,7 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
                 }
                 if (jump_out) continue;
                 *input = new ifstream{filename};
-                (*input)->exceptions(ios::eofbit|ios::failbit);
+                (*input)->exceptions(ios::eofbit);
             } else if (command == RANDOM) {
                 if (curr.getLevel() < 3) {
                     cout << "This command is not suitable for the current level." << endl;
@@ -130,7 +131,63 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
                     cout << "Game restarted.\n" << endl;
                     return 1;
                 }
-            } else {
+            } /* else if (command == ALIAS) {
+                string old_command, new_command;
+                while (true) {
+                    cin >> old_command >> new_command;
+                    if (old_command == LEFT) {
+                        LEFT = new_command;
+                    } else if (old_command == RIGHT) {
+                        RIGHT = new_command;
+                    } else if (old_command == DOWN) {
+                        DOWN = new_command;
+                    } else if (old_command == CLOCKWISE) {
+                        CLOCKWISE = new_command;
+                    } else if (old_command == COUNTER_CLOCKWISE) {
+                        COUNTER_CLOCKWISE = new_command;
+                    } else if (old_command == DROP) {
+                        DROP = new_command;
+                    } else if (old_command == LV_UP) {
+                        LV_UP = new_command;
+                    } else if (old_command == LV_DWON) {
+                        LV_DWON = new_command;
+                    } else if (old_command == NO_RANDOM) {
+                        NO_RANDOM = new_command;
+                    } else if (old_command == RANDOM) {
+                        RANDOM = new_command;
+                    }else if (old_command == SEQ) {
+                        SEQ = new_command;
+                    } else if (old_command == I) {
+                        I = new_command;
+                    } else if (old_command == J) {
+                        J = new_command;
+                    } else if (old_command == L) {
+                        L = new_command;
+                    } else if (old_command == O) {
+                        O = new_command;
+                    } else if (old_command == S) {
+                        S = new_command;
+                    } else if (old_command == Z) {
+                        Z = new_command;
+                    } else if (old_command == T) {
+                        T = new_command;
+                    } else if (old_command == RESTART) {
+                        RESTART = new_command;
+                    } else if (old_command == BLIND) {
+                        BLIND = new_command;
+                    } else if (old_command == HEAVY) {
+                        HEAVY = new_command;
+                    } else if (old_command == FORCE) {
+                        FORCE = new_command;
+                    } else {
+                        cout << "the original command is unknow. Please try again. "
+                             << "You do not need to enter " << ALIAS << " again." << endl;
+                        continue;
+                    }
+                    break;
+                }
+            } */
+            else {
                 cout << "Unknown command. Please try again." << endl;
                 continue;
             }
@@ -167,8 +224,9 @@ int oneTurn(Board& curr, Board& oppnent, int* highScore, TextDisplay* td, istrea
                     }
                 }
                 oppnent.setDebuff(debuff, force_block);
-                bool opp_placed = oppnent.placeNextBlock();
-                if (!opp_placed) return 3;
+                if (debuff == FORCE && !oppnent.placeNextBlock()) {
+                    return 3;
+                }
                 break;
             } else {
                 cout << "Unknown special attack. Please try again." << endl;
@@ -201,7 +259,7 @@ int Biquadris::play() {
     int b1_result, b2_result;
     istream* in = &cin;
     istream** input = &in;
-    cin.exceptions(ios::eofbit|ios::failbit);
+    cin.exceptions(ios::eofbit);
     while (true) {
         try {
             // go through a trun for each player and check if someone 

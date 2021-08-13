@@ -19,11 +19,7 @@ void Cell::setName(std::string name_) {
 }
 
 std::string Cell::getName() {
-    if (blind) {
-        return "?";
-    } else {
-        return name;
-    }
+    return name;
 }
 
 void Cell::notifyObservers() {

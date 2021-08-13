@@ -55,7 +55,7 @@ class Board: public Observer {
     int score;
     bool random_generate;
     Level* lv;
-    Block* curr_blcok;
+    Block* curr_block;
     Block* next_block;
     int drop_times;
     string lv0_path;
