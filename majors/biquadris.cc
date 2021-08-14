@@ -4,8 +4,6 @@ using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
-using std::istream;
-using std::ifstream;
 using std::max;
 
 
@@ -84,14 +82,12 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                 bool jump_out = false;
                 while (true) {
                     **input >> filename;
-                    ifstream temp;
-                    temp.open(filename);
-                    if (!temp.is_open()) {         
+                    infile.open(filename);
+                    if (!infile.is_open()) {         
                         cout << "File path does not exist. Please re-enter the path. "
                              << "You do not need to enter \"sequence\" again.\n" 
                              << "You also can input \"quit\" to skip." << endl;
                     } else {
-                        temp.close();
                         break;
                     }
 
@@ -101,7 +97,7 @@ int Biquadris::oneTurn(Board& curr, Board& oppnent, istream** input) {
                     }
                 }
                 if (jump_out) continue;
-                *input = new ifstream{filename};
+                *input = &infile;
                 (*input)->exceptions(ios::eofbit);
             } else if (command == "random") {
                 if (curr.getLevel() < 3) {
@@ -278,13 +274,13 @@ int Biquadris::play() {
             }
         } catch (string&) {
             // delete input if it's not cin
-            if (*input != &cin) delete *input;
+            //if (*input != &cin) delete *input;
             return 0;
         }
     }
 
     // delete input if it's not cin
-    if (*input != &cin) delete *input;    
+    //if (*input != &cin) delete *input;    
 
     // after a game
     cout << "Do you want to play again? (y/n)" << endl;
@@ -300,3 +296,6 @@ int Biquadris::play() {
     }
 }
 
+Biquadris::~Biquadris() {
+    if (infile.is_open()) infile.close();
+}

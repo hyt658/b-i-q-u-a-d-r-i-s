@@ -3,6 +3,8 @@
 #include "../board/textdisplay.h"
 #include "../board/graphics.h"
 #include "commands.h"
+using std::istream;
+using std::ifstream;
 
 //////////////////////////////////////////////////////////////////////
 // Biquadris: the control class of the entire game, responsible for
@@ -24,15 +26,17 @@ class Biquadris {
     Commands commands;
     shared_ptr<TextDisplay> td;
     shared_ptr<Graphics> graphic;
+    ifstream infile;
 
     // private methods documentation see implementation file
     void draw();
-    int oneTurn(Board& curr, Board& oppnent, std::istream** input);
+    int oneTurn(Board& curr, Board& oppnent, istream** input);
     
     public:
         Biquadris();
         void setup(int start_level, int seed, string path1, string path2, bool only_text); 
-        int play();  
+        int play();
+        ~Biquadris();
 };
 
 #endif
