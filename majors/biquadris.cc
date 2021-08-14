@@ -273,14 +273,9 @@ int Biquadris::play() {
                 break;
             }
         } catch (string&) {
-            // delete input if it's not cin
-            //if (*input != &cin) delete *input;
             return 0;
         }
-    }
-
-    // delete input if it's not cin
-    //if (*input != &cin) delete *input;    
+    } 
 
     // after a game
     cout << "Do you want to play again? (y/n)" << endl;
